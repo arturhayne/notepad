@@ -9,17 +9,24 @@ use App\Http\Infra\PostgresNoteRepository;
 class EloquentNoteRepository extends PostgresNoteRepository implements NoteRepository
 {
 
-    private $note;
-
     public function __construct(){
-        $this->note = new Note();
+        
     }
 
     public function create($id,$aTitle,$aContent){
+        $this->note = new Note();
         $this->note->id = $id->id();
         $this->note->title = $aTitle;
         $this->note->content = $aContent;
         $this->note->save();
+    }
+
+    public function find($id){
+        return Note::find($id);
+    }
+
+    public function delete(Note $note){
+        $note->delete();
     }
 
 }

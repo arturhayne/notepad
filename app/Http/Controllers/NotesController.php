@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Application\NoteDTO;
 use App\Http\Application\CreateNoteService;
+use App\Http\Application\DeleteNoteService;
 use App\Http\Infra\EloquentNoteRepository;
 
 class NotesController extends Controller
@@ -15,6 +16,14 @@ class NotesController extends Controller
         $createNote = new CreateNoteService($eloquent);
         $noteDto = new NoteDTO($request->title, $request->content);
         $response = $createNote->execute($noteDto); 
+
+        return $response;
+    }
+
+    public function deleteNote($id){
+        $eloquent = new EloquentNoteRepository();
+        $deleteNote = new DeleteNoteService($eloquent);
+        $response = $deleteNote->execute($id); 
 
         return $response;
     }

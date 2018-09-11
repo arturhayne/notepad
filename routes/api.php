@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('notes/create','NotesController@createNote');
+Route::delete('notes/delete/{id}','NotesController@deleteNote');
