@@ -29,4 +29,8 @@ class EloquentNoteRepository extends PostgresNoteRepository implements NoteRepos
         $note->delete();
     }
 
+    public function list(){
+        return Note::all();
+    }
+
 }

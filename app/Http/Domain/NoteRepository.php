@@ -9,4 +9,5 @@ interface NoteRepository
     public function create($id,$title,$content);
     public function find($id);
     public function delete(Note $note);
+    public function list();
 }
