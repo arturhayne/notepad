@@ -12,26 +12,18 @@ use App\Http\Infra\EloquentNoteRepository;
 class NotesController extends Controller
 {
 
-    public function createNote(Request $request){
-        $eloquent = new EloquentNoteRepository();
-        $createNote = new CreateNoteService($eloquent);
+    public function createNote(Request $request, CreateNoteService $createNote){
         $noteDto = new NoteDTO($request->title, $request->content);
         $response = $createNote->execute($noteDto); 
-
         return $response;
     }
 
-    public function deleteNote($id){
-        $eloquent = new EloquentNoteRepository();
-        $deleteNote = new DeleteNoteService($eloquent);
+    public function deleteNote($id, DeleteNoteService $deleteNote){
         $response = $deleteNote->execute($id); 
-
         return $response;
     }
 
-    public function listNote(){
-        $eloquent = new EloquentNoteRepository();
-        $listNote = new ListNoteService($eloquent);
+    public function listNote(ListNoteService $listNote){
         $response = $listNote->execute(); 
 
         return $response;
