@@ -29,4 +29,24 @@ Answer:
 
 1 (id)
 
+- Delete a note
+```
+DELETE /api/notes/delete/8
+```
+
+"Note Deleted"
+
+- List notes
+```
+GET /api/notes/list
+```
+
+[
+    {
+        "id": 1,
+        "title": "titulo",
+        "content": "conteudo"
+    }
+]
+
 
