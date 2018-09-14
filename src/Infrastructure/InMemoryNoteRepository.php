@@ -21,4 +21,13 @@ class InMemoryNoteRepository implements NoteRepository{
     {
         $this->notes[] = $note;
     }
+
+    public function remove(NoteId $noteId){
+
+    }
+
+    public function getAll()
+    {
+        return $this->notes;
+    }
 }
