@@ -13,9 +13,9 @@ class ListNoteHandler{
         $this->repository = $repository;
     }
 
-    public function execute() : string{
+    public function execute() : array{
         $list = $this->repository->getAll();
-        return (string) $list;
+        return $list;
     }
 
 }

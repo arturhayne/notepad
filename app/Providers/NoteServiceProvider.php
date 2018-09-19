@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Notepad\Domain\Model\NoteRepository;
+use Notepad\Infrastructure\NotePDORepository;
 
 class NoteServiceProvider extends ServiceProvider
 {
@@ -23,9 +26,16 @@ class NoteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-          $this->app->bind("Notepad\Domain\Model\NoteRepository", "Notepad\Infrastructure\InMemoryNoteRepository");
-          //$this->app->bind(NoteRepository::class, function (Application $app) {
-          //  return new InMemoryNoteRepository();
-         //});
+        //$this->app->bind("Notepad\Domain\Model\NoteRepository", "Notepad\Infrastructure\NotePDORepository");
+        //sounds strange
+        $this->app->bind(NoteRepository::class, function (Application $app) {
+            return new NotePDORepository(
+                new \PDO(
+                    'pgsql:host=localhost;dbname=notepad',
+                    'user',
+                    'user'
+                )
+            );
+         });
     }
 }

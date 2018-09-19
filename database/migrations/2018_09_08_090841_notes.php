@@ -14,9 +14,10 @@ class Notes extends Migration
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
             $table->string('title');
             $table->text('content');
+            $table->primary('id');
         });
     }
 
