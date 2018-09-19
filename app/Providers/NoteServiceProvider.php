@@ -26,7 +26,7 @@ class NoteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //$this->app->bind("Notepad\Domain\Model\NoteRepository", "Notepad\Infrastructure\NotePDORepository");
+        //$this->app->bind("Notepad\Domain\Model\NoteRepository", "Notepad\Infrastructure\EloquentNoteRepository");
         //sounds strange
         $this->app->bind(NoteRepository::class, function (Application $app) {
             return new NotePDORepository(
