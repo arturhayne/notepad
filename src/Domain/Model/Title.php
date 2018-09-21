@@ -16,7 +16,7 @@ class Title{
     }
 
     public function __toString(){
-        return $this->value;
+        return (string) $this->value;
     }
 
     private function validateValue($value){

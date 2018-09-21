@@ -13,9 +13,8 @@ class DeleteNoteHandler{
         $this->repository = $repository;
     }
 
-    public function execute(DeleteNoteCommand $command){
-        
-        $noteId = NoteId::createFromUUIdString($command->id);
+    public function execute(DeleteNoteCommand $command){ 
+        $noteId = NoteId::createFromString($command->id);
         $this->repository->remove($noteId);
     }
 }

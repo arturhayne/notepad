@@ -17,7 +17,6 @@ class CreateNoteHandler{
 
     public function execute(CreateNoteCommand $command) : string{
         $note = Note::create(NoteId::Create(),$command->title,$command->content);
-        //print_r($note->id());
         $this->repository->add($note);
         return (string) $note->id();
     }

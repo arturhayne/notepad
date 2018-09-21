@@ -29,5 +29,10 @@ class Note{
     public function content(){
         return $this->content;
     }
+
+    public function fetchedConvertion($id, $title, $content) { 
+        $noteId = NoteId::createFromString($id);
+        return self::create($noteId,$title,$content);
+    }
     
 }

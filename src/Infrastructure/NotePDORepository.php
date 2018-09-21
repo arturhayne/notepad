@@ -5,6 +5,7 @@ namespace Notepad\Infrastructure;
 use Notepad\Domain\Model\Note;
 use Notepad\Domain\Model\NoteId;
 use Notepad\Domain\Model\NoteRepository;
+use Illuminate\Http\Response;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -30,13 +31,13 @@ class NotePDORepository implements NoteRepository{
         ];
 
         try {
-            $this->generciExecute($cmd,$array);
+            $this->genericExecute($cmd,$array);
         } catch (Exception $e) {
             throw new UnableToCreatePostException($e);
         }
     }
 
-    private function generciExecute($command, $array){
+    private function genericExecute($command, $array){
         $this->pdo->beginTransaction();
 
         try {
@@ -58,16 +59,19 @@ class NotePDORepository implements NoteRepository{
         ];
 
         try {
-            $this->generciExecute($cmd,$array);
+            $this->genericExecute($cmd,$array);
         } catch (Exception $e) {
             throw new UnableToCreatePostException($e);
         }
     }
 
     public function getAll(){
-        $query = $this->pdo->prepare("SELECT * FROM notes");
+        $query = $this->pdo->prepare("SELECT id, title, content FROM notes");
         $query->execute();
-        return $query->fetchAll();
+        return $query->fetchAll(\PDO::FETCH_FUNC,
+            array('Notepad\Domain\Model\Note', 'fetchedConvertion'));
     }
+
+
 
 }
