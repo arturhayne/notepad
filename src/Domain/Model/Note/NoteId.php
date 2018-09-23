@@ -1,6 +1,6 @@
 <?php
 
-namespace Notepad\Domain\Model;
+namespace Notepad\Domain\Model\Note;
 
 use Ramsey\Uuid\Uuid;
 

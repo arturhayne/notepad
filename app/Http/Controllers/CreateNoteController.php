@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Notepad\Application\Service\CreateNoteCommand;
-use Notepad\Application\Service\CreateNoteHandler;
+use Notepad\Application\Service\Note\CreateNoteCommand;
+use Notepad\Application\Service\Note\CreateNoteHandler;
 
 class CreateNoteController extends Controller
 {

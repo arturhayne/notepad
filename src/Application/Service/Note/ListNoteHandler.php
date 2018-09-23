@@ -1,8 +1,8 @@
 <?php
 
-namespace Notepad\Application\Service;
+namespace Notepad\Application\Service\Note;
 use Illuminate\Http\Response;
-use Notepad\Domain\Model\NoteRepository;
+use Notepad\Domain\Model\Note\NoteRepository;
 
 
 class ListNoteHandler{
@@ -14,8 +14,12 @@ class ListNoteHandler{
     }
 
     public function execute() {
+        
         $list = $this->repository->getAll();
-        return $this->transform($list);
+        if(count($list)>0){
+            return $this->transform($list);
+        }
+        return '';
     }
 
     private function transform($list){

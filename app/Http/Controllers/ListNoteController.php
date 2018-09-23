@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Notepad\Application\Service\ListNoteHandler;
+use Notepad\Application\Service\Note\ListNoteHandler;
 
 class ListNoteController extends Controller
 {

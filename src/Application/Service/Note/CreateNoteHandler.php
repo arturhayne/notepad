@@ -1,10 +1,10 @@
 <?php
 
-namespace Notepad\Application\Service;
+namespace Notepad\Application\Service\Note;
 
-use Notepad\Domain\Model\NoteRepository;
-use Notepad\Domain\Model\NoteId;
-use Notepad\Domain\Model\Note;
+use Notepad\Domain\Model\Note\NoteRepository;
+use Notepad\Domain\Model\Note\NoteId;
+use Notepad\Domain\Model\Note\Note;
 
 
 class CreateNoteHandler{

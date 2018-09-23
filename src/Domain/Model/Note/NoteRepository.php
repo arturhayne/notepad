@@ -1,6 +1,6 @@
 <?php
 
-namespace Notepad\Domain\Model;
+namespace Notepad\Domain\Model\Note;
 
 interface NoteRepository{
     public function add(Note $note);

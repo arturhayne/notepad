@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Notepad\Application\Service\DeleteNoteCommand;
-use Notepad\Application\Service\DeleteNoteHandler;
+use Notepad\Application\Service\Note\DeleteNoteCommand;
+use Notepad\Application\Service\Note\DeleteNoteHandler;
 
 class DeleteNoteController extends Controller
 {

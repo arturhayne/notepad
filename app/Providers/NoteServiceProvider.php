@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Notepad\Domain\Model\NoteRepository;
+use Notepad\Domain\Model\Note\NoteRepository;
 use Notepad\Infrastructure\NotePDORepository;
 
 class NoteServiceProvider extends ServiceProvider
@@ -26,8 +26,7 @@ class NoteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //$this->app->bind("Notepad\Domain\Model\NoteRepository", "Notepad\Infrastructure\EloquentNoteRepository");
-        
+
 
         $this->app->bind(NoteRepository::class, function (Application $app) {
             $pdo = new \PDO(env('STRING_CON'),

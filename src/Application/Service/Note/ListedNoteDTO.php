@@ -1,6 +1,6 @@
 <?php
 
-namespace Notepad\Application\Service;
+namespace Notepad\Application\Service\Note;
 
 class ListedNoteDTO
 {
