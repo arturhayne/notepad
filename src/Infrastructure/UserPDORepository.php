@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 
-class UserPDORepository implements UserRepository{
+class UserPDORepository extends PDORepository implements UserRepository{
 
     private $pdo;
 
@@ -28,28 +28,14 @@ class UserPDORepository implements UserRepository{
     public function add(User $user)
     {   
         $array = [ 
-            $note->id(),
-            $note->name()
+            $user->id(),
+            $user->name()
         ];
 
         try {
-            $this->genericExecute(QUERY_INSERT,$array);
+            $this->genericExecute(self::QUERY_INSERT,$array);
         } catch (Exception $e) {
             throw new UnableToCreatePostException($e);
-        }
-    }
-
-    private function genericExecute($command, $array){
-        $this->pdo->beginTransaction();
-
-        try {
-
-            $query = $this->pdo->prepare($command);
-            $res = $query->execute($array); 
-
-            $this->pdo->commit();
-        } catch (Exception $e) {
-            $this->pdo->rollback();
         }
     }
 
@@ -60,7 +46,7 @@ class UserPDORepository implements UserRepository{
         ];
 
         try {
-            $this->genericExecute(QUERY_DELETE,$array);
+            $this->genericExecute(self::QUERY_DELETE,$array);
         } catch (Exception $e) {
             throw new UnableToCreatePostException($e);
         }

@@ -2,9 +2,9 @@
 
 namespace Notepad\Application\Service\User;
 
-use Notepad\Domain\Model\UserRepository;
-use Notepad\Domain\Model\UserId;
-use Notepad\Domain\Model\User;
+use Notepad\Domain\Model\User\UserRepository;
+use Notepad\Domain\Model\User\UserId;
+use Notepad\Domain\Model\User\User;
 
 
 class CreateUserHandler{
@@ -16,7 +16,7 @@ class CreateUserHandler{
     }
 
     public function execute(CreateUserCommand $command) : string{
-        $user = Note::create(UserId::Create(),$command->name);
+        $user = User::create(UserId::Create(),$command->name);
         $this->repository->add($user);
         return (string) $user->id();
     }

@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 
-class NotePDORepository implements NoteRepository{
+class NotePDORepository extends PDORepository implements NoteRepository{
 
     private $pdo;
 
@@ -37,20 +37,6 @@ class NotePDORepository implements NoteRepository{
             $this->genericExecute(self::QUERY_INSERT,$array);
         } catch (Exception $e) {
             throw new UnableToCreatePostException($e);
-        }
-    }
-
-    private function genericExecute($command, $array){
-        $this->pdo->beginTransaction();
-
-        try {
-
-            $query = $this->pdo->prepare($command);
-            $res = $query->execute($array); 
-
-            $this->pdo->commit();
-        } catch (Exception $e) {
-            $this->pdo->rollback();
         }
     }
 
