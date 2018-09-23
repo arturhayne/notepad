@@ -16,7 +16,7 @@ class CreateUserHandler{
     }
 
     public function execute(CreateUserCommand $command) : string{
-        $user = User::create(UserId::Create(),$command->name);
+        $user = User::create(UserId::Create(),$command->name,$command->email);
         $this->repository->add($user);
         return (string) $user->id();
     }

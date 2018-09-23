@@ -18,7 +18,7 @@ class CreateUserController extends Controller
     }
 
     public function store(Request $request){
-        $comand = new CreateUserCommand($request->name);
+        $comand = new CreateUserCommand($request->name, $request->email);
         $id = $this->handler->execute($comand); 
         return response()->json(['id' => $id], Response::HTTP_CREATED);
     }

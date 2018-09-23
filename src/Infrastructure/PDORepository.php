@@ -4,7 +4,10 @@ namespace Notepad\Infrastructure;
 
 abstract class PDORepository{
 
+    protected $pdo;
+
     protected function genericExecute($command, $array){
+        
         $this->pdo->beginTransaction();
 
         try {

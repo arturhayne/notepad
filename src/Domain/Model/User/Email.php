@@ -1,6 +1,6 @@
 <?php
 
-namespace Notepad\Domain\Model\Note;
+namespace Notepad\Domain\Model\User;
 
 class Email{
 
@@ -24,7 +24,7 @@ class Email{
             throw new \InvalidArgumentException('E-mail can not be null');
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('Invalid email format');
         }
     }

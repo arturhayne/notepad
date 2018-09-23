@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class UserPDORepository extends PDORepository implements UserRepository{
 
-    private $pdo;
-
     const QUERY_SELECT = "SELECT id, name FROM users";
     const QUERY_INSERT = 'INSERT INTO users (id, name, email)'
                             .' VALUES (?, ?, ?)';
