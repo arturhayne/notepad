@@ -16,8 +16,8 @@ class UserPDORepository extends PDORepository implements UserRepository{
     private $pdo;
 
     const QUERY_SELECT = "SELECT id, name FROM users";
-    const QUERY_INSERT = 'INSERT INTO users (id, name)'
-                            .' VALUES (?, ?)';
+    const QUERY_INSERT = 'INSERT INTO users (id, name, email)'
+                            .' VALUES (?, ?, ?)';
     const QUERY_DELETE = 'Delete from users where id = ?';
 
      public function __construct(\PDO $pdo)
@@ -29,7 +29,8 @@ class UserPDORepository extends PDORepository implements UserRepository{
     {   
         $array = [ 
             $user->id(),
-            $user->name()
+            $user->name(),
+            $user->email()
         ];
 
         try {
