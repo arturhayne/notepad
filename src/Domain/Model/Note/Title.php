@@ -25,7 +25,7 @@ class Title{
         }
 
         if(strlen($value) > 20){
-            throw new \InvalidArgumentException('Titles can not be bigger than 2`0 chars');
+            throw new \InvalidArgumentException('Titles can not be bigger than 20 chars');
         }
     }
 }
