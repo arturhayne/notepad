@@ -22,3 +22,5 @@ Route::delete('notes/delete/{id}','DeleteNoteController@destroy');
 Route::get('notes/list','ListNoteController@list');
 
 Route::post('users/create','CreateUserController@store');
+
+Route::post('notepad/create','CreateNotepadController@store');
