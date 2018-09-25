@@ -18,7 +18,7 @@ class CreateNotepadController extends Controller
     }
 
     public function store(Request $request){
-        $comand = new CreateNotepadCommand($request->name);
+        $comand = new CreateNotepadCommand($request->name,$request->userId);
         $id = $this->handler->execute($comand); 
         return response()->json(['id' => $id], Response::HTTP_CREATED);
     }

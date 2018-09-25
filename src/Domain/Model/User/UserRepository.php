@@ -6,4 +6,5 @@ interface UserRepository{
     public function add(User $user);
     public function remove(UserId $userId);
     public function getAll();
+    public function ofId(UserId $userId);
 }

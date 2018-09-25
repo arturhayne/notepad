@@ -53,6 +53,6 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         $query = $this->pdo->prepare(self::QUERY_SELECT);
         $query->execute();
         return $query->fetchAll(\PDO::FETCH_FUNC,
-            array(Note::class, 'fetchedConvertion'));
+            array(Notepad::class, 'fetchedConvertion'));
     }
 }
