@@ -18,7 +18,7 @@ class UserPDORepository extends PDORepository implements UserRepository{
                             .' VALUES (?, ?, ?)';
     const QUERY_DELETE = 'Delete from users where id = ?';
 
-    const QUERY_OF_ID = "SELECT id, name FROM users where id = ?";
+    const QUERY_OF_ID = "SELECT id, name, email FROM users where id = ? LIMIT 1";
 
      public function __construct(\PDO $pdo)
      {
@@ -61,9 +61,15 @@ class UserPDORepository extends PDORepository implements UserRepository{
     }
 
     public function ofId(UserId $userId){
+        $array = [ 
+            $userId
+        ];
+
         $query = $this->pdo->prepare(self::QUERY_OF_ID);
-        $query->execute();
-        return $query->fetchObject(User::class);
+        $query->execute($array); 
+        $fetchedUser = $query->fetch();
+        $id = UserId::create($fetchedUser['id']);
+        return User::create($id, $fetchedUser['name'], $fetchedUser['email']);
     }
 
 

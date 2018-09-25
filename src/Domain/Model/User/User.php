@@ -30,4 +30,13 @@ class User{
         return $this->email;
     }
 
+    public function fetchedConvertion($id, $name, $email) { 
+        $userId = UserId::createFromString($id);
+        return self::create($userId,$name,$email);
+    }
+
+    public function createNotepad(NotepadId $notepadId,$name){
+        return Notepad::create($notepadId,$this->id, $name);
+    }
+
 }

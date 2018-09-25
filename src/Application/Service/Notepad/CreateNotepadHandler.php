@@ -11,24 +11,10 @@ use Notepad\Domain\Model\User\UserId;
 
 
 
-class CreateNotepadHandler {
+class CreateNotepadHandler extends NotepadService{
     
-    protected $repository;
-    protected $userRepository;
-
-    public function __construct(NotepadRepository $repository, UserRepository $userRepository){
-        $this->repository = $repository;
-        $this->userRepository = $userRepository;
-    }
-
     public function execute(CreateNotepadCommand $command) : string{
-
-        $user = $userRepository->ofId(new UserId($command->userId));
-
-        if($user == null){
-            throw new \InvalidArgumentException('Notepad needs an user');
-        }
-
+        $user = $this->findUserOrFail($command->userId);
         $nPad = Notepad::create(NotepadId::create(),$user->id(),$command->name);
         $this->repository->add($nPad);
         return (string) $nPad->id();
