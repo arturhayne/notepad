@@ -16,7 +16,7 @@ class NotepadId{
         return new self ($value);
     }
 
-    public function createFromString(string $value):self{
+    public static function createFromString(string $value):self{
         return new static ($value);
     }
 

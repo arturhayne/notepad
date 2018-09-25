@@ -25,11 +25,11 @@ class Notepad{
     }
 
     public function name(){
-        $this->name;
+        return $this->name;
     }
 
     public function userId(){
-        $this->userId;
+        return $this->userId;
     }
 
     public function fetchedConvertion($id, $userId, $name) { 

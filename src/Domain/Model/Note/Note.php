@@ -2,20 +2,24 @@
 
 namespace Notepad\Domain\Model\Note;
 
+use Notepad\Domain\Model\Notepad\NotepadId;
+
 class Note{
     protected $id;
     protected $title;
     protected $content;
+    protected $notepadId;
 
-    private function __construct(NoteId $id,Title $title,string $content)
+    private function __construct(NoteId $id, NotepadId $notepadId,Title $title,string $content)
     {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;
+        $this->notepadId = $notepadId;
     }
 
-    public static function create(NoteId $id,string $title,string $content){
-        return new static($id,Title::create($title),$content);
+    public static function create(NoteId $id, NotepadId $notepadId, string $title,string $content){
+        return new static($id,$notepadId,Title::create($title),$content);
     }
 
     public function id(){
@@ -28,6 +32,10 @@ class Note{
 
     public function content(){
         return $this->content;
+    }
+
+    public function notepadId(){
+        return $this->notepadId;
     }
 
     public function fetchedConvertion($id, $title, $content) { 

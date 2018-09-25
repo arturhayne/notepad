@@ -18,6 +18,8 @@ class Notes extends Migration
             $table->string('title');
             $table->text('content');
             $table->primary('id');
+            $table->uuid('notepad_id');
+            $table->foreign('notepad_id')->references('id')->on('notepad');
         });
     }
 

@@ -7,16 +7,11 @@ use Notepad\Domain\Model\Note\NoteId;
 use Notepad\Domain\Model\Note\Note;
 
 
-class CreateNoteHandler{
-
-    protected $repository;
-
-    public function __construct(NoteRepository $repository){
-        $this->repository = $repository;
-    }
+class CreateNoteHandler extends NoteService{
 
     public function execute(CreateNoteCommand $command) : string{
-        $note = Note::create(NoteId::Create(),$command->title,$command->content);
+        $notepad = $this->findNotepadOrFail($command->notepadId);
+        $note = Note::create(NoteId::Create(),$notepad->id(),$command->title,$command->content);
         $this->repository->add($note);
         return (string) $note->id();
     }
