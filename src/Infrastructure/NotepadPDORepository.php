@@ -22,6 +22,8 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
 
     const QUERY_OF_ID = "SELECT id, name, user_id FROM notepad where id = ? LIMIT 1";
 
+    const QUERY_OF_USER_ID = "SELECT id, name, user_id FROM notepad where user_id = ? ";
+
      public function __construct(\PDO $pdo)
      {
         $this->pdo = $pdo;
@@ -74,5 +76,17 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         $id = NotepadId::create($fetchedNotepad['id']);
         $userId = UserId::create($fetchedNotepad['user_id']);
         return Notepad::create($id,$userId, $fetchedNotepad['name']);
+    }
+
+    public function getAllFromUser(UserId $userId){
+        $array = [ 
+            $userId
+        ];
+        
+        $query = $this->pdo->prepare(self::QUERY_OF_USER_ID);
+        $query->execute($array);
+
+        return $query->fetchAll(\PDO::FETCH_FUNC,
+            array(Notepad::class, 'fetchedConvertion'));
     }
 }

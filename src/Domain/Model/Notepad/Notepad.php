@@ -34,7 +34,7 @@ class Notepad{
 
     public function fetchedConvertion($id, $userId, $name) { 
         $notepafdId = NotepadId::createFromString($id);
-        $userIde = UserdId::createFromString($userId);
+        $userIde = UserId::createFromString($userId);
         return self::create($notepafdId,$userIde,$name);
     }
 
