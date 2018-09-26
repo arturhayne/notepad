@@ -16,6 +16,6 @@ class ListNoteController extends Controller
 
     public function list(Request $request){
         $list = $this->handler->execute(); 
-        return response()->json(['list' => $list], Response::HTTP_ACCEPTED);
+        return response()->json(['list' => $this->handler->listNoteTransformer()], Response::HTTP_ACCEPTED);
     }
 }

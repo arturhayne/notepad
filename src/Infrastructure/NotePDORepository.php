@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class NotePDORepository extends PDORepository implements NoteRepository{
 
-    const QUERY_SELECT = "SELECT id, title, content FROM notes";
+    const QUERY_SELECT = "SELECT id, notepad_id, title, content FROM notes";
     const QUERY_INSERT = 'INSERT INTO notes (id, notepad_id, title, content)'
                             .' VALUES (?, ?, ?, ?)';
     const QUERY_DELETE = 'Delete from notes where id = ?';

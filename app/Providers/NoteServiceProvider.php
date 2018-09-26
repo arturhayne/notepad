@@ -14,6 +14,9 @@ use Notepad\Infrastructure\UserPDORepository;
 use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Infrastructure\NotepadPDORepository;
 
+use Notepad\Application\Service\Note\ArrayListNoteTransformer;
+use Notepad\Application\Service\Note\ListNoteTransformer;
+
 class NoteServiceProvider extends ServiceProvider
 {
     /**
@@ -55,6 +58,10 @@ class NoteServiceProvider extends ServiceProvider
                             env('DB_USERNAME'),
                             env('DB_USERNAME'));
             return new NotepadPDORepository($pdo);
+         });
+
+         $this->app->bind(ListNoteTransformer::class, function (Application $app) {
+            return new ArrayListNoteTransformer();
          });
     }
 }

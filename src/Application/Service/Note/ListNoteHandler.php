@@ -8,30 +8,20 @@ use Notepad\Domain\Model\Note\NoteRepository;
 class ListNoteHandler{
 
     protected $repository;
+    private $listNoteTransformer;
 
-    public function __construct(NoteRepository $repository){
+    public function __construct(NoteRepository $repository, ListNoteTransformer $listNoteTransformer){
         $this->repository = $repository;
+        $this->listNoteTransformer = $listNoteTransformer;
     }
 
     public function execute() {
-        
         $list = $this->repository->getAll();
-        if(count($list)>0){
-            return $this->transform($list);
-        }
-        return '';
+        $this->listNoteTransformer->write($list);
     }
 
-    private function transform($list){
-        foreach($list as $key=>$value){
-            $a[$key] = new ListedNoteDTO(
-                (string)$value->id(),
-                (string) $value->title(),
-                $value->content()
-        );
-        }
-
-        return $a;
+    public function listNoteTransformer(){
+        return $this->listNoteTransformer->read();
     }
 
 }
