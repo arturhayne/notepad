@@ -78,6 +78,13 @@ class UserPDORepository extends PDORepository implements UserRepository{
         $fetchedUser = $query->fetch();
         $id = UserId::create($fetchedUser['id']);
         $user = User::create($id, $fetchedUser['name'], $fetchedUser['email']);
+
+        $allNotepads = $this->getAllNotepad($userId);
+        
+        foreach($allNotepads as $notepad){
+            $user->createNotepad($notepad->name(),$notepad->id());
+        }
+
         return $user;
     }
 

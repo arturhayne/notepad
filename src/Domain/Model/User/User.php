@@ -48,7 +48,7 @@ class User{
     }
 
     public function createNotepad($name, $notepadId = null){
-
+        
         if(count($this->notepads)>=3){
             throw new \InvalidArgumentException('Max number notepads exceeded');
         }
