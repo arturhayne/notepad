@@ -8,11 +8,11 @@ class NotepadId{
     
     protected $value;
 
-    public function __construct($value = null){
-        $this->value = $value ? : Uuid::uuid4();
+    private function __construct($value = null){
+        $this->value = $value ?: Uuid::uuid4();
     }
 
-    public static function create(string $value = null) : self{
+    public static function create ($value = null) : self{
         return new self ($value);
     }
 

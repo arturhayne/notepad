@@ -11,20 +11,19 @@ use Notepad\Domain\Model\User\UserId;
 
 
 
-abstract class NotepadService{
+abstract class NotepadAggregateService{
 
-    protected $repository;
     protected $userRepository;
 
-    public function __construct(NotepadRepository $repository, UserRepository $userRepository){
-        $this->repository = $repository;
+    public function __construct( UserRepository $userRepository){
+        
         $this->userRepository = $userRepository;
     }
 
     protected function findUserOrFail($userId){
         $user = $this->userRepository->ofId(UserId::createFromString($userId));
 
-        if($user == null){
+        if($user === null){
             throw new \InvalidArgumentException('Notepad needs an user');
         }
 

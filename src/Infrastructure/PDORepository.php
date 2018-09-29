@@ -19,6 +19,8 @@ abstract class PDORepository{
         } catch (Exception $e) {
             $this->pdo->rollback();
         }
+
+        return $res;
     }
 
 }

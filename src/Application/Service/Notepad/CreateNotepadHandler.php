@@ -11,12 +11,13 @@ use Notepad\Domain\Model\User\UserId;
 
 
 
-class CreateNotepadHandler extends NotepadService{
+class CreateNotepadHandler extends NotepadAggregateService{
     
-    public function execute(CreateNotepadCommand $command) : string{
+    public function execute(CreateNotepadCommand $command) {
         $user = $this->findUserOrFail($command->userId);
-        $nPad = Notepad::create(NotepadId::create(),$user->id(),$command->name);
-        $this->repository->add($nPad);
-        return (string) $nPad->id();
+        $notead = $user->createNotepad($command->name);
+        $this->userRepository->addNotepad($user);
+        
+        return (string)$notead->id();
     }
 }
