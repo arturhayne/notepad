@@ -64,4 +64,12 @@ class User{
         return $npad;
     }
 
+    public function numberNotes(){
+        $qt = 0;
+        foreach($this->notepads as $notepad){
+            $qt += count($notepad->notes());
+        }
+        return $qt;
+    }
+
 }

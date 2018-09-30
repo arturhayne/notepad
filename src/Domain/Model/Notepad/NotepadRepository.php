@@ -10,6 +10,6 @@ interface NotepadRepository{
     public function remove(NotepadId $notepadId);
     public function getAll();
     public function ofId(NotepadId $notepadId);
-    public function getAllFromUser(UserId $userId);
+    public function getAllNotepads(UserId $userId);
     public function addNote(Notepad $notepad);
 }

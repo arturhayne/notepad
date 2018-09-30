@@ -8,4 +8,5 @@ interface UserRepository{
     public function getAll();
     public function ofId(UserId $userId);
     public function addNotepad(User $user);
+    public function getAllNotepads(UserId $userId);
 }

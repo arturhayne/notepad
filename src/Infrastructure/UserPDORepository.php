@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 
 use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
+use Notepad\Domain\Model\Note\Note;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,9 @@ class UserPDORepository extends PDORepository implements UserRepository{
 
     const QUERY_INSERT_NOTEPAD = 'INSERT INTO notepad (id, name, user_id)'
     .' VALUES (?, ?, ?)';
+
+    const QUERY_SELECT_NOTE = "SELECT id, title, content, notepad_id FROM notes where notepad_id = ?";
+
 
     const QUERY_SELECT_NOTEPAD = "SELECT id, name, user_id FROM notepad where user_id = ?";
 
@@ -79,10 +83,14 @@ class UserPDORepository extends PDORepository implements UserRepository{
         $id = UserId::create($fetchedUser['id']);
         $user = User::create($id, $fetchedUser['name'], $fetchedUser['email']);
 
-        $allNotepads = $this->getAllNotepad($userId);
+        $allNotepads = $this->getAllNotepads($userId);
         
         foreach($allNotepads as $notepad){
-            $user->createNotepad($notepad->name(),$notepad->id());
+            $addedNotepad = $user->createNotepad($notepad->name(),$notepad->id());
+            $allNotes = $this->getAllNotes($addedNotepad->id());
+            foreach($allNotes as $note){
+                $addedNotepad->createNote($note->title(),$note->content(),$note->id());
+            }
         }
 
         return $user;
@@ -107,7 +115,7 @@ class UserPDORepository extends PDORepository implements UserRepository{
         return $npad->id();
     }
 
-    public function getAllNotepad($userId){
+    public function getAllNotepads(UserId $userId){
 
         $array = [ 
             $userId
@@ -115,8 +123,30 @@ class UserPDORepository extends PDORepository implements UserRepository{
 
         $query = $this->pdo->prepare(self::QUERY_SELECT_NOTEPAD);
         $query->execute($array); 
-        return $query->fetchAll(\PDO::FETCH_FUNC,
+        $notepads =  $query->fetchAll(\PDO::FETCH_FUNC,
             array(Notepad::class, 'fetchedConvertion'));
+
+        foreach($notepads as $key => $notepad){
+            $allNotes = $this->getAllNotes($notepad->id());
+            foreach($allNotes as $note){
+                $notepad->createNote($note->title(),$note->content(),$note->id());
+            }
+            $notepads[$key] = $notepad;
+        }
+
+        return $notepads;
+    }
+
+    public function getAllNotes($notepadId){
+
+        $array = [ 
+            $notepadId
+        ];
+
+        $query = $this->pdo->prepare(self::QUERY_SELECT_NOTE);
+        $query->execute($array); 
+        return $query->fetchAll(\PDO::FETCH_FUNC,
+            array(Note::class, 'fetchedConvertion'));
     }
 
 }

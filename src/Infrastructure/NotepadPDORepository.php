@@ -94,7 +94,7 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         return $notepad;
     }
 
-    public function getAllFromUser(UserId $userId){
+    public function getAllNotepads(UserId $userId){
         $array = [ 
             $userId
         ];
@@ -102,8 +102,15 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         $query = $this->pdo->prepare(self::QUERY_OF_USER_ID);
         $query->execute($array);
 
-        return $query->fetchAll(\PDO::FETCH_FUNC,
+        $notepads = $query->fetchAll(\PDO::FETCH_FUNC,
             array(Notepad::class, 'fetchedConvertion'));
+        
+        foreach($notepads as $key => $notepad){
+
+            $notepads[$key] = $this->ofId($notepad->id());
+        }
+
+        return $notepads;
     }
 
     public function addNote(Notepad $notepad){
