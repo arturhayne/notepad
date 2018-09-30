@@ -11,4 +11,5 @@ interface NotepadRepository{
     public function getAll();
     public function ofId(NotepadId $notepadId);
     public function getAllFromUser(UserId $userId);
+    public function addNote(Notepad $notepad);
 }

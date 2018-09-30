@@ -14,6 +14,8 @@ class User{
     protected $email;
     protected $notepads;
 
+    const MAX_NOTEPADS = 3;
+
     private function __construct(UserId $id,string $name, Email $email)
     {
         $this->id = $id;
@@ -49,7 +51,7 @@ class User{
 
     public function createNotepad($name, $notepadId = null){
         
-        if(count($this->notepads)>=3){
+        if(count($this->notepads)>=self::MAX_NOTEPADS){
             throw new \InvalidArgumentException('Max number notepads exceeded');
         }
 
@@ -58,7 +60,7 @@ class User{
         }
 
         $npad = Notepad::create($notepadId,$this->id, $name);
-        $this->notepads[] = Notepad::create($notepadId,$this->id, $name);
+        $this->notepads[] = $npad;
         return $npad;
     }
 

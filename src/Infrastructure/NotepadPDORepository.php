@@ -6,6 +6,9 @@ use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Domain\Model\Notepad\NotepadRepository;
 
+use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Note\NoteId;
+
 use Notepad\Domain\Model\User\UserId;
 use Illuminate\Http\Response;
 
@@ -23,6 +26,11 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
     const QUERY_OF_ID = "SELECT id, name, user_id FROM notepad where id = ? LIMIT 1";
 
     const QUERY_OF_USER_ID = "SELECT id, name, user_id FROM notepad where user_id = ? ";
+
+    const QUERY_INSERT_NOTE = 'INSERT INTO notes (id, title, content, notepad_id)'
+    .' VALUES (?, ?, ?, ?)';
+
+    const QUERY_SELECT_NOTE = "SELECT id, title, content, notepad_id FROM notes where notepad_id = ?";
 
      public function __construct(\PDO $pdo)
      {
@@ -75,7 +83,15 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         
         $id = NotepadId::create($fetchedNotepad['id']);
         $userId = UserId::create($fetchedNotepad['user_id']);
-        return Notepad::create($id,$userId, $fetchedNotepad['name']);
+        $notepad = Notepad::create($id,$userId, $fetchedNotepad['name']);
+
+        $allNotes = $this->getAllNotes($notepadId);
+
+        foreach($allNotes as $note){
+            $notepad->createNote($note->title(),$note->content(),$note->id());
+        }
+
+        return $notepad;
     }
 
     public function getAllFromUser(UserId $userId){
@@ -88,5 +104,36 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
 
         return $query->fetchAll(\PDO::FETCH_FUNC,
             array(Notepad::class, 'fetchedConvertion'));
+    }
+
+    public function addNote(Notepad $notepad){
+        $note = $notepad->notes()->last(); 
+
+        $array = [ 
+            $note->id(),
+            $note->title(),
+            $note->content(),
+            $note->notepadId()
+        ];
+
+        try {
+            $this->genericExecute(self::QUERY_INSERT_NOTE,$array);
+        } catch (Exception $e) {
+            throw new UnableToCreatePostException($e);
+        }
+        
+        return $note->id();
+    }
+
+    public function getAllNotes($notepadId){
+
+        $array = [ 
+            $notepadId
+        ];
+
+        $query = $this->pdo->prepare(self::QUERY_SELECT_NOTE);
+        $query->execute($array); 
+        return $query->fetchAll(\PDO::FETCH_FUNC,
+            array(Note::class, 'fetchedConvertion'));
     }
 }

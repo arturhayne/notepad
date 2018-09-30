@@ -11,13 +11,11 @@ use Notepad\Domain\Model\Note\Note;
 
 
 
-abstract class NoteService{
+abstract class NoteAggregateService{
 
-    protected $repository;
     protected $notepadRepository;
 
-    public function __construct(NoteRepository $repository, NotepadRepository $notepadRepository){
-        $this->repository = $repository;
+    public function __construct(NotepadRepository $notepadRepository){
         $this->notepadRepository = $notepadRepository;
     }
 
