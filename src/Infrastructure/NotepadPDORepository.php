@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class NotepadPDORepository extends PDORepository implements NotepadRepository{
 
-    const QUERY_SELECT = "SELECT id, name FROM notepad";
+    const QUERY_SELECT = "SELECT id, user_id, name FROM notepad";
     const QUERY_INSERT = 'INSERT INTO notepad (id, name, user_id)'
                             .' VALUES (?, ?, ?)';
     const QUERY_DELETE = 'Delete from notepad where id = ?';
@@ -70,8 +70,16 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
     public function getAll(){
         $query = $this->pdo->prepare(self::QUERY_SELECT);
         $query->execute();
-        return $query->fetchAll(\PDO::FETCH_FUNC,
+        $allNotepads = $query->fetchAll(\PDO::FETCH_FUNC,
             array(Notepad::class, 'fetchedConvertion'));
+
+        foreach($allNotepads as $notepad){
+            $allNotes = $this->getAllNotes($notepad->id());
+            foreach($allNotes as $note){
+                $notepad->createNote($note->title(),$note->content(),$note->id());
+            }
+        }
+        return $allNotepads;
     }
 
     public function ofId(NotepadId $notepadId){

@@ -5,19 +5,11 @@ use Illuminate\Http\Response;
 use Notepad\Domain\Model\Note\NoteRepository;
 
 
-class ListNoteHandler{
-
-    protected $repository;
-    private $listNoteTransformer;
-
-    public function __construct(NoteRepository $repository, ListNoteTransformer $listNoteTransformer){
-        $this->repository = $repository;
-        $this->listNoteTransformer = $listNoteTransformer;
-    }
+class ListNoteHandler extends NoteAggregateService{
 
     public function execute() {
-        $list = $this->repository->getAll();
-        $this->listNoteTransformer->write($list);
+        $notepads = $this->notepadRepository->getAll();
+        $this->listNoteTransformer->write($notepads);
     }
 
     public function listNoteTransformer(){

@@ -14,9 +14,11 @@ use Notepad\Domain\Model\Note\Note;
 abstract class NoteAggregateService{
 
     protected $notepadRepository;
+    protected $listNoteTransformer;
 
-    public function __construct(NotepadRepository $notepadRepository){
+    public function __construct(NotepadRepository $notepadRepository, ListNoteTransformer $listNoteTransformer){
         $this->notepadRepository = $notepadRepository;
+        $this->listNoteTransformer = $listNoteTransformer;
     }
 
     protected function findNotepadOrFail($notepadId){

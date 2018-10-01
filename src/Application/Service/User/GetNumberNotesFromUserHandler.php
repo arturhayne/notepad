@@ -1,6 +1,6 @@
 <?php
 
-namespace Notepad\Application\Service;
+namespace Notepad\Application\Service\User;
 
 use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Domain\Model\Notepad\NotepadId;

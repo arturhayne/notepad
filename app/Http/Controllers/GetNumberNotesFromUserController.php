@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Notepad\Application\Service\GetNumberNotesFromUserHandler;
-use Notepad\Application\Service\GetNumberNotesFromUseCommand;
+use Notepad\Application\Service\User\GetNumberNotesFromUserHandler;
+use Notepad\Application\Service\User\GetNumberNotesFromUseCommand;
 
 class GetNumberNotesFromUserController extends Controller
 {
