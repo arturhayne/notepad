@@ -13,11 +13,12 @@ class ArrayListNoteTransformer implements ListNoteTransformer{
             $list = array_merge($notepad->notes()->toArray(), $list);
         }
 
-        foreach($list as $key=>$value){
+        foreach($list as $key=>$note){
             $this->array[$key] = new ListedNoteDTO(
-                (string)$value->id(),
-                (string) $value->title(),
-                $value->content()
+                (string)$note->id(),
+                (string) $note->title(),
+                $note->content(),
+                (string)$note->notepadId()
             );
         }
             

@@ -39,34 +39,6 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         $this->pdo = $pdo;
     }
 
-    public function add(Notepad $npad)
-    {   
-        $array = [ 
-            $npad->id(),
-            $npad->name(),
-            $npad->userId()
-        ];
-
-        try {
-            $this->genericExecute(self::QUERY_INSERT,$array);
-        } catch (Exception $e) {
-            throw new UnableToCreatePostException($e);
-        }
-    }
-
-    public function remove(NotepadId $nId){
-        
-        $array = [ 
-            $nId
-        ];
-
-        try {
-            $this->genericExecute(self::QUERY_DELETE,$array);
-        } catch (Exception $e) {
-            throw new UnableToCreatePostException($e);
-        }
-    }
-
     public function getAll(){
         $query = $this->pdo->prepare(self::QUERY_SELECT);
         $query->execute();
@@ -93,6 +65,7 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         
         $id = NotepadId::create($fetchedNotepad['id']);
         $userId = UserId::create($fetchedNotepad['user_id']);
+        
         $notepad = Notepad::create($id,$userId, $fetchedNotepad['name']);
 
         $allNotes = $this->getAllNotes($notepadId);
@@ -102,25 +75,6 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         }
 
         return $notepad;
-    }
-
-    public function getAllNotepads(UserId $userId){
-        $array = [ 
-            $userId
-        ];
-        
-        $query = $this->pdo->prepare(self::QUERY_OF_USER_ID);
-        $query->execute($array);
-
-        $notepads = $query->fetchAll(\PDO::FETCH_FUNC,
-            array(Notepad::class, 'fetchedConvertion'));
-        
-        foreach($notepads as $key => $notepad){
-
-            $notepads[$key] = $this->ofId($notepad->id());
-        }
-
-        return $notepads;
     }
 
     public function addNote(Notepad $notepad){
@@ -142,7 +96,15 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         return $note->id();
     }
 
-    public function getAllNotes($notepadId){
+    public function removeNote(Notepad $notepad){
+        $notes = $notepad->notes();
+        $notesFromDb = $this->getAllNotes($notepad->id());
+        $arrayNote = array_diff_key($notesFromDb,$notes->toArray());
+        $deleteThisNote = reset($arrayNote);
+        $this->deleteNote($deleteThisNote->id());
+    }
+
+    private function getAllNotes($notepadId){
 
         $array = [ 
             $notepadId
@@ -152,14 +114,6 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         $query->execute($array); 
         return $query->fetchAll(\PDO::FETCH_FUNC,
             array(Note::class, 'fetchedConvertion'));
-    }
-
-    public function removeNote(Notepad $notepad){
-        $notes = $notepad->notes();
-        $notesFromDb = $this->getAllNotes($notepad->id());
-        $arrayNote = array_diff_key($notesFromDb,$notes->toArray());
-        $deleteThisNote = reset($arrayNote);
-        $this->deleteNote($deleteThisNote->id());
     }
 
     private function deleteNote(NoteId $noteId){

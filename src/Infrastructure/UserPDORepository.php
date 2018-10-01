@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserPDORepository extends PDORepository implements UserRepository{
 
-    const QUERY_SELECT = "SELECT id, name FROM users";
     const QUERY_INSERT = 'INSERT INTO users (id, name, email)'
                             .' VALUES (?, ?, ?)';
-    const QUERY_DELETE = 'Delete from users where id = ?';
 
     const QUERY_OF_ID = "SELECT id, name, email FROM users where id = ? LIMIT 1";
 
@@ -28,7 +26,6 @@ class UserPDORepository extends PDORepository implements UserRepository{
     .' VALUES (?, ?, ?)';
 
     const QUERY_SELECT_NOTE = "SELECT id, title, content, notepad_id FROM notes where notepad_id = ?";
-
 
     const QUERY_SELECT_NOTEPAD = "SELECT id, name, user_id FROM notepad where user_id = ?";
 
@@ -50,26 +47,6 @@ class UserPDORepository extends PDORepository implements UserRepository{
         } catch (Exception $e) {
             throw new UnableToCreatePostException($e);
         }
-    }
-
-    public function remove(UserId $userId){
-        
-        $array = [ 
-            $userId
-        ];
-
-        try {
-            $this->genericExecute(self::QUERY_DELETE,$array);
-        } catch (Exception $e) {
-            throw new UnableToCreatePostException($e);
-        }
-    }
-
-    public function getAll(){
-        $query = $this->pdo->prepare(self::QUERY_SELECT);
-        $query->execute();
-        return $query->fetchAll(\PDO::FETCH_FUNC,
-            array(User::class, 'fetchedConvertion'));
     }
 
     public function ofId(UserId $userId){
@@ -115,7 +92,7 @@ class UserPDORepository extends PDORepository implements UserRepository{
         return $npad->id();
     }
 
-    public function getAllNotepads(UserId $userId){
+    private function getAllNotepads(UserId $userId){
 
         $array = [ 
             $userId
@@ -137,7 +114,7 @@ class UserPDORepository extends PDORepository implements UserRepository{
         return $notepads;
     }
 
-    public function getAllNotes($notepadId){
+    private function getAllNotes($notepadId){
 
         $array = [ 
             $notepadId

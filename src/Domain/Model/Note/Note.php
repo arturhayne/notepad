@@ -38,7 +38,7 @@ class Note{
         return $this->notepadId;
     }
 
-    public function fetchedConvertion($id, $notepadId, $title, $content) { 
+    public function fetchedConvertion($id, $title, $content, $notepadId) { 
         $noteId = NoteId::createFromString($id);
         return self::create($noteId,NotepadId::createFromString($notepadId),$title,$content);
     }

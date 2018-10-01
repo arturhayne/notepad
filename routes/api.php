@@ -19,8 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('notes/create','CreateNoteController@store');
 Route::delete('notes/delete/{noteId}/{notepadId}','DeleteNoteController@destroy');
-
 Route::get('notes/list','ListNoteController@list');
+
 Route::get('user/qtNotes/{userId}','GetNumberNotesFromUserController@qtdFromUser');
 
 Route::post('users/create','CreateUserController@store');
