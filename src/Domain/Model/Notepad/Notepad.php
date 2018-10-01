@@ -64,4 +64,14 @@ class Notepad{
         return $note;
     }
 
+    public function removeNote(NoteId $noteId){
+        foreach($this->notes as $k => $note){
+            if($noteId->equals($note->id())){
+                unset($this->notes[$k]);
+                break;
+            }
+        }
+        throw new \InvalidArgumentException('Note not found!');
+    }
+
 }

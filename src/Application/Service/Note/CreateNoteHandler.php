@@ -11,9 +11,7 @@ class CreateNoteHandler extends NoteAggregateService{
 
     public function execute(CreateNoteCommand $command) : string{
         $notepad = $this->findNotepadOrFail($command->notepadId);
-
         $note = $notepad->createNote($command->title,$command->content);
-
         $this->notepadRepository->addNote($notepad);
         return (string) $note->id();
     }

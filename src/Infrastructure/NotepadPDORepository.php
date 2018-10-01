@@ -32,7 +32,9 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
 
     const QUERY_SELECT_NOTE = "SELECT id, title, content, notepad_id FROM notes where notepad_id = ?";
 
-     public function __construct(\PDO $pdo)
+    const QUERY_DELETE_NOTE = 'Delete from notes where id = ?';
+
+    public function __construct(\PDO $pdo)
      {
         $this->pdo = $pdo;
     }
@@ -142,5 +144,26 @@ class NotepadPDORepository extends PDORepository implements NotepadRepository{
         $query->execute($array); 
         return $query->fetchAll(\PDO::FETCH_FUNC,
             array(Note::class, 'fetchedConvertion'));
+    }
+
+    public function removeNote(Notepad $notepad){
+        $notes = $notepad->notes();
+        $notesFromDb = $this->getAllNotes($notepad->id());
+        $arrayNote = array_diff_key($notesFromDb,$notes->toArray());
+        $deleteThisNote = reset($arrayNote);
+        $this->deleteNote($deleteThisNote->id());
+    }
+
+    private function deleteNote(NoteId $noteId){
+        
+        $array = [ 
+            $noteId
+        ];
+
+        try {
+            $this->genericExecute(self::QUERY_DELETE_NOTE,$array);
+        } catch (Exception $e) {
+            throw new UnableToCreatePostException($e);
+        }
     }
 }

@@ -15,8 +15,8 @@ class DeleteNoteController extends Controller
         $this->handler = $handler;
     }
 
-    public function destroy($id){
-        $comand = new DeleteNoteCommand($id);
+    public function destroy($id,$notepadId){
+        $comand = new DeleteNoteCommand($id,$notepadId);
         $this->handler->execute($comand); 
         return response()->json(['result' => 'OK'], Response::HTTP_ACCEPTED);
     }
