@@ -5,6 +5,8 @@ namespace Notepad\Domain\Model\User;
 use Ramsey\Uuid\Uuid;
 
 class UserId{
+    
+    /** @var Uuid */
     protected $value;
 
     private function __construct($value = null){

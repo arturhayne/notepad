@@ -9,9 +9,16 @@ use Notepad\Domain\Model\Notepad\NotepadId;
 
 class User{
     
+    /** @var Uuid */
     protected $id;
+
+    /** @var string */
     protected $name;
+
+    /** @var Email */
     protected $email;
+
+    /** @var ArrayCollection */
     protected $notepads;
 
     const MAX_NOTEPADS = 3;
@@ -28,18 +35,30 @@ class User{
         return new static($id,$name,Email::create($email));
     }
 
+    /**
+     * @return UserId
+     */
     public function id(){
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function name(){
         return $this->name;
     }
 
+    /**
+     * @return Email
+     */
     public function email(){
         return $this->email;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function notepads(){
         return $this->notepads;
     }
@@ -69,6 +88,13 @@ class User{
             $qt += count($notepad->notes());
         }
         return $qt;
+    }
+
+    public function whitelist()
+    {
+    	return [
+    		'name'
+    	];
     }
 
 }
