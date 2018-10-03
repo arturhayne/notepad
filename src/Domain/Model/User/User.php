@@ -77,7 +77,6 @@ class User{
         }
         
         $userId = UserId::createFromString($this->id);
-        print_r($userId);
         $npad = Notepad::create(NotepadId::create(), $userId, $name);
         $this->notepads[] = $npad;
         return $npad;
