@@ -20,10 +20,10 @@ class UserDoctrineRepository extends EntityRepository implements UserRepository
     }
 
     public function ofId(UserId $userId){
-
+        return $this->_em->find(User::class, $userId);
     }
 
     public function addNotepad(User $user){
-
+        
     }
 }

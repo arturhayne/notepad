@@ -17,6 +17,26 @@ return [
             'email' => [
                 'type' => 'string'
             ],
+            'notepads' => [
+                'type' => 'ArrayCollection'
+            ],
         ]
-    ]
+    ],
+    'Notepad\Domain\Model\Notepad\Notepad' => [
+            'type'   => 'entity',
+            'table'  => 'notepad',
+            'id'     => [
+                'id' => [
+                    'type'     => 'uuid'
+                ],
+            ],
+            'fields' => [
+                'name' => [
+                    'type' => 'string'
+                ],
+                'userId' => [
+                    'type' => 'uuid'
+                ]
+            ]
+        ]
 ];

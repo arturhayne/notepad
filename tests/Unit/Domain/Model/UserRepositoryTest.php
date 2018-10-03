@@ -29,5 +29,18 @@ class UserRepositoryTest extends TestCase
         $this->assertDatabaseHas('users',['id'=>$user->id()]);
     }
 
+    public function testFind(){
+        $id = UserId::create();
+        $user = User::create($id,'Jhony','teste@gmail.com');
+        $this->repository->add($user);
+        $result = $this->repository->ofId($id);
+        $this->assertEquals($result,$user);
+    }
+
+    public function testFindAll(){
+        $users = $this->repository->findAll();
+        $this->assertContainsOnlyInstancesOf(User::class, $users);
+    }
+
 
 }

@@ -18,7 +18,9 @@ class User{
     /** @var Email */
     protected $email;
 
-    /** @var ArrayCollection */
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
     protected $notepads;
 
     const MAX_NOTEPADS = 3;
