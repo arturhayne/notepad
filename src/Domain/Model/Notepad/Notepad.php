@@ -13,6 +13,7 @@ class Notepad{
     protected $userId;
     protected $name;
     protected $notes;
+    protected $user;
 
     const MAX_NOTES = 5;
 
@@ -41,6 +42,10 @@ class Notepad{
 
     public function notes(){
         return $this->notes;
+    }
+
+    public function user(){
+        return $this->user;
     }
 
     public function fetchedConvertion($id, $userId, $name) { 

@@ -2,12 +2,42 @@
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 
 return [
+    'Notepad\Domain\Model\Notepad\Notepad' => [
+        'type'   => 'entity',
+        'table'  => 'notepad',
+        'id'     => [
+            'id' => [
+                'type'     => 'NotepadId',
+                'column' => 'id'
+            ],
+        ],
+        'fields' => [
+            'name' => [
+                'type' => 'string'
+            ],
+            'userId' => [
+                'type' => 'uuid'
+            ]
+        ],
+        'manyToOne' => [
+            'user' => [
+                'targetEntity' =>  'Notepad\Domain\Model\User\User',
+                'inversedBy' => 'notepads',
+                'joinColumn' => [
+                    'name' => 'user_id',
+                    'referencedColumnName'=> 'id'
+                ]
+
+            ]
+        ]
+    ],
     'Notepad\Domain\Model\User\User' => [
         'type'   => 'entity',
         'table'  => 'users',
         'id'     => [
             'id' => [
-                'type'     => 'uuid'
+                'type'     => 'UserId',
+                'column' => 'id'
             ],
         ],
         'fields' => [
@@ -16,27 +46,15 @@ return [
             ],
             'email' => [
                 'type' => 'string'
-            ],
-            'notepads' => [
-                'type' => 'ArrayCollection'
-            ],
-        ]
-    ],
-    'Notepad\Domain\Model\Notepad\Notepad' => [
-            'type'   => 'entity',
-            'table'  => 'notepad',
-            'id'     => [
-                'id' => [
-                    'type'     => 'uuid'
-                ],
-            ],
-            'fields' => [
-                'name' => [
-                    'type' => 'string'
-                ],
-                'userId' => [
-                    'type' => 'uuid'
+            ]
+        ],
+        'oneToMany' => [
+                'notepads' => [
+                    'orphanRemoval' => 'true',
+                    'cascade' => ["all"],
+                    'targetEntity' =>  'Notepad\Domain\Model\Notepad\Notepad',
+                    'mappedBy'=> 'user'
                 ]
             ]
         ]
-];
+    ];

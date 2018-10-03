@@ -24,6 +24,8 @@ class UserDoctrineRepository extends EntityRepository implements UserRepository
     }
 
     public function addNotepad(User $user){
-        
+        $this->_em->persist($user);
+		$this->_em->flush($user);
+		return $user;
     }
 }
