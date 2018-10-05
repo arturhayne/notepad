@@ -23,14 +23,15 @@ return [
     'managers'                   => [
         'default' => [
             'dev'           => env('APP_DEBUG', false),
-            'meta'          => env('DOCTRINE_METADATA',  'config'),
+            'meta'          => env('DOCTRINE_METADATA',  'xml'),
             'connection'    => env('DB_CONNECTION', 'pgsql'),
             'mapping_file' => 'mappings',
             'namespaces'    => [
                 'Notepad\Domain\Model'
             ],
             'paths'         => [
-                base_path('Notepad')
+                //config_path('xml')
+                base_path('src/Infrastructure/Persistence/Doctrine/Mapping')
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [
@@ -113,6 +114,10 @@ return [
     'custom_types'               => [
         'json' => LaravelDoctrine\ORM\Types\Json::class,
         'uuid' => Ramsey\Uuid\Doctrine\UuidType::class,
+        'Email' => \Notepad\Infrastructure\Persistence\Doctrine\Types\DoctrineEmail::class,
+        'NoteId' => \Notepad\Infrastructure\Persistence\Doctrine\Types\DoctrineNoteId::class,
+        'UserId' => \Notepad\Infrastructure\Persistence\Doctrine\Types\DoctrineUserId::class,
+        'NotepadId' => \Notepad\Infrastructure\Persistence\Doctrine\Types\DoctrineNotepadId::class,
     ],
     /*
     |--------------------------------------------------------------------------

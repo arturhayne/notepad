@@ -13,7 +13,6 @@ class Notepad{
     protected $userId;
     protected $name;
     protected $notes;
-    protected $user;
 
     const MAX_NOTES = 5;
 
@@ -44,16 +43,6 @@ class Notepad{
         return $this->notes;
     }
 
-    public function user(){
-        return $this->user;
-    }
-
-    public function fetchedConvertion($id, $userId, $name) { 
-        $notepafdId = NotepadId::createFromString($id);
-        $userIde = UserId::createFromString($userId);
-        return self::create($notepafdId,$userIde,$name);
-    }
-
     public function createNote($title, $content, $noteId = null){
         
         if(count($this->notes)>=self::MAX_NOTES){
@@ -77,6 +66,14 @@ class Notepad{
             }
         }
         throw new \InvalidArgumentException('Note not found!');
+    }
+
+
+    public function numberNotes($qt = 0){
+        //foreach($this->notepads as $notepad){
+         //   $qt += count($this->notes());
+        //}
+        return $qt;
     }
 
 }
