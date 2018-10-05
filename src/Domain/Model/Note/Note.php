@@ -3,12 +3,14 @@
 namespace Notepad\Domain\Model\Note;
 
 use Notepad\Domain\Model\Notepad\NotepadId;
+use Notepad\Domain\Model\Notepad\Notepad;
 
 class Note{
     protected $id;
     protected $title;
     protected $content;
     protected $notepadId;
+    protected $notepad;
 
     private function __construct(NoteId $id, NotepadId $notepadId,Title $title,string $content)
     {
@@ -16,6 +18,7 @@ class Note{
         $this->title = $title;
         $this->content = $content;
         $this->notepadId = $notepadId;
+
     }
 
     public static function create(NoteId $id, NotepadId $notepadId, string $title,string $content){
@@ -38,9 +41,12 @@ class Note{
         return $this->notepadId;
     }
 
-    public function fetchedConvertion($id, $title, $content, $notepadId) { 
-        $noteId = NoteId::createFromString($id);
-        return self::create($noteId,NotepadId::createFromString($notepadId),$title,$content);
+    public function notepad(){
+        return $this->notepad;
+    }
+
+    public function setNotepad(Notepad $notepad){
+        $this->notepad = $notepad;
     }
     
 }

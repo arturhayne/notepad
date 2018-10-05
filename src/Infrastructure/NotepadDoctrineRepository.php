@@ -23,11 +23,6 @@ class NotepadDoctrineRepository extends EntityRepository implements NotepadRepos
         return $this->_em->find(Notepad::class, $notepadId);
     }
 
-    public function getAll(){
-        return;
-    }
-
-    public function addNote(Notepad $notepad){}
     public function removeNote(Notepad $notepad){}
 
 

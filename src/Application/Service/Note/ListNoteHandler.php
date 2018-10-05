@@ -8,7 +8,7 @@ use Notepad\Domain\Model\Note\NoteRepository;
 class ListNoteHandler extends NoteAggregateService{
 
     public function execute() {
-        $notepads = $this->notepadRepository->getAll();
+        $notepads = $this->notepadRepository->findAll();
         $this->listNoteTransformer->write($notepads);
     }
 

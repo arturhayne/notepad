@@ -10,6 +10,13 @@
         <id name="id" type="NotepadId" column="id" />
         <field name="userId" column="user_id" type="UserId" />
         <field name="name" column="name" type="string" />
+        <one-to-many field="notes" 
+            target-entity="Notepad\Domain\Model\Note\Note" 
+            mapped-by="notepad" >
+            <cascade>
+                 <cascade-persist/>
+            </cascade>
+            </one-to-many>
     </entity>
 
 </doctrine-mapping>

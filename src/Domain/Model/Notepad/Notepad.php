@@ -54,6 +54,8 @@ class Notepad{
         }
 
         $note = Note::create($noteId, $this->id, $title, $content);
+
+        $note->setNotepad($this);
         $this->notes[] = $note;
         return $note;
     }
