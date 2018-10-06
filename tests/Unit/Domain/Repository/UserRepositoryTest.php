@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Model;
+namespace Tests\Unit\Domain\Repository;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;

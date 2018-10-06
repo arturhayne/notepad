@@ -46,13 +46,6 @@ class NoteServiceProvider extends ServiceProvider
         /** @var EntityManager $em */
         $em = $this->app['em'];
 
-        $this->app->bind(NoteRepository::class, function (Application $app) {
-            $pdo = new \PDO(env('STRING_CON'),
-                            env('DB_USERNAME'),
-                            env('DB_USERNAME'));
-            return new NotePDORepository($pdo);
-         });
-
          $this->app->bind(UserRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new UserDoctrineRepository(
