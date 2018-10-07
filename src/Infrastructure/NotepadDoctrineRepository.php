@@ -7,6 +7,8 @@ use Notepad\Domain\Model\Notepad\Notepad;
 
 use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Domain\Model\Notepad\NotepadId;
+use Notepad\Domain\Model\Note\Note;
+
 
 
 class NotepadDoctrineRepository extends EntityRepository implements NotepadRepository 
@@ -23,7 +25,10 @@ class NotepadDoctrineRepository extends EntityRepository implements NotepadRepos
         return $this->_em->find(Notepad::class, $notepadId);
     }
 
-    public function removeNote(Notepad $notepad){}
-
+    public function removeNote(Note $note){
+        $this->_em->remove($note);
+        $this->_em->flush();
+        return $note;
+    }
 
 }

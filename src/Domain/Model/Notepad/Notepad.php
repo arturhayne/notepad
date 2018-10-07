@@ -6,6 +6,7 @@ use Notepad\Domain\Model\User\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Notepad\Domain\Model\Note\NoteId;
 use Notepad\Domain\Model\Note\Note;
+use Doctrine\Common\Collections\Criteria;
 
 class Notepad{
 
@@ -43,17 +44,13 @@ class Notepad{
         return $this->notes;
     }
 
-    public function createNote($title, $content, $noteId = null){
+    public function createNote($title, $content){
         
         if(count($this->notes)>=self::MAX_NOTES){
             throw new \InvalidArgumentException('Max number notes exceeded');
         }
 
-        if($noteId===null){
-            $noteId =  NoteId::create();
-        }
-
-        $note = Note::create($noteId, $this->id, $title, $content);
+        $note = Note::create(NoteId::create(), $this->id, $title, $content);
 
         $note->setNotepad($this);
         $this->notes[] = $note;
@@ -61,13 +58,25 @@ class Notepad{
     }
 
     public function removeNote(NoteId $noteId){
-        foreach($this->notes as $k => $note){
-            if($noteId->equals($note->id())){
-                unset($this->notes[$k]);
-                break;
-            }
-        }
-        throw new \InvalidArgumentException('Note not found!');
+        $note = $this->findNote($noteId);
+
+        if(!$note){
+            throw new \InvalidArgumentException('Note not found!');
+        } 
+
+        //Is this necessary?
+        $this->notes->removeElement($note);
+        $note->setNotepad(null);
+
+        return $note;
+    }
+
+    private function findNote(NoteId $noteId){
+        return $this->notes->matching(
+            Criteria::create()->where(
+                Criteria::expr()->eq('id',$noteId)
+                )
+            )->first();
     }
 
 

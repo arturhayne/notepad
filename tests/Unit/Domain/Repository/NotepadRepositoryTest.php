@@ -6,6 +6,12 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Notepad\Domain\Model\Notepad\NotepadRepository;
+use Notepad\Domain\Model\User\UserRepository;
+use Notepad\Domain\Model\User\User;
+use Notepad\Domain\Model\User\UserId;
+use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Note\NoteId;
+
 use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
 use App;
@@ -14,33 +20,71 @@ use App;
 class NotepadRepositoryTest extends TestCase
 {
     protected $repository;
-    protected $user;
+    protected $userId;
 
     public function setUp(){
         parent::setUp();
         $this->repository = App::make(NotepadRepository::class);
+        $this->createUser();
     }
 
-
-    public function testCreateAndSave()
-    {
-        $notepad = Notepad::create(NotepadId::create(),
-            UserId::createFromString($command->userId),$command->name);
-        $user = Notepad::create(NotepadId::create(),'Jhony','teste@gmail.com');
-        $this->repository->add($user);
+    private function createUser(){
+        $userRepository = App::make(UserRepository::class);
+        $this->userId = UserId::create();
+        $user = User::create($this->userId,'Jhony','teste@gmail.com');
+        $userRepository->add($user);
         $this->assertDatabaseHas('users',['id'=>$user->id()]);
     }
 
-    public function testFind(){
-        $id = UserId::create();
-        $user = User::create($id,'Jhony','teste@gmail.com');
-        $this->repository->add($user);
-        $result = $this->repository->ofId($id);
-        $this->assertEquals($result,$user);
+    private function createNotepad($name = 'test'){
+        $notepad = Notepad::create(NotepadId::create(),
+            $this->userId,
+            $name);
+        return $notepad;
+    }
+
+    private function createSaveNote(Notepad $notepad,
+                                    $title = 'title',
+                                    $content = 'content'){
+        $note = $notepad->createNote($title,$content);
+        $this->repository->add($notepad);
+        return $note;
+    }
+
+    public function testCreateAndSave()
+    {
+        $notepad = $this->createNotepad();
+        $this->repository->add($notepad);
+        $this->assertDatabaseHas('notepad',['id'=>$notepad->id()]);
+    }
+
+     public function testFind(){
+        $notepad = $this->createNotepad();
+        $this->repository->add($notepad);
+        $result = $this->repository->ofId($notepad->id());
+        $this->assertEquals($result,$notepad);
     }
 
     public function testFindAll(){
-        $users = $this->repository->findAll();
-        $this->assertContainsOnlyInstancesOf(User::class, $users);
+        $notepad = $this->repository->findAll();
+        $this->assertContainsOnlyInstancesOf(Notepad::class, $notepad);
+    } 
+
+    public function testCreateSaveNote(){
+        $notepad = $this->createNotepad();
+        $note = $this->createSaveNote($notepad);
+        $this->assertDatabaseHas('notes',['id'=>$note->id()]);
+    }
+
+    public function testDeleteNote(){
+        $notepad = $this->createNotepad();
+        $note = $this->createSaveNote($notepad);
+        $notepadFromDB = $this->repository->ofId($notepad->id());
+
+        $numNotes = count($notepadFromDB->notes());
+        $this->repository->removeNote($note);
+        $numNotesAfterRemoveNote = count($notepadFromDB->notes());
+
+        $this->assertEquals($numNotes-1,$numNotesAfterRemoveNote);
     }
 }

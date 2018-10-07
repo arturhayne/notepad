@@ -9,7 +9,7 @@ class DeleteNoteHandler extends NoteAggregateService{
 
     public function execute(DeleteNoteCommand $command){ 
         $notepad = $this->findNotepadOrFail($command->notepadId);
-        $notepad->removeNote(NoteId::createFromString($command->noteId));
-        $this->notepadRepository->removeNote($notepad);
+        $note = $notepad->removeNote(NoteId::createFromString($command->noteId));
+        $this->notepadRepository->removeNote($note);
     }
 }

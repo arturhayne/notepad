@@ -45,7 +45,7 @@ class Note{
         return $this->notepad;
     }
 
-    public function setNotepad(Notepad $notepad){
+    public function setNotepad(?Notepad $notepad){
         $this->notepad = $notepad;
     }
     
