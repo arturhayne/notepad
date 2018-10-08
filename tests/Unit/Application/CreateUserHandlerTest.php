@@ -29,7 +29,8 @@ class CreateUserHandlerTest extends TestCase
     public function testeNotAllowInvalidEmail(){
         $this->expectException(\InvalidArgumentException::class);
         $this->command = new CreateUserCommand('teste','');
-        $this->executeCreateUser();
+        $user = $this->executeCreateUser();
+        $this->assertInstanceOf(User::class, $user);
     }
 
     public function testEmptyName(){

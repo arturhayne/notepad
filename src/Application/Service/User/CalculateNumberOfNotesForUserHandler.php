@@ -13,7 +13,7 @@ use Notepad\Domain\Model\User\UserId;
 use Notepad\Domain\Model\User\UserRepository;
 
 
-class GetNumberNotesFromUserHandler{
+class CalculateNumberOfNotesForUserHandler{
 
     protected $repository;
 
@@ -21,10 +21,8 @@ class GetNumberNotesFromUserHandler{
         $this->repository = $repository;
     }
 
-    public function execute(GetNumberNotesFromUseCommand $command){
+    public function execute(CalculateNumberOfNotesForUserCommand $command){
         $user = $this->repository->ofId(UserId::createFromString($command->userId));
         return $user->numberNotes();
     }
-
-
 }

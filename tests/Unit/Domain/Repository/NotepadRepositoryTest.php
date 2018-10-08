@@ -66,8 +66,8 @@ class NotepadRepositoryTest extends TestCase
     }
 
     public function testFindAll(){
-        $notepad = $this->repository->findAll();
-        $this->assertContainsOnlyInstancesOf(Notepad::class, $notepad);
+        $notepads = $this->repository->findAll();
+        $this->assertContainsOnlyInstancesOf(Notepad::class, $notepads);
     } 
 
     public function testCreateSaveNote(){

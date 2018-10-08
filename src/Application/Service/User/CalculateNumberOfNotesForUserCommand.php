@@ -2,7 +2,7 @@
 
 namespace Notepad\Application\Service\User;
 
-class GetNumberNotesFromUseCommand{
+class CalculateNumberOfNotesForUserCommand{
     public $userId;
 
     public function __construct($userId){
