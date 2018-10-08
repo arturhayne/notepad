@@ -20,6 +20,10 @@ class CreateNotepadHandlerTest extends TestCase
     {
         parent::setUp();
         $this->createNotepadHandler = App::make(CreateNotepadHandler::class);
+        $this->prophet = new \Prophecy\Prophet;
+        $repository  = $this->prophet->prophesize(NotepadRepository::class);
+        $notepad   = new Notepad($repository->reveal());
+        $repository->add($notepad)->willReturn($notepad);
     }
 
     private function executeCreateNotepad(){
