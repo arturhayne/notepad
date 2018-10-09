@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Notepad\Application\Service\Notepad\CreateNotepadHandler;
 use Notepad\Application\Service\Notepad\CreateNotepadCommand;
-use Notepad\Domain\Model\User\UserId;
 use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Infrastructure\NotepadDoctrineRepository;
