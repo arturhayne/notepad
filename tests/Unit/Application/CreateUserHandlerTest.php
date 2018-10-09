@@ -7,8 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Notepad\Application\Service\User\CreateUserHandler;
 use Notepad\Application\Service\User\CreateUserCommand;
+use Notepad\Infrastructure\UserDoctrineRepository;
 
-use App;
+
 
 class CreateUserHandlerTest extends TestCase
 {
@@ -18,8 +19,10 @@ class CreateUserHandlerTest extends TestCase
 
     public function setUp()
     {
-        parent::setUp();
-        $this->createUserHandler = App::make(CreateUserHandler::class);
+        $this->prophet = new \Prophecy\Prophet;
+        $repository  = $this->prophet->prophesize(UserDoctrineRepository::class);
+        $stub = $repository->reveal();
+        $this->createUserHandler = new CreateUserHandler($stub);
     }
 
     private function executeCreateUser(){

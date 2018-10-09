@@ -28,4 +28,9 @@ class UserDoctrineRepository extends EntityRepository implements UserRepository
 		$this->_em->flush($user);
 		return $user;
     }
+
+    public function remove(User $user){
+        $this->_em->remove($user);
+		$this->_em->flush();
+    }
 }

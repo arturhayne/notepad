@@ -31,4 +31,10 @@ class NotepadDoctrineRepository extends EntityRepository implements NotepadRepos
         return $note;
     }
 
+    public function remove(Notepad $notepad){
+        $this->_em->remove($notepad);
+        $this->_em->flush();
+        return $notepad;
+    }
+
 }

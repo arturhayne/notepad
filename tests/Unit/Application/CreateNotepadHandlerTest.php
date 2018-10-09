@@ -8,8 +8,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Notepad\Application\Service\Notepad\CreateNotepadHandler;
 use Notepad\Application\Service\Notepad\CreateNotepadCommand;
 use Notepad\Domain\Model\User\UserId;
+use Notepad\Domain\Model\Notepad\Notepad;
+use Notepad\Domain\Model\Notepad\NotepadId;
+use Notepad\Infrastructure\NotepadDoctrineRepository;
 
-use App;
 
 class CreateNotepadHandlerTest extends TestCase
 {
@@ -17,13 +19,11 @@ class CreateNotepadHandlerTest extends TestCase
     private $command;
 
     protected function setUp()
-    {
-        parent::setUp();
-        $this->createNotepadHandler = App::make(CreateNotepadHandler::class);
+    {        
         $this->prophet = new \Prophecy\Prophet;
-        $repository  = $this->prophet->prophesize(NotepadRepository::class);
-        $notepad   = new Notepad($repository->reveal());
-        $repository->add($notepad)->willReturn($notepad);
+        $repository  = $this->prophet->prophesize(NotepadDoctrineRepository::class);
+        $stub = $repository->reveal();
+        $this->createNotepadHandler = new CreateNotepadHandler($stub);
     }
 
     private function executeCreateNotepad(){
@@ -32,19 +32,19 @@ class CreateNotepadHandlerTest extends TestCase
 
     public function testCreateNotepad(){
         $this->command = new CreateNotepadCommand('name',UserId::create());
-        $notepad = $this->executeCreateNotepad();
-        $this->assertInstanceOf(Notepad::class, $notepad);
+        $notepadId = $this->executeCreateNotepad();
+        $this->assertNotNull($notepadId);
     }
 
     public function testEmptyName(){
         $this->command = new CreateNotepadCommand('',UserId::create());
-        $this->executeCreateNotepad();
-        $this->assertTrue(true);
+        $notepadId = $this->executeCreateNotepad();
+        $this->assertNotNull($notepadId);
     }
 
     public function testReturnedFormat(){
-        $this->command = new CreateNotepadCommand('bli','artur@gamil.com');
-        $userId = $this->executeCreateNotepad();
-        $this->assertInternalType('string',$userId);
+        $this->command = new CreateNotepadCommand('bli',UserId::create());
+        $notepadId = $this->executeCreateNotepad();
+        $this->assertInternalType('string',$notepadId);
     }
 }

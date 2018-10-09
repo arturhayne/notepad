@@ -7,4 +7,5 @@ interface UserRepository{
     public function ofId(UserId $userId);
     public function addNotepad(User $user);
     public function findAll();
+    public function remove(User $user);
 }
