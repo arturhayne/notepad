@@ -31,6 +31,7 @@ class CreateNoteHandlerTest extends TestCase
         $this->createNoteHandler = $this->prophesize(CreateNoteHandler::class);
         $this->createNoteHandler->findNotepadOrFail($this->notepadId)->willReturn($notepad);
     }
+    
     private function executeCreateNote(){
         return $this->createNoteHandler->execute($this->command);
     }

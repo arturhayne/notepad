@@ -17,8 +17,6 @@ use Notepad\Domain\Model\Notepad\NotepadId;
 
 use Notepad\Infrastructure\NotepadDoctrineRepository;
 
-
-
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools;

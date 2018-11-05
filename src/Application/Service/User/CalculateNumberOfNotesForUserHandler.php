@@ -17,7 +17,7 @@ class CalculateNumberOfNotesForUserHandler{
 
     protected $repository;
 
-    public function __construct(UserRepository $repository){
+    public function __construct(NotepadRepository $repository){
         $this->repository = $repository;
     }
 
