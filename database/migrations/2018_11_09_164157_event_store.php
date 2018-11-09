@@ -15,6 +15,7 @@ class EventStore extends Migration
     {
         Schema::create('event_store', function (Blueprint $table) {
             $table->increments('event_id');
+            $table->int('aggregate_id');
             $table->text('event_body');
             $table->string('type_name');
             $table->datetime('occured_on');

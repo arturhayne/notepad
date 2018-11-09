@@ -7,11 +7,13 @@ use Notepad\Event\DomainEvent;
 class StoredEvent implements DomainEvent{
 
     private $eventId;
+    private $aggregateId;
     private $eventBody;
     private $ocurredOn;
     private $typeName;
 
-    public function __construct($aTypeName, \DateTimeImmutable $aOcurredOn, $aEventBody){
+    public function __construct($aggregateId,$aTypeName, \DateTimeImmutable $aOcurredOn, $aEventBody){
+        $this->aggregateId = $aggregateId;
         $this->eventBody = $aEventBody;
         $this->ocurredOn = $aOcurredOn;
         $this->typeName = $aTypeName;
@@ -19,6 +21,10 @@ class StoredEvent implements DomainEvent{
 
     public function eventId(){
         return $this->eventId;
+    }
+
+    public function aggregateId(){
+        return $this->aggregateId;
     }
 
     public function eventBody(){

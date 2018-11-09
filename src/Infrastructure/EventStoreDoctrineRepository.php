@@ -4,7 +4,7 @@ namespace Notepad\Infrastructure;
 
 use \JMS\Serializer\Serializer\SerializerBuilder;
 
-class EventStoreDoctrineRepository extends EntityRepository implements EventStoreRepository 
+class EventStoreDoctrineRepository extends EntityRepository implements EventStore 
 {
     private $serializer;
 

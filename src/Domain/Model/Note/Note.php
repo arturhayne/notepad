@@ -4,6 +4,9 @@ namespace Notepad\Domain\Model\Note;
 
 use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Domain\Model\Notepad\Notepad;
+use Notepad\Domain\Event\DomainEventPublisher;
+use Notepad\Domain\Event\NoteCreated;
+
 
 class Note{
     protected $id;
@@ -19,6 +22,13 @@ class Note{
         $this->content = $content;
         $this->notepadId = $notepadId;
 
+        $this->publishEvent();
+    }
+
+    protected function publishEvent(){
+        DomainEventPublisher::instance()->publish(
+            new NoteCreated($this->id)
+       );
     }
 
     public static function create(NoteId $id, NotepadId $notepadId, string $title,string $content){

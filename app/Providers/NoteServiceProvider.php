@@ -23,6 +23,14 @@ use Notepad\Infrastructure\NotepadPDORepository;
 use Notepad\Application\Service\Note\ArrayListNoteTransformer;
 use Notepad\Application\Service\Note\ListNoteTransformer;
 
+use Notepad\Domain\DomainEventSubscriber;
+use Notepad\Domain\PersistDomainEventSubscriber;
+
+use Notepad\Domain\Model\EventStore\EventStore;
+use Notepad\Infrastructure\EventStoreDoctrineRepository;
+use Notepad\Domain\Model\EventStore\StoredEvent;
+
+
 class NoteServiceProvider extends ServiceProvider
 {
     /**
@@ -65,5 +73,21 @@ class NoteServiceProvider extends ServiceProvider
          $this->app->bind(ListNoteTransformer::class, function (Application $app) {
             return new ArrayListNoteTransformer();
          });
+
+
+         $this->app->bind(EventStore::class, function($app)  use ($em){
+            // This is what Doctrine's EntityRepository needs in its constructor.
+            return new EventStoreDoctrineRepository(
+                $em,
+                $em->getClassMetaData(StoredEvent::class)
+            );
+        });
+
+
+        //$this->app->bind(DomainEventSubscriber::class, function($app)  use ($em){
+            // This is what Doctrine's EntityRepository needs in its constructor.
+        //    return new PersistDomainEventSubscriber();
+         //   );
+        ///});
     }
 }
