@@ -1,16 +1,24 @@
 <?php
 
 namespace Notepad\Infrastructure;
+use Doctrine\ORM\EntityRepository;
 
-use \JMS\Serializer\Serializer\SerializerBuilder;
+//se JMS\Serializer\Serializer\SerializerBuilder;
+use Notepad\Domain\Model\EventStore\EventStore;
+use Notepad\Domain\Event\DomainEvent;
+use Notepad\Domain\Model\EventStore\StoredEvent;
+use JMS\Serializer\Serializer;
+
+
+
 
 class EventStoreDoctrineRepository extends EntityRepository implements EventStore 
 {
     private $serializer;
 
     public function append(DomainEvent $aDomainEvent){
-        $storedEvent =  new StoredEvent(get_class($aDomainEvent),
-                $aDomainEvent -> occurredOn (),
+        $storedEvent =  new StoredEvent(1,get_class($aDomainEvent),
+                $aDomainEvent->occuredOn(),
                 $this->serializer()->serialize($aDomainEvent, 'json')
             );
 
@@ -27,9 +35,9 @@ class EventStoreDoctrineRepository extends EntityRepository implements EventStor
         return $query->getQuery()->getResult();
     }
 
-    private function seriaalizer(){
+    private function serializer(){
         if ( null === $this -> serializer ) {
-            $this->serializer = SerializerBuilder::create()->build ();
+            $this->serializer = \JMS\Serializer\SerializerBuilder::create()->build();
         }
         return $this->serializer;
     }

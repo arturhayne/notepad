@@ -2,6 +2,8 @@
 
 namespace Notepad\Domain\Event;
 
+use Notepad\Domain\Model\EventStore\StoredEvent;
+
 
 /*
     A Domain Event Publisher is a Singleton class available from our 
@@ -23,9 +25,8 @@ class DomainEventPublisher {
         return static::$instance;
     }
 
-    private function __construct(PersistDomainEventSubscriber $subscriber){
-        $this->subscribers[] = $subscriber;
-        //$this->subscribers = [];
+    private function __construct(){
+        $this->subscribers = [];
     }
 
     public function clone(){
@@ -37,9 +38,9 @@ class DomainEventPublisher {
     }
 
 
-    public function publish(DomainEvent $aEvent){
+    public function publish(DomainEvent $anEvent){
         foreach($this->subscribers as $aSubscriber){
-            if($aSubscriber->isSubscribedTo($aEvent)){
+            if($aSubscriber->isSubscribedTo($anEvent)){
                 $aSubscriber->handle($anEvent);
             }
         }

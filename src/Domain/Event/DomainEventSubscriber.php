@@ -1,5 +1,7 @@
 <?php
 
+namespace Notepad\Domain\Event;
+
 interface DomainEventSubscriber{
 
     /*

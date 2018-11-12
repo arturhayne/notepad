@@ -8,14 +8,16 @@ use Notepad\Domain\Model\Note\NoteId;
 use Notepad\Domain\Model\Note\Note;
 use Doctrine\Common\Collections\Criteria;
 
-class Notepad{
+use Notepad\Domain\Event\NoteCreated;
+
+class Notepad extends AggregateRoot{ 
 
     protected $id;
     protected $userId;
     protected $name;
     protected $notes;
 
-    const MAX_NOTES = 5;
+    const MAX_NOTES = 50;
 
     public function __construct(NotepadId $notepadId, UserId $userId, string $name){
         $this->id = $notepadId;
@@ -49,13 +51,21 @@ class Notepad{
         if(count($this->notes)>=self::MAX_NOTES){
             throw new \InvalidArgumentException('Max number notes exceeded');
         }
-
-        $note = Note::create(NoteId::create(), $this->id, $title, $content);
+        $noteId = NoteId::create();
+        $note = Note::create($noteId, $this->id, $title, $content);
 
         $note->setNotepad($this);
         $this->notes[] = $note;
+
+      //  $this->recordApplyAndPublishThat(
+        //     new NoteCreated($noteId));
+            
         return $note;
     }
+
+    protected function applyNotetWasCreated(NoteCreated $event){
+        $this->id = $event->id();
+    }        
 
     public function removeNote(NoteId $noteId){
         $note = $this->findNote($noteId);

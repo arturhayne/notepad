@@ -2,7 +2,10 @@
 
 namespace Notepad\Domain\Event;
 
-//use Notepad\Domain\Model\EventStore;
+
+use Notepad\Domain\Model\EventStore\EventStore;
+use Notepad\Domain\Event\DomainEvent;
+
 
 
 /*
@@ -16,11 +19,12 @@ class PersistDomainEventSubscriber implements DomainEventSubscriber{
 
     private $eventStore;
 
-    public function __construc(EventStore $anEventStore){
+    public function __construct(EventStore $anEventStore){
         $this->eventStore = $anEventStore;
     }
 
     public function handle($aDomainEvent){
+        //print_r($aDomainEvent);
         $this->eventStore->append($aDomainEvent);
     }
 

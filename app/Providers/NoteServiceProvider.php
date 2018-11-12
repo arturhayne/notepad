@@ -84,10 +84,9 @@ class NoteServiceProvider extends ServiceProvider
         });
 
 
-        //$this->app->bind(DomainEventSubscriber::class, function($app)  use ($em){
+        $this->app->bind(DomainEventSubscriber::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-        //    return new PersistDomainEventSubscriber();
-         //   );
-        ///});
+            return new PersistDomainEventSubscriber(EventStore::class);
+        });
     }
 }

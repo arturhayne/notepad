@@ -2,7 +2,7 @@
 
 namespace Notepad\Domain\Model\EventStore;
 
-use Notepad\Event\DomainEvent;
+use Notepad\Domain\Event\DomainEvent;
 
 
 interface EventStore{

@@ -1,21 +1,21 @@
 <?php
 
-namespace Notepad\Domain\EventStore\EventStore;
+namespace Notepad\Domain\Model\EventStore;
 
-use Notepad\Event\DomainEvent;
+use Notepad\Domain\Event\DomainEvent;
 
 class StoredEvent implements DomainEvent{
 
     private $eventId;
     private $aggregateId;
     private $eventBody;
-    private $ocurredOn;
+    private $occurredOn;
     private $typeName;
 
-    public function __construct($aggregateId,$aTypeName, \DateTimeImmutable $aOcurredOn, $aEventBody){
+    public function __construct($aggregateId, $aTypeName, \DateTimeImmutable $aOcurredOn, $aEventBody){
         $this->aggregateId = $aggregateId;
         $this->eventBody = $aEventBody;
-        $this->ocurredOn = $aOcurredOn;
+        $this->occurredOn = $aOcurredOn;
         $this->typeName = $aTypeName;
     }
 
@@ -31,8 +31,8 @@ class StoredEvent implements DomainEvent{
         return $this->eventBody;
     }
 
-    public function ocurredOn(){
-        return $this->ocurredOn;
+    public function occuredOn(){
+        return $this->occurredOn;
     }
 
     public function typeName(){

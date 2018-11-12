@@ -7,6 +7,13 @@ use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Event\DomainEventPublisher;
 use Notepad\Domain\Event\NoteCreated;
 
+use Notepad\Domain\Model\EventStore\StoredEvent;
+use Notepad\Domain\Model\EventStore\EventStore;
+
+
+use Notepad\Domain\Event\PersistDomainEventSubscriber;
+
+
 
 class Note{
     protected $id;
@@ -26,9 +33,12 @@ class Note{
     }
 
     protected function publishEvent(){
+
         DomainEventPublisher::instance()->publish(
-            new NoteCreated($this->id)
+          new NoteCreated($this->id)
        );
+
+
     }
 
     public static function create(NoteId $id, NotepadId $notepadId, string $title,string $content){
