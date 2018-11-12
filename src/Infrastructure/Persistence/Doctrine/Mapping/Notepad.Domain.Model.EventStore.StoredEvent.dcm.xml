@@ -9,7 +9,7 @@
         <id name="eventId" type="integer" column="event_id" >
             <generator strategy="AUTO" />
         </id>
-        <field name="aggregateId" type="integer" column="aggregate_id" />
+        <field name="aggregateId" type="uuid" column="aggregate_id" />
         <field name="eventBody" column="event_body" type="text" />
         <field name="typeName" column="type_name" type="string" />
         <field name="occurredOn" column="occured_on" type="datetime" />

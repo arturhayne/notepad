@@ -24,7 +24,6 @@ class PersistDomainEventSubscriber implements DomainEventSubscriber{
     }
 
     public function handle($aDomainEvent){
-        //print_r($aDomainEvent);
         $this->eventStore->append($aDomainEvent);
     }
 

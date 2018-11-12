@@ -54,18 +54,12 @@ class Notepad extends AggregateRoot{
         $noteId = NoteId::create();
         $note = Note::create($noteId, $this->id, $title, $content);
 
+        $this->publishThat(new NoteCreated($noteId,$this->id));
+
         $note->setNotepad($this);
         $this->notes[] = $note;
-
-      //  $this->recordApplyAndPublishThat(
-        //     new NoteCreated($noteId));
-            
         return $note;
-    }
-
-    protected function applyNotetWasCreated(NoteCreated $event){
-        $this->id = $event->id();
-    }        
+    }      
 
     public function removeNote(NoteId $noteId){
         $note = $this->findNote($noteId);
@@ -73,11 +67,8 @@ class Notepad extends AggregateRoot{
         if(!$note){
             throw new \InvalidArgumentException('Note not found!');
         } 
-
-        //Is this necessary?
         $this->notes->removeElement($note);
         $note->setNotepad(null);
-
         return $note;
     }
 

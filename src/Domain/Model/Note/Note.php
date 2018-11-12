@@ -28,19 +28,8 @@ class Note{
         $this->title = $title;
         $this->content = $content;
         $this->notepadId = $notepadId;
-
-        $this->publishEvent();
     }
-
-    protected function publishEvent(){
-
-        DomainEventPublisher::instance()->publish(
-          new NoteCreated($this->id)
-       );
-
-
-    }
-
+    
     public static function create(NoteId $id, NotepadId $notepadId, string $title,string $content){
         return new static($id,$notepadId,Title::create($title),$content);
     }
