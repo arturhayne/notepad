@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Criteria;
 
 use Notepad\Domain\Event\NoteCreated;
 
-class Notepad extends AggregateRoot{ 
+class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{ 
 
     protected $id;
     protected $userId;
@@ -54,7 +54,7 @@ class Notepad extends AggregateRoot{
         $noteId = NoteId::create();
         $note = Note::create($noteId, $this->id, $title, $content);
 
-        $this->publishThat(new NoteCreated($noteId,$this->id));
+        $this->recordApplyAndPublishThat(new NoteCreated($noteId,$this->id));
 
         $note->setNotepad($this);
         $this->notes[] = $note;
@@ -78,6 +78,15 @@ class Notepad extends AggregateRoot{
                 Criteria::expr()->eq('id',$noteId)
                 )
             )->first();
+    }
+
+    public static function reconstitute(EventStream $history){
+        $notepad = new static($history->aggregateId());
+
+        foreach($events as $event){
+            $notepad->applyThat($event);
+        }
+        return $notepad;
     }
 
 
