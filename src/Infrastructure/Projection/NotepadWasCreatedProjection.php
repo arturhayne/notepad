@@ -18,25 +18,20 @@ class NotepadWasCreatedProjection implements Projection{
    }
 
    public function project($event){
-       print_r('entrou na projecao');
-       /* $stmt = $this->pdo->query('SELECT * FROM notepad WHERE notepad_id = :notepad_id');
-        $stmt->bindParam(':notepad_id', $event->getAggregateId());
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt->closeCursor();
+        $this->addNotepad($event);
+    }
 
+    private function addNotepad($event){
         $stmt = $this->pdo->prepare(
-            'INSERT INTO posts_with_comments (post_id, comment_id, title, content, state, comment)
-                VALUES (:post_id, :comment_id, :title, :content, :state, :comment)'
+            'INSERT INTO notepad (id, name, user_id)
+             VALUES (:id, :name, :user_id)'
         );
 
         $stmt->execute([
-            ':post_id' => $event->getAggregateId(),
-            ':comment_id' => $event->getCommentId(),
-            ':title' => $post['title'],
-            ':content' => $post['content'],
-            ':state' => $post['state'],
-            ':comment' => $post['comment']
-            ]);*/
+            ':id' => $event->aggregateId(),
+            ':name'   => $event->name(),
+            ':user_id' => $event->userId()
+        ]);
     }
 
 }

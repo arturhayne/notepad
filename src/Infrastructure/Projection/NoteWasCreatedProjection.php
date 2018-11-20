@@ -3,6 +3,8 @@
 namespace Notepad\Infrastructure\Projection;
 
 use Notepad\Domain\Model\Note\NoteWasCreated;
+use PDO;
+
 
 class NoteWasCreatedProjection implements Projection{
 
@@ -17,24 +19,45 @@ class NoteWasCreatedProjection implements Projection{
    }
 
    public function project($event){
-        $stmt = $this->pdo->query('SELECT * FROM notepad WHERE notepad_id = :notepad_id');
-        $stmt->bindParam(':notepad_id', $event->getAggregateId());
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt->closeCursor();
+        $this->addNote($event);
+   }
 
+   private function addNote($event){
         $stmt = $this->pdo->prepare(
-            'INSERT INTO posts_with_comments (post_id, comment_id, title, content, state, comment)
-                VALUES (:post_id, :comment_id, :title, :content, :state, :comment)'
+            'INSERT INTO notes (id, title, content, notepad_id)
+            VALUES (:id, :title, :content, :notepad_id)'
         );
 
         $stmt->execute([
-            ':post_id' => $event->getAggregateId(),
-            ':comment_id' => $event->getCommentId(),
-            ':title' => $post['title'],
-            ':content' => $post['content'],
-            ':state' => $post['state'],
-            ':comment' => $post['comment']
-            ]);
-        }
+            ':id' => $event->noteId(),
+            ':title'   => $event->title(),
+            ':content' => $event->content(),
+            ':notepad_id' => $event->aggregateId(),
+        ]);
+    }
+
+
+
+    private function notesFromUser($event){ 
+        /*$stmt = $this->pdo->query('SELECT * FROM notepad WHERE id = :id');
+        $stmt->bindParam(':id', $event->aggregateId());
+        $notepad = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt->closeCursor();*/
+
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO notes_from_user (user_id, note_id, notepad_id, title, content)
+             VALUES (:user_id, :note_id, :notepad_id, :title, :content)'
+        );
+
+        $stmt->execute([
+            ':user_id' => '1ea15c7d-a837-4f57-a20c-6f8d378c5ace', //$notepad['userId'],
+            ':note_id' => $event->noteId(),
+            ':notepad_id' => $event->aggregateId(),
+            ':title' => $event->title(),
+            ':content' => $event->content()
+        ]);
+
+    }
+
 
 }

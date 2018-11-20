@@ -17,25 +17,20 @@ class UserWasCreatedProjection implements Projection{
    }
 
    public function project($event){
-       print_r('entrou na projecao');
-       /* $stmt = $this->pdo->query('SELECT * FROM notepad WHERE notepad_id = :notepad_id');
-        $stmt->bindParam(':notepad_id', $event->getAggregateId());
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt->closeCursor();
+        $this->addUser($event);
+    }
 
+    private function addUser($event){
         $stmt = $this->pdo->prepare(
-            'INSERT INTO posts_with_comments (post_id, comment_id, title, content, state, comment)
-                VALUES (:post_id, :comment_id, :title, :content, :state, :comment)'
+            'INSERT INTO users (id, name, email)
+             VALUES (:id, :name, :email)'
         );
 
         $stmt->execute([
-            ':post_id' => $event->getAggregateId(),
-            ':comment_id' => $event->getCommentId(),
-            ':title' => $post['title'],
-            ':content' => $post['content'],
-            ':state' => $post['state'],
-            ':comment' => $post['comment']
-            ]);*/
+            ':id' => $event->aggregateId(),
+            ':name'   => $event->name(),
+            ':email' => $event->email()
+        ]);
     }
 
 }

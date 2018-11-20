@@ -35,6 +35,10 @@ class User extends AggregateRoot{
             new UserWasCreated($id, $name, $email)
         );
 
+        $newUser->recordAndpublishThat(
+            new NumUserNotesWasAdded($id, 0)
+        );
+
         return $newUser;
     }
 

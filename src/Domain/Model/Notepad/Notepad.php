@@ -65,6 +65,14 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
             new NoteWasCreated($noteId, $this->id, $title, $content)
         );
 
+        $this->recordAndpublishThat(
+            new NumUserNotesWasIncreased($this->userId)
+        );
+
+        $this->recordAndpublishThat(
+            new UsersNoteAdded($this->userId, $this->id, $noteId, $title, $content)
+        );
+
         return $noteId;
     }      
 

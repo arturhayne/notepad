@@ -33,7 +33,11 @@ use Notepad\Domain\Model\EventStore\StoredEvent;
 use Notepad\Infrastructure\Projection\Projector;
 use Notepad\Infrastructure\Projection\NoteWasCreatedProjection; 
 use Notepad\Infrastructure\Projection\UserWasCreatedProjection; 
+use Notepad\Infrastructure\Projection\NumUserNotesWasAddedProjection;
+use Notepad\Infrastructure\Projection\NumUserNotesWasIncreasedProjection;
 use Notepad\Infrastructure\Projection\NotepadWasCreatedProjection; 
+use Notepad\Infrastructure\Projection\UsersNoteAddedProjection; 
+
 
 
 
@@ -69,7 +73,10 @@ class NoteServiceProvider extends ServiceProvider
         $projector = new Projector();
         $projector->register([new NoteWasCreatedProjection($pdo), 
                                 new UserWasCreatedProjection($pdo),
-                                new NotepadWasCreatedProjection($pdo)]);
+                                new NotepadWasCreatedProjection($pdo),
+                                new NumUserNotesWasIncreasedProjection($pdo),
+                                new NumUserNotesWasAddedProjection($pdo),
+                                new UsersNoteAddedProjection($pdo)]);
 
 
          $this->app->bind(UserRepository::class, function($app)  use ($em, $projector){

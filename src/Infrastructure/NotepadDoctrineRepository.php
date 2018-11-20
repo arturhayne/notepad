@@ -28,16 +28,8 @@ class NotepadDoctrineRepository extends EntityRepository implements NotepadRepos
 
     public function add(Notepad $notepad)
 	{
-        $this->em->transactional(
-            function (EntityManager $em) use ($notepad){
-                $em->persist($notepad);
-		        $em->flush($notepad);
-               // foreach($notepad->recordedEvents() as $event){
-               //     $em->persist($event);
-                //    $em->flush($event);
-                //}
-            }
-        );
+        $this->em->persist($notepad);
+        $this->em->flush($notepad);
         $this->projector->project($notepad->recordedEvents());
 		return $notepad;
     }
