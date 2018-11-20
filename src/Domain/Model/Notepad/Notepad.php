@@ -8,7 +8,9 @@ use Notepad\Domain\Model\Note\NoteId;
 use Notepad\Domain\Model\Note\Note;
 use Doctrine\Common\Collections\Criteria;
 
-use Notepad\Domain\Event\NoteCreated;
+use Notepad\Domain\Model\Common\AggregateRoot;
+
+use Notepad\Domain\Model\Note\NoteWasCreated;
 
 class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{ 
 
@@ -17,7 +19,7 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
     protected $name;
     protected $notes;
 
-    const MAX_NOTES = 50;
+    const MAX_NOTES = 500;
 
     public function __construct(NotepadId $notepadId, UserId $userId, string $name){
         $this->id = $notepadId;
@@ -27,7 +29,13 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
     }
 
     public static function create(NotepadId $notepadId, UserId $userId, string $name){
-        return new static($notepadId,$userId,$name);
+
+        $aNewNotepad = new static($notepadId, $userId, $name);
+
+        $aNewNotepad->recordAndpublishThat(
+            new NotepadWasCreated($notepadId, $userId, $name)
+        );
+        return $aNewNotepad;
     }
 
     public function id(){
@@ -51,14 +59,13 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
         if(count($this->notes)>=self::MAX_NOTES){
             throw new \InvalidArgumentException('Max number notes exceeded');
         }
+
         $noteId = NoteId::create();
-        $note = Note::create($noteId, $this->id, $title, $content);
+        $this->recordApplyAndPublishThat(
+            new NoteWasCreated($noteId, $this->id, $title, $content)
+        );
 
-        $this->recordApplyAndPublishThat(new NoteCreated($noteId,$this->id));
-
-        $note->setNotepad($this);
-        $this->notes[] = $note;
-        return $note;
+        return $noteId;
     }      
 
     public function removeNote(NoteId $noteId){
@@ -95,6 +102,14 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
          //   $qt += count($this->notes());
         //}
         return $qt;
+    }
+
+    protected function applyNoteWasCreated(NoteWasCreated $event){
+        $note = Note::create($event->noteId(), $event->aggregateId(), 
+                                $event->title(), $event->content());
+
+        $note->setNotepad($this);
+        $this->notes[] = $note;
     }
 
 }

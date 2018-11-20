@@ -2,6 +2,7 @@
 
 namespace Notepad\Infrastructure;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Notepad\Domain\Model\Notepad\Notepad;
 
@@ -9,44 +10,51 @@ use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Domain\Model\Note\Note;
 
+use Notepad\Infrastructure\Projection\Projector;
+
+use Notepad\Infrastructure\Projection\NoteWasCreatedProjection;
+use Notepad\Infrastructure\Projection\Projection;
 
 
 class NotepadDoctrineRepository extends EntityRepository implements NotepadRepository 
 {
+    private $projector;
+    private $em;
+
+    public function __construct(EntityManager $em, Projector $projector){
+        $this->em = $em;
+        $this->projector = $projector;
+    }
 
     public function add(Notepad $notepad)
 	{
-        $this->_em->transactional(
-            function (\Doctrine\ORM\EntityManager $_em) use ($notepad){
-                $_em->persist($notepad);
-		        $_em->flush($notepad);
-                foreach($notepad->recordedEvents() as $event){
-                    $_em->persist($event);
-                    $_em->flush($event);
-                }
+        $this->em->transactional(
+            function (EntityManager $em) use ($notepad){
+                $em->persist($notepad);
+		        $em->flush($notepad);
+               // foreach($notepad->recordedEvents() as $event){
+               //     $em->persist($event);
+                //    $em->flush($event);
+                //}
             }
         );
-
-       // $this->projector->project(
-        //    $notepad->recordedEvents()
-        //);
-        
+        $this->projector->project($notepad->recordedEvents());
 		return $notepad;
     }
 
     public function ofId(NotepadId $notepadId){
-        return $this->_em->find(Notepad::class, $notepadId);
+        return $this->em->find(Notepad::class, $notepadId);
     }
 
     public function removeNote(Note $note){
-        $this->_em->remove($note);
-        $this->_em->flush();
+        $this->em->remove($note);
+        $this->em->flush();
         return $note;
     }
 
     public function remove(Notepad $notepad){
-        $this->_em->remove($notepad);
-        $this->_em->flush();
+        $this->em->remove($notepad);
+        $this->em->flush();
         return $notepad;
     }
 

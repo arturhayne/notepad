@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
 
-class User{
+use Notepad\Domain\Model\Common\AggregateRoot;
+
+
+class User extends AggregateRoot{
     
     /** @var Uuid */
     protected $id;
@@ -26,7 +29,13 @@ class User{
     }
 
     public static function create(UserId $id,string $name, string $email){
-        return new static($id,$name,Email::create($email));
+        $newUser = new static($id,$name,Email::create($email));
+
+        $newUser->recordAndpublishThat(
+            new UserWasCreated($id, $name, $email)
+        );
+
+        return $newUser;
     }
 
     /**

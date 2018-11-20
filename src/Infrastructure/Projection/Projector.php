@@ -1,11 +1,14 @@
 <?php
 
 namespace Notepad\Infrastructure\Projection;
+use Notepad\Domain\Model\Note\NoteWasCreated;
+
 
 class Projector{
+
     private $projections = [];
 
-    public function register(array $projection){
+    public function register(array $projections){
         foreach($projections as $projection){
             $listenTo = $projection->listenTo();
             $this->projections[$listenTo] = $projection;

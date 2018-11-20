@@ -14,9 +14,10 @@ use Notepad\Domain\Model\User\UserId;
 class CreateNotepadHandler extends NotepadAggregateService{
     
     public function execute(CreateNotepadCommand $command) {
+        $this->subscribe();
         $notepad = Notepad::create(NotepadId::create(),
             UserId::createFromString($command->userId),$command->name);
-        $this->repository->add($notepad);
+        $this->notepadRepository->add($notepad);
         return (string)$notepad->id();
     }
 }

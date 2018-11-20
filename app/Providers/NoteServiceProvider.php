@@ -30,6 +30,14 @@ use Notepad\Domain\Model\EventStore\EventStore;
 use Notepad\Infrastructure\EventStoreDoctrineRepository;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 
+use Notepad\Infrastructure\Projection\Projector;
+use Notepad\Infrastructure\Projection\NoteWasCreatedProjection; 
+use Notepad\Infrastructure\Projection\UserWasCreatedProjection; 
+use Notepad\Infrastructure\Projection\NotepadWasCreatedProjection; 
+
+
+
+
 
 class NoteServiceProvider extends ServiceProvider
 {
@@ -54,19 +62,38 @@ class NoteServiceProvider extends ServiceProvider
         /** @var EntityManager $em */
         $em = $this->app['em'];
 
-         $this->app->bind(UserRepository::class, function($app)  use ($em){
+        /** Projetion **/
+        $pdo = new \PDO(env('STRING_CON'),
+                            env('DB_USERNAME'),
+                            env('DB_USERNAME'));
+        $projector = new Projector();
+        $projector->register([new NoteWasCreatedProjection($pdo), 
+                                new UserWasCreatedProjection($pdo),
+                                new NotepadWasCreatedProjection($pdo)]);
+
+
+         $this->app->bind(UserRepository::class, function($app)  use ($em, $projector){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new UserDoctrineRepository(
                 $em,
+                $projector,
                 $em->getClassMetaData(User::class)
             );
         });
 
-        $this->app->bind(NotepadRepository::class, function($app)  use ($em){
+        $this->app->bind(NotepadRepository::class, function($app)  use ($em, $projector){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new NotepadDoctrineRepository(
                 $em,
+                $projector,
                 $em->getClassMetaData(Notepad::class)
+            );
+        });
+
+        $this->app->bind(NotepadProjection::class, function($app)  use ($em){
+            // This is what Doctrine's EntityRepository needs in its constructor.
+            return new Projector(
+
             );
         });
 
@@ -82,6 +109,8 @@ class NoteServiceProvider extends ServiceProvider
                 $em->getClassMetaData(StoredEvent::class)
             );
         });
+
+        
 
 
         $this->app->bind(DomainEventSubscriber::class, function($app)  use ($em){

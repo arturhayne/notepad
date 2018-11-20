@@ -5,7 +5,10 @@ namespace Notepad\Application\Service\Note;
 use Notepad\Domain\Model\Note\NoteRepository;
 use Notepad\Domain\Model\Note\NoteId;
 
-class DeleteNoteHandler extends NoteAggregateService{
+use Notepad\Application\Service\Notepad\NotepadAggregateService;
+
+
+class DeleteNoteHandler extends NotepadAggregateService{
 
     public function execute(DeleteNoteCommand $command){ 
         $notepad = $this->findNotepadOrFail($command->notepadId);

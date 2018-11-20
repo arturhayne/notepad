@@ -1,9 +1,10 @@
 <?php
 
-namespace Notepad\Domain\Model\Notepad;
+namespace Notepad\Domain\Model\Common;
 
 use Notepad\Domain\Event\DomainEventPublisher;
 use Notepad\Domain\Event\DomainEvent;
+use Notepad\Domain\Model\Notepad\Notepad;
 
 class AggregateRoot {
 
@@ -15,13 +16,19 @@ class AggregateRoot {
         $this->publishThat($domainEvent);
     }
 
+    protected function recordAndpublishThat(DomainEvent $domainEvent){
+        $this->recordThat($domainEvent);
+        $this->publishThat($domainEvent);
+    }
+
     protected function recordThat(DomainEvent $domainEvent)
     {
         $this->recordedEvents[] = $domainEvent;
     }
 
     protected function applyThat(DomainEvent $domainEvent){
-        $modifier = 'apply' . get_class($domainEvent);
+        $modifier = 'apply' . (new \ReflectionClass($domainEvent))->getShortName();
+        $this->$modifier($domainEvent);
     }
 
     protected function publishThat(DomainEvent $domainEvent){

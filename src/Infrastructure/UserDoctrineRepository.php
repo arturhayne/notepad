@@ -7,30 +7,33 @@ use Notepad\Domain\Model\User\User;
 
 use Notepad\Domain\Model\User\UserRepository;
 use Notepad\Domain\Model\User\UserId;
+use Doctrine\ORM\EntityManager;
+use Notepad\Infrastructure\Projection\Projector;
+
+
 
 
 class UserDoctrineRepository extends EntityRepository implements UserRepository 
 {
 
+    private $projector;
+    private $em;
+
+    public function __construct(EntityManager $em, Projector $projector){
+        $this->em = $em;
+        $this->projector = $projector;
+    }
+
     public function add(User $data)
 	{
-        $this->_em->persist($data);
-		$this->_em->flush($data);
+        $this->em->persist($data);
+        $this->em->flush($data);
+        $this->projector->project($data->recordedEvents());        
 		return $data;
     }
 
     public function ofId(UserId $userId){
-        return $this->_em->find(User::class, $userId);
+        return $this->em->find(User::class, $userId);
     }
 
-    public function addNotepad(User $user){
-        $this->_em->persist($user);
-		$this->_em->flush($user);
-		return $user;
-    }
-
-    public function remove(User $user){
-        $this->_em->remove($user);
-		$this->_em->flush();
-    }
 }
