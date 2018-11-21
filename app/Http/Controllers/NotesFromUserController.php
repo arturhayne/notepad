@@ -13,8 +13,8 @@ class NotesFromUserController extends Controller{
     }
 
     public function allNotes($userId){
-        $qtd = $this->handler->execute($userId); 
-        return response()->json(['qtd' => $qtd], Response::HTTP_CREATED);
+        $allNotes = $this->handler->execute($userId); 
+        return response()->json($allNotes, Response::HTTP_CREATED);
     }
 
 }
