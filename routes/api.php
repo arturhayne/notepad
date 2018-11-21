@@ -23,6 +23,9 @@ Route::get('notes/list','ListNoteController@list');
 
 Route::get('user/qtNotes/{userId}','GetNumberNotesFromUserController@qtdFromUser');
 
+Route::get('user/notesFromUser/{userId}','NotesFromUserController@allNotes');
+
+
 Route::post('users/create','CreateUserController@store');
 
 Route::post('notepad/create','CreateNotepadController@store');

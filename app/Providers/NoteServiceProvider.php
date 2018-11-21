@@ -38,7 +38,8 @@ use Notepad\Infrastructure\Projection\NumUserNotesWasIncreasedProjection;
 use Notepad\Infrastructure\Projection\NotepadWasCreatedProjection; 
 use Notepad\Infrastructure\Projection\UsersNoteAddedProjection; 
 
-
+use Notepad\Domain\Model\User\UserQueryRepository;
+use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
 
 
 
@@ -85,6 +86,13 @@ class NoteServiceProvider extends ServiceProvider
                 $em,
                 $projector,
                 $em->getClassMetaData(User::class)
+            );
+        });
+
+        $this->app->bind(UserQueryRepository::class, function($app)  use ($pdo){
+            // This is what Doctrine's EntityRepository needs in its constructor.
+            return new UserPDORepository(
+                $pdo
             );
         });
 
