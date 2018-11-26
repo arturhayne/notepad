@@ -27,9 +27,9 @@ class UserWasCreatedProjection implements Projection{
         );
 
         $stmt->execute([
-            ':id' => $event->aggregateId(),
-            ':name'   => $event->name(),
-            ':email' => $event->email()
+            ':id' => $event['id'],
+            ':name'   => $event['name'],
+            ':email' => $event['email']
         ]);
     }
 

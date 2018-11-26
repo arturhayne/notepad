@@ -22,4 +22,10 @@ class Projector{
             }
         }
     }
+
+    public function projectEvent($type,$event){
+        if(isset($this->projections[$type])){
+            $this->projections[$type]->project($event);
+        }
+    }
 }

@@ -40,6 +40,12 @@ use Notepad\Infrastructure\Projection\UsersNoteAddedProjection;
 
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
+use Notepad\Domain\Notification\PublishedMessageTracker;
+use Notepad\Domain\Notification\MessageProducer;
+
+use Notepad\Infrastructure\Notification\DoctrinePublishedMessageTracker;
+use Notepad\Infrastructure\Notification\ProjectionMessageProducer;
+use Notepad\Domain\Notification\PublishedMessage;
 
 
 
@@ -80,11 +86,10 @@ class NoteServiceProvider extends ServiceProvider
                                 new UsersNoteAddedProjection($pdo)]);
 
 
-         $this->app->bind(UserRepository::class, function($app)  use ($em, $projector){
+         $this->app->bind(UserRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new UserDoctrineRepository(
                 $em,
-                $projector,
                 $em->getClassMetaData(User::class)
             );
         });
@@ -96,11 +101,10 @@ class NoteServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(NotepadRepository::class, function($app)  use ($em, $projector){
+        $this->app->bind(NotepadRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new NotepadDoctrineRepository(
                 $em,
-                $projector,
                 $em->getClassMetaData(Notepad::class)
             );
         });
@@ -125,8 +129,20 @@ class NoteServiceProvider extends ServiceProvider
             );
         });
 
-        
+        $this->app->bind(PublishedMessageTracker::class, function($app)  use ($em){
+            // This is what Doctrine's EntityRepository needs in its constructor.
+            return new DoctrinePublishedMessageTracker(
+                $em,
+                $em->getClassMetaData(PublishedMessage::class)
+            );
+        });
 
+        $this->app->bind(MessageProducer::class, function($app)  use ($em, $projector){
+            // This is what Doctrine's EntityRepository needs in its constructor.
+            return new ProjectionMessageProducer(
+                $projector
+            );
+        });
 
         $this->app->bind(DomainEventSubscriber::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.

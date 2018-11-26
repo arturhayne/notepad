@@ -113,7 +113,8 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
     }
 
     protected function applyNoteWasCreated(NoteWasCreated $event){
-        $note = Note::create($event->noteId(), $event->aggregateId(), 
+        $note = Note::create(NoteId::createFromString($event->noteId()), 
+                        NotepadId::createFromString($event->aggregateId()), 
                                 $event->title(), $event->content());
 
         $note->setNotepad($this);

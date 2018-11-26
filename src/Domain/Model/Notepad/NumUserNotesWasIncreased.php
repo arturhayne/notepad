@@ -10,7 +10,7 @@ class NumUserNotesWasIncreased implements DomainEvent{
     private $plsuNotes;
 
     public function __construct($userId){
-        $this->userId = $userId;
+        $this->userId = (string)$userId;
         $this->plusNotes = 1;
         $this->occurredOn = new \DateTimeImmutable();
     }

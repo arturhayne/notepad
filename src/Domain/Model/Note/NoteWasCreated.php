@@ -12,9 +12,9 @@ class NoteWasCreated implements DomainEvent{
     protected $title;
     protected $content;
 
-    public function __construct(NoteId $noteId, $aggregateId, $title, $content){
-        $this->noteId = $noteId;
-        $this->aggregateId = $aggregateId;
+    public function __construct($noteId, $aggregateId, $title, $content){
+        $this->noteId = (string)$noteId;
+        $this->aggregateId = (string)$aggregateId;
         $this->content = $content;
         $this->title = $title;
         $this->occurredOn = new \DateTimeImmutable();

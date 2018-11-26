@@ -27,11 +27,11 @@ class UsersNoteAddedProjection implements Projection{
         );
 
         $stmt->execute([
-            ':user_id' => $event->aggregateId(),
-            ':note_id' => $event->noteId(),
-            ':notepad_id' => $event->notepadId(),
-            ':title'   => $event->title(),
-            ':content' => $event->content()
+            ':user_id' => $event['user_id'],
+            ':note_id' => $event['note_id'],
+            ':notepad_id' => $event['notepad_id'],
+            ':title'   => $event['title'],
+            ':content' => $event['content']
         ]);
     }
 

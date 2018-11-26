@@ -28,9 +28,9 @@ class NotepadWasCreatedProjection implements Projection{
         );
 
         $stmt->execute([
-            ':id' => $event->aggregateId(),
-            ':name'   => $event->name(),
-            ':user_id' => $event->userId()
+            ':id' => $event['id'],
+            ':name'   => $event['name'],
+            ':user_id' => $event['user_id']
         ]);
     }
 

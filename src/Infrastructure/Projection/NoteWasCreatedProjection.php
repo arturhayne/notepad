@@ -29,35 +29,14 @@ class NoteWasCreatedProjection implements Projection{
         );
 
         $stmt->execute([
-            ':id' => $event->noteId(),
-            ':title'   => $event->title(),
-            ':content' => $event->content(),
-            ':notepad_id' => $event->aggregateId(),
+            ':id' => $event['note_id'],
+            ':title'   => $event['title'],
+            ':content' => $event['content'],
+            ':notepad_id' => $event['notepad_id'],
         ]);
     }
 
 
-
-    private function notesFromUser($event){ 
-        /*$stmt = $this->pdo->query('SELECT * FROM notepad WHERE id = :id');
-        $stmt->bindParam(':id', $event->aggregateId());
-        $notepad = $stmt->fetch(\PDO::FETCH_ASSOC);
-        $stmt->closeCursor();*/
-
-        $stmt = $this->pdo->prepare(
-            'INSERT INTO notes_from_user (user_id, note_id, notepad_id, title, content)
-             VALUES (:user_id, :note_id, :notepad_id, :title, :content)'
-        );
-
-        $stmt->execute([
-            ':user_id' => '1ea15c7d-a837-4f57-a20c-6f8d378c5ace', //$notepad['userId'],
-            ':note_id' => $event->noteId(),
-            ':notepad_id' => $event->aggregateId(),
-            ':title' => $event->title(),
-            ':content' => $event->content()
-        ]);
-
-    }
 
 
 }

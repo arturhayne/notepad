@@ -27,7 +27,7 @@ class NumUserNotesWasAddedProjection implements Projection{
         );
 
         $stmt->execute([
-            ':id' => $event->aggregateId()
+            ':id' => $event['user_id']
         ]);
     }
 

@@ -10,7 +10,7 @@ class NumUserNotesWasAdded  implements DomainEvent{
     private $numNotes;
 
     public function __construct($userId, $numNotes){
-        $this->userId = $userId;
+        $this->userId = (string)$userId;
         $this->numNotes = $numNotes;
         $this->occurredOn = new \DateTimeImmutable();
     }
@@ -28,6 +28,5 @@ class NumUserNotesWasAdded  implements DomainEvent{
     public function occuredOn(){
         return $this->occurredOn;
     }
-
 
 }

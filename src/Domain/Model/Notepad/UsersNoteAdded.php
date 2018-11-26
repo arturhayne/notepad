@@ -13,9 +13,9 @@ class UsersNoteAdded implements DomainEvent{
     private $content;
 
     public function __construct($userId, $notepadId, $noteId, $title, $content){
-        $this->userId = $userId;
-        $this->notepadId = $notepadId;
-        $this->noteId = $noteId;
+        $this->userId = (string)$userId;
+        $this->notepadId = (string)$notepadId;
+        $this->noteId = (string)$noteId;
         $this->title = $title;
         $this->content = $content;
         $this->occurredOn = new \DateTimeImmutable();

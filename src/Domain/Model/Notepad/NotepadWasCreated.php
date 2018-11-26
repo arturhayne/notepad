@@ -10,8 +10,8 @@ class NotepadWasCreated implements DomainEvent{
     protected $name;
     
     public function __construct($aggregateId, $userId, $name){
-        $this->id = $aggregateId;
-        $this->userId = $userId;
+        $this->id = (string)$aggregateId;
+        $this->userId = (string)$userId;
         $this->name = $name;
         $this->occurredOn = new \DateTimeImmutable();
     }

@@ -18,19 +18,16 @@ use Notepad\Infrastructure\Projection\Projection;
 
 class NotepadDoctrineRepository extends EntityRepository implements NotepadRepository 
 {
-    private $projector;
     private $em;
 
-    public function __construct(EntityManager $em, Projector $projector){
+    public function __construct(EntityManager $em){
         $this->em = $em;
-        $this->projector = $projector;
     }
 
     public function add(Notepad $notepad)
 	{
         $this->em->persist($notepad);
         $this->em->flush($notepad);
-        $this->projector->project($notepad->recordedEvents());
 		return $notepad;
     }
 

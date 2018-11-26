@@ -13,7 +13,7 @@ class UserWasCreated implements DomainEvent{
     protected $name;
     
     public function __construct($aggregateId, $name, $email){
-        $this->id = $aggregateId;
+        $this->id = (string)$aggregateId;
         $this->name = $name;
         $this->email = $email;
         $this->occurredOn = new \DateTimeImmutable();
