@@ -4,9 +4,16 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\PushNotificationsCommand;
 
 class Kernel extends ConsoleKernel
 {
+
+    //Cron command
+    //
+    // * * * * * cd /Users/arturhayne/Projects/notepad/notepad/ && php artisan schedule:run >> /dev/null 2>&1
+    ///
+    
     /**
      * The Artisan commands provided by your application.
      *
@@ -24,8 +31,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //$schedule->command(PushNotificationsCommand::class, ['notepad'])->everyMinute();
+        $schedule->command('domain:events:spread notepad')
+            ->everyMinute()
+            ->appendOutputTo(base_path('.eventsOutput'));
     }
 
     /**

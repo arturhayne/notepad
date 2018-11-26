@@ -46,6 +46,7 @@ class NotificationService
             $lastPublishedNotification = null;
             foreach ($notifications as $notification) {
                 $lastPublishedNotification = $this->publish($exchangeName, $notification, $messageProducer);
+                
                 $publishedMessages++;
             }
         } catch(\Exception $e) {

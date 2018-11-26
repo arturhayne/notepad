@@ -28,7 +28,7 @@ class EventStoreDoctrineRepository extends EntityRepository implements EventStor
         $query = $this->createQueryBuilder('e');
         if($anEventId){
             $query->where('e.eventId > :eventId');
-            $query->setParamenters(['eventId' => $anEventId ]);
+            $query->setParameters(['eventId' => $anEventId ]);
         } 
         $query->orderBy('e.eventId');
         return $query->getQuery()->getResult();

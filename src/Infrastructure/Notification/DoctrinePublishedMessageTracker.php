@@ -29,14 +29,13 @@ class DoctrinePublishedMessageTracker extends EntityRepository implements Publis
         }
 
         $maxId = $notification->eventId();
-        
         if(!$exchangeName){
             return;
         }
 
-        $publishedMessage = $this->find($exchangeName);
+        $publishedMessage = $this->findOneByExchangeName($exchangeName);
 
-        if (!$publishedMessage) {
+        if (null === $publishedMessage) {
             $publishedMessage = new PublishedMessage(
                 $exchangeName,
                 $maxId
