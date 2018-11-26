@@ -4,7 +4,7 @@ namespace Notepad\Domain\Notification;
 
 interface MessageProducer
 {
-    public function open($exchangeName);
+    //public function open($exchangeName);
 
     /**
      * @param $exchangeName
@@ -14,7 +14,7 @@ interface MessageProducer
      * @param \DateTime $notificationOccurredOn
      * @return
      */
-    public function send($exchangeName, $notificationMessage, $notificationType, $notificationId, \DateTime $notificationOccurredOn);
+    public function send($notificationMessage, $notificationType);
 
-    public function close($exchangeName);
+    //public function close($exchangeName);
 }

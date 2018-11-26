@@ -14,19 +14,12 @@ class ProjectionMessageProducer implements MessageProducer
         $this->projector = $projector;
     }
     /*
-        notificationId: eventId
         notificationMessage: serialized object
         notificationType: eventName
     */
-    public function send($exchangeName, $notificationMessage, $notificationType, $notificationId, \DateTime $notificationOccurredOn)
+    public function send($notificationMessage, $notificationType)
     {
         $this->projector->projectEvent($notificationType, $notificationMessage);
     }
 
-    public function open($exchangeName){
-
-    }
-    public function close($exchangeName){
-
-    }
 }

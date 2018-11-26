@@ -40,7 +40,6 @@ class NotificationService
         }
 
         $messageProducer = $this->messageProducer();
-        $messageProducer->open($exchangeName);
         try {
             $publishedMessages = 0;
             $lastPublishedNotification = null;
@@ -54,7 +53,6 @@ class NotificationService
         }
 
         $this->trackMostRecentPublishedMessage($publishedMessageTracker, $exchangeName, $lastPublishedNotification);
-        $messageProducer->close($exchangeName);
 
         return $publishedMessages;
     }
@@ -84,11 +82,8 @@ class NotificationService
     {
         
         $messageProducer->send(
-            $exchangeName,
             $this->serializer()->deserialize($notification->eventBody(), 'array' , 'json'),
-            $notification->typeName(),
-            $notification->eventId(),
-            $notification->occuredOn()
+            $notification->typeName()
         );
 
         return $notification;

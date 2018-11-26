@@ -5,3 +5,172 @@
 3 notification(s) sent!
 0 notification(s) sent!
 0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Call to undefined method Notepad\Infrastructure\Notification\ProjectionMessageProducer::open()
+
+  at /Users/arturhayne/Projects/notepad/notepad/src/Application/Service/Notification/NotificationService.php:43
+    39|             return 0;
+    40|         }
+    41| 
+    42|         $messageProducer = $this->messageProducer();
+  > 43|         $messageProducer->open($exchangeName);
+    44|         try {
+    45|             $publishedMessages = 0;
+    46|             $lastPublishedNotification = null;
+    47|             foreach ($notifications as $notification) {
+
+  Exception trace:
+
+  1   Notepad\Application\Service\Notification\NotificationService::publishNotifications("notepad")
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/PushNotificationsCommand.php:61
+
+  2   App\Console\Commands\PushNotificationsCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Call to undefined method Notepad\Infrastructure\Notification\ProjectionMessageProducer::open()
+
+  at /Users/arturhayne/Projects/notepad/notepad/src/Application/Service/Notification/NotificationService.php:43
+    39|             return 0;
+    40|         }
+    41| 
+    42|         $messageProducer = $this->messageProducer();
+  > 43|         $messageProducer->open($exchangeName);
+    44|         try {
+    45|             $publishedMessages = 0;
+    46|             $lastPublishedNotification = null;
+    47|             foreach ($notifications as $notification) {
+
+  Exception trace:
+
+  1   Notepad\Application\Service\Notification\NotificationService::publishNotifications("notepad")
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/PushNotificationsCommand.php:61
+
+  2   App\Console\Commands\PushNotificationsCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Call to undefined method Notepad\Infrastructure\Notification\ProjectionMessageProducer::open()
+
+  at /Users/arturhayne/Projects/notepad/notepad/src/Application/Service/Notification/NotificationService.php:43
+    39|             return 0;
+    40|         }
+    41| 
+    42|         $messageProducer = $this->messageProducer();
+  > 43|         $messageProducer->open($exchangeName);
+    44|         try {
+    45|             $publishedMessages = 0;
+    46|             $lastPublishedNotification = null;
+    47|             foreach ($notifications as $notification) {
+
+  Exception trace:
+
+  1   Notepad\Application\Service\Notification\NotificationService::publishNotifications("notepad")
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/PushNotificationsCommand.php:61
+
+  2   App\Console\Commands\PushNotificationsCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Call to undefined method Notepad\Infrastructure\Notification\ProjectionMessageProducer::close()
+
+  at /Users/arturhayne/Projects/notepad/notepad/src/Application/Service/Notification/NotificationService.php:56
+    52| 
+    53|         }
+    54| 
+    55|         $this->trackMostRecentPublishedMessage($publishedMessageTracker, $exchangeName, $lastPublishedNotification);
+  > 56|         $messageProducer->close($exchangeName);
+    57| 
+    58|         return $publishedMessages;
+    59|     }
+    60|
+
+  Exception trace:
+
+  1   Notepad\Application\Service\Notification\NotificationService::publishNotifications("notepad")
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/PushNotificationsCommand.php:61
+
+  2   App\Console\Commands\PushNotificationsCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+0 notification(s) sent!
+0 notification(s) sent!
+0 notification(s) sent!
+2 notification(s) sent!
+2 notification(s) sent!
+4 notification(s) sent!
