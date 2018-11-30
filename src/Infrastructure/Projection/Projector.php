@@ -1,7 +1,7 @@
 <?php
 
 namespace Notepad\Infrastructure\Projection;
-use Notepad\Domain\Model\Note\NoteWasCreated;
+use Notepad\Domain\Model\Note\NoteWasAdded;
 
 
 class Projector{

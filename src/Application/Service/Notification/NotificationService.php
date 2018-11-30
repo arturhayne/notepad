@@ -7,7 +7,7 @@ use JMS\Serializer\SerializerBuilder;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 use Notepad\Domain\Notification\MessageProducer;
 use Notepad\Domain\Notification\PublishedMessageTracker;
-use Notepad\Domain\Model\Note\NoteWasCreated;
+use Notepad\Domain\Model\Note\NoteWasAdded;
 
 
 class NotificationService

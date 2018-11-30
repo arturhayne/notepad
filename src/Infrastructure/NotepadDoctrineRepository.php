@@ -12,7 +12,7 @@ use Notepad\Domain\Model\Note\Note;
 
 use Notepad\Infrastructure\Projection\Projector;
 
-use Notepad\Infrastructure\Projection\NoteWasCreatedProjection;
+use Notepad\Infrastructure\Projection\NoteWasAddedProjection;
 use Notepad\Infrastructure\Projection\Projection;
 
 

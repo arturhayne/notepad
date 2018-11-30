@@ -32,7 +32,7 @@ class User extends AggregateRoot{
         $newUser = new static($id,$name,Email::create($email));
 
         $newUser->recordAndpublishThat(
-            new UserWasCreated($id, $name, $email)
+            new UserWasAdded($id, $name, $email)
         );
 
         $newUser->recordAndpublishThat(

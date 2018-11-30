@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Criteria;
 
 use Notepad\Domain\Model\Common\AggregateRoot;
 
-use Notepad\Domain\Model\Note\NoteWasCreated;
+use Notepad\Domain\Model\Note\NoteWasAdded;
 
 class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{ 
 
@@ -33,7 +33,7 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
         $aNewNotepad = new static($notepadId, $userId, $name);
 
         $aNewNotepad->recordAndpublishThat(
-            new NotepadWasCreated($notepadId, $userId, $name)
+            new NotepadWasAdded($notepadId, $userId, $name)
         );
         return $aNewNotepad;
     }
@@ -62,7 +62,7 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
 
         $noteId = NoteId::create();
         $this->recordApplyAndPublishThat(
-            new NoteWasCreated($noteId, $this->id, $title, $content)
+            new NoteWasAdded($noteId, $this->id, $title, $content)
         );
 
         $this->recordAndpublishThat(
@@ -95,7 +95,7 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
             )->first();
     }
 
-    public static function reconstitute(EventStream $history){
+    public static function reconstitute($history){
         $notepad = new static($history->aggregateId());
 
         foreach($events as $event){
@@ -112,7 +112,7 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
         return $qt;
     }
 
-    protected function applyNoteWasCreated(NoteWasCreated $event){
+    protected function applyNoteWasAdded(NoteWasAdded $event){
         $note = Note::create(NoteId::createFromString($event->noteId()), 
                         NotepadId::createFromString($event->aggregateId()), 
                                 $event->title(), $event->content());

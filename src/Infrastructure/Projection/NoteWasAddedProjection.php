@@ -2,11 +2,11 @@
 
 namespace Notepad\Infrastructure\Projection;
 
-use Notepad\Domain\Model\Note\NoteWasCreated;
+use Notepad\Domain\Model\Note\NoteWasAdded;
 use PDO;
 
 
-class NoteWasCreatedProjection implements Projection{
+class NoteWasAddedProjection implements Projection{
 
     private $pdo;
 
@@ -15,7 +15,7 @@ class NoteWasCreatedProjection implements Projection{
     }
 
    public function listenTO(){
-       return NoteWasCreated::class;
+       return NoteWasAdded::class;
    }
 
    public function project($event){

@@ -2,13 +2,13 @@
 
 namespace Notepad\Domain\Notepad;
 
-use Notepad\Domain\Note\NoteWasCreated;
+use Notepad\Domain\Note\NoteWasAdded;
 
 interface NotepadProjection {
     
-    public function projectNotepadWasCreated(NotepadWasCreated $event);
+    public function projectNotepadWasAdded(NotepadWasAdded $event);
 
-    public function projectNoteWasCreated(NoteWasCreated $event);
+    public function projectNoteWasAdded(NoteWasAdded $event);
 
     public function project(DomainEvents $eventStream);
 

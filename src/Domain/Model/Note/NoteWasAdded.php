@@ -6,7 +6,7 @@ use Notepad\Domain\Model\Note\NoteId;
 use  Notepad\Domain\Event\DomainEvent;
 
 
-class NoteWasCreated implements DomainEvent{
+class NoteWasAdded implements DomainEvent{
 
     private $noteId;
     protected $title;

@@ -17,6 +17,7 @@ class UsersNoteAddedProjection implements Projection{
    }
 
    public function project($event){
+       print_r('teetetes');
         $this->addingUsersNote($event);
     }
 

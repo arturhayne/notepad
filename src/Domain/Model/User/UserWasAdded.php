@@ -1,18 +1,21 @@
 <?php
 
-namespace Notepad\Domain\Model\Notepad;
+namespace Notepad\Domain\Model\User;
 
 use Notepad\Domain\Event\DomainEvent;
 
-class NotepadWasCreated implements DomainEvent{
+
+
+class UserWasAdded implements DomainEvent{
+
     protected $id;
-    protected $userId;
+    protected $email;
     protected $name;
     
-    public function __construct($aggregateId, $userId, $name){
+    public function __construct($aggregateId, $name, $email){
         $this->id = (string)$aggregateId;
-        $this->userId = (string)$userId;
         $this->name = $name;
+        $this->email = $email;
         $this->occurredOn = new \DateTimeImmutable();
     }
 
@@ -21,9 +24,9 @@ class NotepadWasCreated implements DomainEvent{
         return $this->id;
     } 
 
-    public function userId()
+    public function email()
     {
-        return $this->userId;
+        return $this->email;
     }
 
     public function name()
@@ -34,4 +37,5 @@ class NotepadWasCreated implements DomainEvent{
     public function occuredOn(){
         return $this->occurredOn;
     }
+
 }

@@ -31,11 +31,11 @@ use Notepad\Infrastructure\EventStoreDoctrineRepository;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 
 use Notepad\Infrastructure\Projection\Projector;
-use Notepad\Infrastructure\Projection\NoteWasCreatedProjection; 
-use Notepad\Infrastructure\Projection\UserWasCreatedProjection; 
+use Notepad\Infrastructure\Projection\NoteWasAddedProjection; 
+use Notepad\Infrastructure\Projection\UserWasAddedProjection; 
 use Notepad\Infrastructure\Projection\NumUserNotesWasAddedProjection;
 use Notepad\Infrastructure\Projection\NumUserNotesWasIncreasedProjection;
-use Notepad\Infrastructure\Projection\NotepadWasCreatedProjection; 
+use Notepad\Infrastructure\Projection\NotepadWasAddedProjection; 
 use Notepad\Infrastructure\Projection\UsersNoteAddedProjection; 
 
 use Notepad\Domain\Model\User\UserQueryRepository;
@@ -78,9 +78,9 @@ class NoteServiceProvider extends ServiceProvider
                             env('DB_USERNAME'),
                             env('DB_USERNAME'));
         $projector = new Projector();
-        $projector->register([new NoteWasCreatedProjection($pdo), 
-                                new UserWasCreatedProjection($pdo),
-                                new NotepadWasCreatedProjection($pdo),
+        $projector->register([new NoteWasAddedProjection($pdo), 
+                                new UserWasAddedProjection($pdo),
+                                new NotepadWasAddedProjection($pdo),
                                 new NumUserNotesWasIncreasedProjection($pdo),
                                 new NumUserNotesWasAddedProjection($pdo),
                                 new UsersNoteAddedProjection($pdo)]);
