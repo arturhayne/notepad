@@ -11,21 +11,13 @@ class Projector{
     public function register(array $projections){
         foreach($projections as $projection){
             $listenTo = $projection->listenTo();
-            $this->projections[$listenTo] = $projection;
-        }
-    }
-
-    public function project(array $events){
-        foreach($events as $event){
-            if(isset($this->projections[get_class($event)])){
-                $this->projections[get_class($event)]->project($event);
-            }
+            $this->projections[$listenTo][] = $projection;
         }
     }
 
     public function projectEvent($type,$event){
-        if(isset($this->projections[$type])){
-            $this->projections[$type]->project($event);
+        foreach($this->projections[$type] as $projection){
+            $projection->project($event);
         }
     }
 }

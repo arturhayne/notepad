@@ -32,10 +32,17 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
 
         $aNewNotepad = new static($notepadId, $userId, $name);
 
-        $aNewNotepad->recordAndpublishThat(
+        $aNewNotepad->recordApplyAndPublishThat(
             new NotepadWasAdded($notepadId, $userId, $name)
         );
+
         return $aNewNotepad;
+    }
+
+    public function applyNotepadWasAdded(NotepadWasAdded $event){
+        $this->id = NotepadId::createFromString($event->aggregateId());
+        $this->name = $event->name();
+        $this->userId = UserId::createFromString($event->userId()); 
     }
 
     public function id(){
@@ -62,19 +69,30 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
 
         $noteId = NoteId::create();
         $this->recordApplyAndPublishThat(
-            new NoteWasAdded($noteId, $this->id, $title, $content)
-        );
-
-        $this->recordAndpublishThat(
-            new NumUserNotesWasIncreased($this->userId)
-        );
-
-        $this->recordAndpublishThat(
-            new UsersNoteAdded($this->userId, $this->id, $noteId, $title, $content)
+            new NoteWasAdded($noteId, $this->id, $title, $content, $this->userId)
         );
 
         return $noteId;
-    }      
+    }  
+
+    protected function applyNoteWasAdded(NoteWasAdded $event){
+        $note = Note::create(NoteId::createFromString($event->noteId()), 
+                                NotepadId::createFromString($event->aggregateId()), 
+                                $event->title(), 
+                                $event->content());
+
+        $note->setNotepad($this);
+        $this->notes[] = $note;
+    }
+    
+    public static function reconstitute($history){
+        $notepad = new static($history->aggregateId());
+
+        foreach($events as $event){
+            $notepad->applyThat($event);
+        }
+        return $notepad;
+    }
 
     public function removeNote(NoteId $noteId){
         $note = $this->findNote($noteId);
@@ -93,32 +111,6 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
                 Criteria::expr()->eq('id',$noteId)
                 )
             )->first();
-    }
-
-    public static function reconstitute($history){
-        $notepad = new static($history->aggregateId());
-
-        foreach($events as $event){
-            $notepad->applyThat($event);
-        }
-        return $notepad;
-    }
-
-
-    public function numberNotes($qt = 0){
-        //foreach($this->notepads as $notepad){
-         //   $qt += count($this->notes());
-        //}
-        return $qt;
-    }
-
-    protected function applyNoteWasAdded(NoteWasAdded $event){
-        $note = Note::create(NoteId::createFromString($event->noteId()), 
-                        NotepadId::createFromString($event->aggregateId()), 
-                                $event->title(), $event->content());
-
-        $note->setNotepad($this);
-        $this->notes[] = $note;
     }
 
 }

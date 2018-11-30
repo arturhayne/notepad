@@ -12,13 +12,15 @@ class NoteWasAdded implements DomainEvent{
     protected $title;
     protected $content;
     protected $notepadId;
+    protected $userId;
 
-    public function __construct($noteId, $aggregateId, $title, $content){
+    public function __construct($noteId, $aggregateId, $title, $content, $userId){
         $this->noteId = (string)$noteId;
         $this->aggregateId = (string)$aggregateId;
         $this->notepadId = (string)$aggregateId;
         $this->content = $content;
         $this->title = $title;
+        $this->userId = (string)$userId;
         $this->occurredOn = new \DateTimeImmutable();
     }
 
@@ -44,6 +46,10 @@ class NoteWasAdded implements DomainEvent{
 
     public function aggregateId(){
         return $this->aggregateId;
+    }
+
+    public function userId(){
+        return $this->userId;
     }
 
 }

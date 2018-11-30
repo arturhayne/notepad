@@ -59,6 +59,6 @@ class PushNotificationsCommand extends Command
         );
 
         $numberOfNotifications = $notificationService->publishNotifications($exchangeName);
-        $this->info($numberOfNotifications.' notification(s) sent! ');
+        $this->info($numberOfNotifications.' event(s) sent! ');
     }
 }

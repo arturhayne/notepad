@@ -31,15 +31,17 @@ class User extends AggregateRoot{
     public static function create(UserId $id,string $name, string $email){
         $newUser = new static($id,$name,Email::create($email));
 
-        $newUser->recordAndpublishThat(
+        $newUser->recordApplyAndPublishThat(
             new UserWasAdded($id, $name, $email)
         );
-
-        $newUser->recordAndpublishThat(
-            new NumUserNotesWasAdded($id, 0)
-        );
-
+        
         return $newUser;
+    }
+
+    public function applyUserWasAdded(UserWasAdded $event){
+        $this->id = UserId::createFromString($event->aggregateId());
+        $this->name = $event->name();
+        $this->email = Email::create($event->email()); 
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Notepad\Infrastructure\Projection;
 
-use Notepad\Domain\Model\User\NumUserNotesWasAdded;
+use Notepad\Domain\Model\User\UserWasAdded;
 
 class NumUserNotesWasAddedProjection implements Projection{
 
@@ -13,7 +13,7 @@ class NumUserNotesWasAddedProjection implements Projection{
     }
 
    public function listenTO(){
-       return NumUserNotesWasAdded::class;
+       return UserWasAdded::class;
    }
 
    public function project($event){
@@ -27,7 +27,7 @@ class NumUserNotesWasAddedProjection implements Projection{
         );
 
         $stmt->execute([
-            ':id' => $event['user_id']
+            ':id' => $event['id']
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 namespace Notepad\Infrastructure\Projection;
 
-use Notepad\Domain\Model\Notepad\NumUserNotesWasIncreased;
+use Notepad\Domain\Model\Note\NoteWasAdded;
 
 class UsersNoteAddedProjection implements Projection{
 
@@ -13,11 +13,10 @@ class UsersNoteAddedProjection implements Projection{
     }
 
    public function listenTO(){
-       return UsersNoteAdded::class;
+       return NoteWasAdded::class;
    }
 
    public function project($event){
-       print_r('teetetes');
         $this->addingUsersNote($event);
     }
 

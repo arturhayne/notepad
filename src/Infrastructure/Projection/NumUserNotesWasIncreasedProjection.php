@@ -2,7 +2,7 @@
 
 namespace Notepad\Infrastructure\Projection;
 
-use Notepad\Domain\Model\Notepad\NumUserNotesWasIncreased;
+use Notepad\Domain\Model\Note\NoteWasAdded;
 
 class NumUserNotesWasIncreasedProjection implements Projection{
 
@@ -13,7 +13,7 @@ class NumUserNotesWasIncreasedProjection implements Projection{
     }
 
    public function listenTO(){
-       return NumUserNotesWasIncreased::class;
+       return NoteWasAdded::class;
    }
 
    public function project($event){
