@@ -2,17 +2,17 @@
 
 namespace Notepad\Domain\Notification;
 
-interface PublishedMessageTracker
+interface ProjectedEventTracker
 {
     /**
      * @param $aTypeName
      * @return int
      */
-    public function mostRecentPublishedMessageId($aTypeName);
+    public function mostRecentProjectedEventId($aTypeName);
 
     /**
      * @param $aTypeName
      * @param StoredEvent $notification
      */
-    public function trackMostRecentPublishedMessage($aTypeName, $notification);
+    public function trackMostRecentProjectedEvent($aTypeName, $notification);
 }

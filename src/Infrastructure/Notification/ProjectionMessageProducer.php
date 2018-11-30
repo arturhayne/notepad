@@ -2,11 +2,10 @@
 
 namespace Notepad\Infrastructure\Notification;
 
-use Notepad\Domain\Notification\MessageProducer;
-use PhpAmqpLib\Message\AMQPMessage;
+use Notepad\Domain\Notification\ProjectorManager;
 use Notepad\Infrastructure\Projection\Projector;
 
-class ProjectionMessageProducer implements MessageProducer
+class ProjectionMessageProducer implements ProjectorManager
 {
     private $projector;
 

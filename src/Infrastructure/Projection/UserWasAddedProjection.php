@@ -17,7 +17,6 @@ class UserWasAddedProjection implements Projection{
    }
 
    public function project($event){
-       print_r('added');
         $this->addUser($event);
     }
 

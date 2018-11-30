@@ -3,17 +3,17 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Notepad\Application\Service\Notification\NotificationService;
-use Notepad\Domain\Notification\PublishedMessageTracker;
-use Notepad\Domain\Notification\MessageProducer;
+use Notepad\Application\Service\Notification\ProjectionService;
+use Notepad\Domain\Notification\ProjectedEventTracker;
+use Notepad\Domain\Notification\ProjectorManager;
 use Notepad\Domain\Model\EventStore\EventStore;
 
 
-class PushNotificationsCommand extends Command
+class ProjectNotepadCommand extends Command
 {
     protected $eventStore;
-    protected $messageTracker;
-    protected $messageProducer;
+    protected $eventTracker;
+    protected $projectorManager;
     /**
      * The name and signature of the console command.
      *
@@ -34,12 +34,12 @@ class PushNotificationsCommand extends Command
      * @return void
      */
     public function __construct(EventStore $eventStore,
-            PublishedMessageTracker $messageTracker,
-            MessageProducer $messageProducer)
+            ProjectedEventTracker $eventTracker,
+            ProjectorManager $projectorManager)
     {
         $this->eventStore = $eventStore;
-        $this->messageTracker = $messageTracker;
-        $this->messageProducer = $messageProducer;
+        $this->eventTracker = $eventTracker;
+        $this->projectorManager = $projectorManager;
         parent::__construct();
     }
 
@@ -52,13 +52,13 @@ class PushNotificationsCommand extends Command
     {
         $exchangeName = $this->argument('exchange-name');
 
-        $notificationService = new NotificationService(
+        $projectionService = new ProjectionService(
             $this->eventStore,
-            $this->messageTracker,
-            $this->messageProducer
+            $this->eventTracker,
+            $this->projectorManager
         );
 
-        $numberOfNotifications = $notificationService->publishNotifications($exchangeName);
+        $numberOfNotifications = $projectionService->projectEvents($exchangeName);
         $this->info($numberOfNotifications.' event(s) sent! ');
     }
 }

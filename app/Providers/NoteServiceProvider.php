@@ -40,12 +40,13 @@ use Notepad\Infrastructure\Projection\UsersNoteAddedProjection;
 
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
-use Notepad\Domain\Notification\PublishedMessageTracker;
-use Notepad\Domain\Notification\MessageProducer;
 
-use Notepad\Infrastructure\Notification\DoctrinePublishedMessageTracker;
+use Notepad\Infrastructure\Notification\DoctrineProjectedEventTracker;
 use Notepad\Infrastructure\Notification\ProjectionMessageProducer;
-use Notepad\Domain\Notification\PublishedMessage;
+use Notepad\Domain\Notification\ProjectedEventTracker;
+use Notepad\Domain\Notification\ProjectedEvent;
+
+use Notepad\Domain\Notification\ProjectorManager;
 
 
 
@@ -129,15 +130,15 @@ class NoteServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(PublishedMessageTracker::class, function($app)  use ($em){
+        $this->app->bind(ProjectedEventTracker::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new DoctrinePublishedMessageTracker(
+            return new DoctrineProjectedEventTracker(
                 $em,
-                $em->getClassMetaData(PublishedMessage::class)
+                $em->getClassMetaData(ProjectedEvent::class)
             );
         });
 
-        $this->app->bind(MessageProducer::class, function($app)  use ($em, $projector){
+        $this->app->bind(ProjectorManager::class, function($app)  use ($em, $projector){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new ProjectionMessageProducer(
                 $projector
