@@ -58,9 +58,8 @@ class ProjectionService
     private function publish($exchangeName, StoredEvent $event, ProjectorManager $projectorManager)
     {
         
-        $projectorManager->send(
-            $this->serializer()->deserialize($event->eventBody(), 'array' , 'json'),
-            $event->typeName()
+        $projectorManager->projectEvent($event->typeName(),
+            $this->serializer()->deserialize($event->eventBody(), 'array' , 'json')
         );
 
         return $event;

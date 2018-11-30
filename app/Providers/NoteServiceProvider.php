@@ -78,15 +78,7 @@ class NoteServiceProvider extends ServiceProvider
         $pdo = new \PDO(env('STRING_CON'),
                             env('DB_USERNAME'),
                             env('DB_USERNAME'));
-        $projector = new Projector();
-        $projector->register([new NoteWasAddedProjection($pdo), 
-                                new UserWasAddedProjection($pdo),
-                                new NotepadWasAddedProjection($pdo),
-                                new NumUserNotesWasIncreasedProjection($pdo),
-                                new NumUserNotesWasAddedProjection($pdo),
-                                new UsersNoteAddedProjection($pdo)]);
-
-
+                            
          $this->app->bind(UserRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new UserDoctrineRepository(
@@ -138,11 +130,16 @@ class NoteServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(ProjectorManager::class, function($app)  use ($em, $projector){
-            // This is what Doctrine's EntityRepository needs in its constructor.
-            return new ProjectionMessageProducer(
-                $projector
-            );
+        $this->app->bind(ProjectorManager::class, function($app)  use ($pdo){
+
+            $projector = new Projector();
+            $projector->register([new NoteWasAddedProjection($pdo), 
+                                    new UserWasAddedProjection($pdo),
+                                    new NotepadWasAddedProjection($pdo),
+                                    new NumUserNotesWasIncreasedProjection($pdo),
+                                    new NumUserNotesWasAddedProjection($pdo),
+                                    new UsersNoteAddedProjection($pdo)]);
+            return $projector;
         });
 
         $this->app->bind(DomainEventSubscriber::class, function($app)  use ($em){

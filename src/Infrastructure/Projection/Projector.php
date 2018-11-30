@@ -2,9 +2,11 @@
 
 namespace Notepad\Infrastructure\Projection;
 use Notepad\Domain\Model\Note\NoteWasAdded;
+use Notepad\Domain\Notification\ProjectorManager;
 
 
-class Projector{
+
+class Projector implements ProjectorManager{
 
     private $projections = [];
 
