@@ -11,6 +11,10 @@ An online notepad
 - composer install
 - cp .env.example .env
 - php artisan key:generate
+
+## Database
+It is necessary to especify the projection database in .env file and maybe in config\database.php. Projection connection is made with PDO.
+After all configuration:
 - php artisan migrate
 
 ## Run
@@ -18,35 +22,80 @@ An online notepad
 
 ## Services:
 
-- Create a note with title
+- Create user
 ```
-POST /api/notes/create 
+POST http://localhost:8000/api/users/create 
 ```
 
-payload: {"title":"titulo","content":"conteudo"}
+payload: {"name":"name","email":"teste@teste.com"}
 
 Answer:
+{
+    "id": "77d6ddad-0f6b-4378-9e03-03d4e36f181a"
+}
 
-1 (id)
-
-- Delete a note
+- Create Notepad
 ```
-DELETE /api/notes/delete/8
-```
-
-"Note Deleted"
-
-- List notes
-```
-GET /api/notes/list
+POST http://localhost:8000/api/notepad/create
 ```
 
+payload: {"name":"notepad name", "userId":"77d6ddad-0f6b-4378-9e03-03d4e36f181a"}
+
+Answer:
+{
+    "id": "2a21ae57-6115-4ed4-8df2-2404187b4dab"
+}
+
+- Create Note
+
+```
+POST http://localhost:8000/api/notes/create
+```
+
+payload: {"title":"title name", "content":"content", "notepadId":"2a21ae57-6115-4ed4-8df2-2404187b4dab"}
+
+Answer:
+{
+    "id": "0b5ac7f3-2991-4463-b5d7-80ef3c49caa1"
+}
+
+- Amount of notes per user
+
+GET http://localhost:8000/api/user/qtNotes/b5724410-4caa-4607-aaa4-f81b58e0513c
+
+Answer:
+{
+    "qtd": 3
+}
+
+- Notes from User
+
+GET http://localhost:8000/api/user/notesFromUser/b5724410-4caa-4607-aaa4-f81b58e0513c
+
+Answer:
 [
     {
-        "id": 1,
-        "title": "titulo",
-        "content": "conteudo"
+        "id": 4,
+        "user_id": "b5724410-4caa-4607-aaa4-f81b58e0513c",
+        "note_id": "42c3835e-b8c1-4d7c-aea7-d8eda16f5e1c",
+        "notepad_id": "17cba867-fcb4-484d-9898-dbb3e10475b2",
+        "title": "título2",
+        "content": "testing creating note"
+    },
+    {
+        "id": 5,
+        "user_id": "b5724410-4caa-4607-aaa4-f81b58e0513c",
+        "note_id": "51dec6b7-ec4e-482b-98c0-5543c6568459",
+        "notepad_id": "17cba867-fcb4-484d-9898-dbb3e10475b2",
+        "title": "título2",
+        "content": "testing creating note"
+    },
+    {
+        "id": 6,
+        "user_id": "b5724410-4caa-4607-aaa4-f81b58e0513c",
+        "note_id": "b04fe7ec-9b8f-42ca-a2d3-4ec91fd049ad",
+        "notepad_id": "17cba867-fcb4-484d-9898-dbb3e10475b2",
+        "title": "título2",
+        "content": "testing creating note"
     }
 ]
-
-
