@@ -41,12 +41,11 @@ use Notepad\Infrastructure\Projection\UsersNoteAddedProjection;
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
 
-use Notepad\Infrastructure\Notification\DoctrineProjectedEventTracker;
-use Notepad\Infrastructure\Notification\ProjectionMessageProducer;
-use Notepad\Domain\Notification\ProjectedEventTracker;
-use Notepad\Domain\Notification\ProjectedEvent;
+use Notepad\Infrastructure\Projection\DoctrineProjectedEventTracker;
+use Notepad\Domain\Projection\ProjectedEventTracker;
+use Notepad\Domain\Projection\ProjectedEvent;
 
-use Notepad\Domain\Notification\ProjectorManager;
+use Notepad\Domain\Projection\ProjectorManager;
 
 
 

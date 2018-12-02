@@ -4,9 +4,9 @@
       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Notepad\Domain\Notification\ProjectedEvent" 
+    <entity name="Notepad\Domain\Projection\ProjectedEvent" 
         table="event_published_message_tracker" 
-        repository-class="Notepad\Domain\Notification\PublishedMessageTracker">
+        repository-class="Notepad\Domain\Projection\PublishedMessageTracker">
 
         <id name="trackerId" type="integer" column="tracker_id" >
             <generator strategy="AUTO" />

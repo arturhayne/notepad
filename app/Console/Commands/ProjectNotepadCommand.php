@@ -3,17 +3,12 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Notepad\Application\Service\Notification\ProjectionService;
-use Notepad\Domain\Notification\ProjectedEventTracker;
-use Notepad\Domain\Notification\ProjectorManager;
-use Notepad\Domain\Model\EventStore\EventStore;
+use Notepad\Application\Service\Projection\ProjectionService;
 
 
 class ProjectNotepadCommand extends Command
 {
-    protected $eventStore;
-    protected $eventTracker;
-    protected $projectorManager;
+    protected $projectionService;
     /**
      * The name and signature of the console command.
      *
@@ -33,13 +28,8 @@ class ProjectNotepadCommand extends Command
      *
      * @return void
      */
-    public function __construct(EventStore $eventStore,
-            ProjectedEventTracker $eventTracker,
-            ProjectorManager $projectorManager)
-    {
-        $this->eventStore = $eventStore;
-        $this->eventTracker = $eventTracker;
-        $this->projectorManager = $projectorManager;
+    public function __construct(ProjectionService $projectionService)
+    {   $this->projectionService = $projectionService;
         parent::__construct();
     }
 
@@ -51,14 +41,7 @@ class ProjectNotepadCommand extends Command
     public function handle()
     {
         $exchangeName = $this->argument('exchange-name');
-
-        $projectionService = new ProjectionService(
-            $this->eventStore,
-            $this->eventTracker,
-            $this->projectorManager
-        );
-
-        $numberOfNotifications = $projectionService->projectEvents($exchangeName);
+        $numberOfNotifications = $this->projectionService->projectEvents($exchangeName);
         $this->info($numberOfNotifications.' event(s) sent! ');
     }
 }

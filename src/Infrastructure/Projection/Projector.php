@@ -2,7 +2,7 @@
 
 namespace Notepad\Infrastructure\Projection;
 use Notepad\Domain\Model\Note\NoteWasAdded;
-use Notepad\Domain\Notification\ProjectorManager;
+use Notepad\Domain\Projection\ProjectorManager;
 
 
 

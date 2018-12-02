@@ -1,9 +1,9 @@
 <?php
 
-namespace Notepad\Infrastructure\Notification;
+namespace Notepad\Infrastructure\Projection;
 
-use Notepad\Domain\Notification\ProjectedEventTracker;
-use Notepad\Domain\Notification\ProjectedEvent;
+use Notepad\Domain\Projection\ProjectedEventTracker;
+use Notepad\Domain\Projection\ProjectedEvent;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 use Doctrine\ORM\EntityRepository;
 

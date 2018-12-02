@@ -1,12 +1,12 @@
 <?php
 
-namespace Notepad\Application\Service\Notification;
+namespace Notepad\Application\Service\Projection;
 
 use Notepad\Domain\Model\EventStore\EventStore;
 use JMS\Serializer\SerializerBuilder;
 use Notepad\Domain\Model\EventStore\StoredEvent;
-use Notepad\Domain\Notification\ProjectorManager;
-use Notepad\Domain\Notification\ProjectedEventTracker;
+use Notepad\Domain\Projection\ProjectorManager;
+use Notepad\Domain\Projection\ProjectedEventTracker;
 use Notepad\Domain\Model\Note\NoteWasAdded;
 
 

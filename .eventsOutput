@@ -52,3 +52,126 @@ Notepad\Domain\Model\User\UserWasAdded0 event(s) sent!
 0 event(s) sent! 
 0 event(s) sent! 
 0 event(s) sent! 
+0 event(s) sent! 
+0 event(s) sent! 
+0 event(s) sent! 
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Class 'Notepad\Application\Service\Notification\ProjectionService' not found
+
+  at /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:55
+    51|     public function handle()
+    52|     {
+    53|         $exchangeName = $this->argument('exchange-name');
+    54| 
+  > 55|         $projectionService = new ProjectionService(
+    56|             $this->eventStore,
+    57|             $this->eventTracker,
+    58|             $this->projectorManager
+    59|         );
+
+  Exception trace:
+
+  1   App\Console\Commands\ProjectNotepadCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  2   call_user_func_array([])
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Undefined variable: projectionService
+
+  at /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+    40|      */
+    41|     public function handle()
+    42|     {
+    43|         $exchangeName = $this->argument('exchange-name');
+  > 44|         $numberOfNotifications = $projectionService->projectEvents($exchangeName);
+    45|         $this->info($numberOfNotifications.' event(s) sent! ');
+    46|     }
+    47| }
+    48|
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Undefined variable: projectionService", "/Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php", ["notepad"])
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+
+  2   App\Console\Commands\ProjectNotepadCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Undefined variable: projectionService
+
+  at /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+    40|      */
+    41|     public function handle()
+    42|     {
+    43|         $exchangeName = $this->argument('exchange-name');
+  > 44|         $numberOfNotifications = $projectionService->projectEvents($exchangeName);
+    45|         $this->info($numberOfNotifications.' event(s) sent! ');
+    46|     }
+    47| }
+    48|
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Undefined variable: projectionService", "/Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php", ["notepad"])
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+
+  2   App\Console\Commands\ProjectNotepadCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Undefined variable: projectionService
+
+  at /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+    40|      */
+    41|     public function handle()
+    42|     {
+    43|         $exchangeName = $this->argument('exchange-name');
+  > 44|         $numberOfNotifications = $projectionService->projectEvents($exchangeName);
+    45|         $this->info($numberOfNotifications.' event(s) sent! ');
+    46|     }
+    47| }
+    48|
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Undefined variable: projectionService", "/Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php", ["notepad"])
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+
+  2   App\Console\Commands\ProjectNotepadCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+
+   ErrorException  : Object of class App\Console\Commands\ProjectNotepadCommand could not be converted to string
+
+  at /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+    40|      */
+    41|     public function handle()
+    42|     {
+    43|         $exchangeName = $this->argument('exchange-name');
+  > 44|         $numberOfNotifications = $$this->projectionService->projectEvents($exchangeName);
+    45|         $this->info($numberOfNotifications.' event(s) sent! ');
+    46|     }
+    47| }
+    48|
+
+  Exception trace:
+
+  1   Illuminate\Foundation\Bootstrap\HandleExceptions::handleError("Object of class App\Console\Commands\ProjectNotepadCommand could not be converted to string", "/Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php", ["notepad"])
+      /Users/arturhayne/Projects/notepad/notepad/app/Console/Commands/ProjectNotepadCommand.php:44
+
+  2   App\Console\Commands\ProjectNotepadCommand::handle()
+      /Users/arturhayne/Projects/notepad/notepad/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:29
+
+  Please use the argument -v to see more details.
+0 event(s) sent! 
+0 event(s) sent! 
+0 event(s) sent! 
+1 event(s) sent! 
+0 event(s) sent! 

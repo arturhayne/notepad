@@ -1,6 +1,6 @@
 <?php
 
-namespace Notepad\Domain\Notification;
+namespace Notepad\Domain\Projection;
 
 class ProjectedEvent
 {
