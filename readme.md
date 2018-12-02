@@ -1,5 +1,5 @@
 # About
-An online notepad
+An online notepad using DDD, Hexagonal Arch., CQRS, Doctrine, PDO
 - Laravel 5.6
 
 # Requirements
