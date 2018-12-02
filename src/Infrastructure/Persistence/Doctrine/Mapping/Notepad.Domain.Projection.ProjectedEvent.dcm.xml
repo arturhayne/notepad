@@ -6,7 +6,7 @@
 
     <entity name="Notepad\Domain\Projection\ProjectedEvent" 
         table="event_published_message_tracker" 
-        repository-class="Notepad\Domain\Projection\PublishedMessageTracker">
+        repository-class="Notepad\Domain\Projection\ProjectedEventTracker">
 
         <id name="trackerId" type="integer" column="tracker_id" >
             <generator strategy="AUTO" />

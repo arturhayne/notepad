@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Notepad extends Migration
+class NotesProjection extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class Notepad extends Migration
      */
     public function up()
     {
-        Schema::create('notepad', function (Blueprint $table) {
+        Schema::connection(env('DB_PROJECTION_CONNECTION'))->create('notes', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('name');
+            $table->string('title');
+            $table->text('content');
             $table->primary('id');
-            $table->uuid('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->uuid('notepad_id');
         });
     }
 
@@ -29,7 +29,7 @@ class Notepad extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notepad');
+        Schema::connection(env('DB_PROJECTION_CONNECTION'))->dropIfExists('notes');
         
     }
 }

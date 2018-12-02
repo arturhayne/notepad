@@ -21,7 +21,7 @@ class ProjectNotepadCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Notify all domain events via messaging';
+    protected $description = 'Project all domain events';
 
     /**
      * Create a new command instance.

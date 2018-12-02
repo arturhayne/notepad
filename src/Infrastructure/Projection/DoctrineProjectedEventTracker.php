@@ -13,7 +13,6 @@ class DoctrineProjectedEventTracker extends EntityRepository implements Projecte
     public function mostRecentProjectedEventId($exchangeName)
     {
         $eventTracked = $this->findOneByExchangeName($exchangeName);
-
         if (!$eventTracked) {
             return null;
         }

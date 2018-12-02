@@ -75,8 +75,8 @@ class NoteServiceProvider extends ServiceProvider
 
         /** Projetion **/
         $pdo = new \PDO(env('STRING_CON'),
-                            env('DB_USERNAME'),
-                            env('DB_USERNAME'));
+                            env('DB_USERNAME_PROJECTION'),
+                            env('DB_PASSWORD_PROJECTION'));
                             
          $this->app->bind(UserRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
