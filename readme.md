@@ -5,7 +5,7 @@ An online notepad using DDD, Hexagonal Arch., CQRS, Doctrine, PDO
 # Requirements
 - php 5.6 ou higher [tutorial](http://tecadmin.net/install-php5-on-ubuntu/)
 - composer [tutorial](https://getcomposer.org/doc/00-intro.md#globally)
-- postgres
+- database: [postgres](https://www.postgresql.org/download/) or [MySQL](https://www.mysql.com/downloads/)
 
 ## Development
 - cp .env.example .env
