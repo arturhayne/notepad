@@ -19,12 +19,12 @@ After all configuration:
 
 ## Projections Command
 Scheduling the projection command (ProjectNotepadCommand) with crontab
- - #crotab -e
+- #crotab -e
  ```
  * * * * * cd /[project-path-change-me-please]/notepad/ && php artisan schedule:run >> /dev/null 2>&1
  ```
- 
- The command output will be in .eventsOutput in project folder
+
+The command output will be in .eventsOutput in project folder
 
 ## Run
 - php artisan serve --port=5000
@@ -70,7 +70,9 @@ Answer:
 
 - Amount of notes per user
 
+```
 GET http://localhost:8000/api/user/qtNotes/b5724410-4caa-4607-aaa4-f81b58e0513c
+```
 
 Answer:
 {
@@ -79,7 +81,9 @@ Answer:
 
 - Notes from User
 
+```
 GET http://localhost:8000/api/user/notesFromUser/b5724410-4caa-4607-aaa4-f81b58e0513c
+```
 
 Answer:
 [
