@@ -8,14 +8,23 @@ An online notepad using DDD, Hexagonal Arch., CQRS, Doctrine, PDO
 - postgres
 
 ## Development
-- composer install
 - cp .env.example .env
+- composer install
 - php artisan key:generate
 
 ## Database
-It is necessary to especify the projection database in .env file and maybe in config\database.php. Projection connection is made with PDO.
+It is necessary to especify the projection database in .env (pgsql_projection or mysql_projection) or for another type in config\database.php. Projection connection is made with PDO.
 After all configuration:
 - php artisan migrate
+
+## Projections Command
+Scheduling the projection command (ProjectNotepadCommand) with crontab
+ - #crotab -e
+ ```
+ * * * * * cd /[project-path-change-me-please]/notepad/ && php artisan schedule:run >> /dev/null 2>&1
+ ```
+ 
+ The command output will be in .eventsOutput in project folder
 
 ## Run
 - php artisan serve --port=5000
