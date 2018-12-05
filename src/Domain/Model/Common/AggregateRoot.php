@@ -6,6 +6,7 @@ use Notepad\Domain\Event\DomainEventPublisher;
 use Notepad\Domain\Event\DomainEvent;
 use Notepad\Domain\Model\Notepad\Notepad;
 
+
 class AggregateRoot {
 
     private $recordedEvents = [];
@@ -28,6 +29,7 @@ class AggregateRoot {
 
     protected function applyThat(DomainEvent $domainEvent){
         $modifier = 'apply' . (new \ReflectionClass($domainEvent))->getShortName();
+        //$modifier = 'apply' . ClassFunctions::short($domainEvent);
         $this->$modifier($domainEvent);
     }
 

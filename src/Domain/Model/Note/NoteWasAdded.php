@@ -52,4 +52,13 @@ class NoteWasAdded implements DomainEvent{
         return $this->userId;
     }
 
+    public static function arrayToDomainEvent(array $array){
+        return new static($array['note_id'],
+        $array['notepad_id'],
+        $array['title'],
+        $array['content'],
+        $array['user_id']);
+    }
+
+
 }

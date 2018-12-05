@@ -17,7 +17,6 @@ class CreateNotepadHandler extends NotepadAggregateService{
         $this->subscribe();
         $notepad = Notepad::create(NotepadId::create(),
             UserId::createFromString($command->userId),$command->name);
-        $this->notepadRepository->add($notepad);
         return (string)$notepad->id();
     }
 }

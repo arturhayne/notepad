@@ -29,8 +29,13 @@ class UserDoctrineRepository extends EntityRepository implements UserRepository
 		return $data;
     }
 
-    public function ofId(UserId $userId){
+   /*public function ofId(UserId $userId){
         return $this->em->find(User::class, $userId);
+    }*/
+    public function ofId(UserId $userId){
+        $eventStream = $this->eventStore->getAggregateHistoryFor($aggregateId);
+
+        return User::reconstitute($eventStream);
     }
 
 }

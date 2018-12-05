@@ -20,7 +20,6 @@ class CreateNoteHandler extends NotepadAggregateService{
         $this->subscribe();
         $notepad = $this->findNotepadOrFail($command->notepadId);
         $noteId = $notepad->createNote($command->title,$command->content);
-        $this->notepadRepository->add($notepad);
         return (string) $noteId;
     }
 

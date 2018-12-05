@@ -13,7 +13,7 @@ class StoredEvent implements DomainEvent{
     private $typeName;
 
     public function __construct($aggregateId, $aTypeName, \DateTimeImmutable $aOcurredOn, $aEventBody){
-        $this->aggregateId = $aggregateId;
+        $this->aggregateId = (string)$aggregateId;
         $this->eventBody = $aEventBody;
         $this->occurredOn = $aOcurredOn;
         $this->typeName = $aTypeName;
@@ -38,5 +38,8 @@ class StoredEvent implements DomainEvent{
     public function typeName(){
         return $this->typeName;
     }
+
+    public static function arrayToDomainEvent(array $array){}
+
 
 }

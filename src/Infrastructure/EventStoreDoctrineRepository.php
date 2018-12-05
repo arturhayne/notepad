@@ -7,6 +7,8 @@ use Notepad\Domain\Model\EventStore\EventStore;
 use Notepad\Domain\Event\DomainEvent;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 use JMS\Serializer\Serializer;
+use Notepad\Domain\Model\Common\AggregateHistory;
+use Notepad\Domain\Model\Notepad\NotepadWasAdded;
 
 
 class EventStoreDoctrineRepository extends EntityRepository implements EventStore 
@@ -22,6 +24,7 @@ class EventStoreDoctrineRepository extends EntityRepository implements EventStor
             );
 
         $this->getEntityManager()->persist($storedEvent);
+        $this->getEntityManager()->flush($storedEvent);
     }
 
     public function allStoredEventsSince($anEventId){
@@ -32,6 +35,16 @@ class EventStoreDoctrineRepository extends EntityRepository implements EventStor
         } 
         $query->orderBy('e.eventId');
         return $query->getQuery()->getResult();
+    }
+
+    public function getHistoryOfId($aggregateId){
+        $query = $this->createQueryBuilder('e');
+        if($aggregateId){
+            $query->where('e.aggregateId = :aggregateId');
+            $query->setParameters(['aggregateId' => $aggregateId ]);
+        } 
+        $query->orderBy('e.occurredOn');
+        return new AggregateHistory($aggregateId, $query->getQuery()->getResult()); 
     }
 
     private function serializer(){

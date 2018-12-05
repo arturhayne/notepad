@@ -27,27 +27,22 @@ use  Notepad\Domain\Event\DomainEvent;
 
 abstract class NotepadAggregateService{
 
-    protected $notepadRepository;
     protected $listNoteTransformer;
     protected $eventStore;
 
-    public function __construct(NotepadRepository $notepadRepository, 
+    public function __construct( 
         ListNoteTransformer $listNoteTransformer,
         EventStore $eventStore){
-
-        $this->notepadRepository = $notepadRepository;
         $this->listNoteTransformer = $listNoteTransformer;
         $this->eventStore = $eventStore;
     }
 
     protected function findNotepadOrFail($notepadId){
-        
-        $notepad = $this->notepadRepository->ofId(NotepadId::createFromString($notepadId));
-
+        $history = $this->eventStore->getHistoryOfId($notepadId);
+        $notepad = Notepad::reconstitute($history);
         if($notepad == null){
             throw new \InvalidArgumentException('Note needs a Notepad');
         }
-
         return $notepad;
     }
 

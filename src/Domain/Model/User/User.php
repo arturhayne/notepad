@@ -10,7 +10,7 @@ use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Domain\Model\Common\AggregateRoot;
 
 
-class User extends AggregateRoot{
+class User extends AggregateRoot implements EventSourcedAggregateRoot{ 
     
     /** @var Uuid */
     protected $id;
@@ -63,6 +63,17 @@ class User extends AggregateRoot{
      */
     public function email(){
         return $this->email;
+    }
+
+    public static function reconstitute($events)
+    {
+        $user = User::create($events[0]->aggregateId(),'teste','artur@gm.com');
+
+        foreach ($events as $anEvent) {
+            $user->applyThat($anEvent);
+        }
+
+        return $user;
     }
 
 }

@@ -16,6 +16,14 @@ class NotepadWasAdded implements DomainEvent{
         $this->occurredOn = new \DateTimeImmutable();
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function id($id){
+        $this->id = $id;
+    }
+
     public function aggregateId()
     {
         return $this->id;
@@ -33,5 +41,9 @@ class NotepadWasAdded implements DomainEvent{
 
     public function occuredOn(){
         return $this->occurredOn;
+    }
+
+    public static function arrayToDomainEvent(array $array){
+        return new static($array['id'],$array['user_id'],$array['name']);
     }
 }

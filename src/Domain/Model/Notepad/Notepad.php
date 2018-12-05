@@ -9,8 +9,12 @@ use Notepad\Domain\Model\Note\Note;
 use Doctrine\Common\Collections\Criteria;
 
 use Notepad\Domain\Model\Common\AggregateRoot;
+use Notepad\Domain\Model\Common\AggregateHistory;
+use Notepad\Domain\Model\Common\EventSourcedAggregateRoot;
 
 use Notepad\Domain\Model\Note\NoteWasAdded;
+use Ramsey\Uuid\Uuid;
+
 
 class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{ 
 
@@ -31,7 +35,6 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
     public static function create(NotepadId $notepadId, UserId $userId, string $name){
 
         $aNewNotepad = new static($notepadId, $userId, $name);
-
         $aNewNotepad->recordApplyAndPublishThat(
             new NotepadWasAdded($notepadId, $userId, $name)
         );
@@ -66,12 +69,10 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
         if(count($this->notes)>=self::MAX_NOTES){
             throw new \InvalidArgumentException('Max number notes exceeded');
         }
-
         $noteId = NoteId::create();
         $this->recordApplyAndPublishThat(
             new NoteWasAdded($noteId, $this->id, $title, $content, $this->userId)
         );
-
         return $noteId;
     }  
 
@@ -80,19 +81,10 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
                                 NotepadId::createFromString($event->aggregateId()), 
                                 $event->title(), 
                                 $event->content());
-
         $note->setNotepad($this);
         $this->notes[] = $note;
     }
-    
-    public static function reconstitute($history){
-        $notepad = new static($history->aggregateId());
 
-        foreach($events as $event){
-            $notepad->applyThat($event);
-        }
-        return $notepad;
-    }
 
     public function removeNote(NoteId $noteId){
         $note = $this->findNote($noteId);
@@ -111,6 +103,19 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
                 Criteria::expr()->eq('id',$noteId)
                 )
             )->first();
+    }
+
+    public static function reconstitute(AggregateHistory $history)
+    {
+        $notepad = new static (
+            NotepadId::createFromString($history->aggregateId()),
+            UserId::create(),'');
+
+        foreach ($history->events() as $anEvent) {
+            $notepad->applyThat($anEvent);
+        }
+        $notepad->clearEvents();
+        return $notepad;
     }
 
 }

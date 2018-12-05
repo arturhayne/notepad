@@ -17,15 +17,13 @@ class CreateUserHandler{
     protected $repository;
     protected $eventStore;
 
-    public function __construct(UserRepository $repository, EventStore $eventStore){
-        $this->repository = $repository;
+    public function __construct(EventStore $eventStore){
         $this->eventStore = $eventStore;
     }
 
     public function execute(CreateUserCommand $command) : string{
         $this->subscribe();
         $user = User::create(UserId::Create(),$command->name,$command->email);
-        $this->repository->add($user);
         return (string) $user->id();
     }
 
