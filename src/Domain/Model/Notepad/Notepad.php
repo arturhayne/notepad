@@ -107,15 +107,18 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
 
     public static function reconstitute(AggregateHistory $history)
     {
-        $notepad = new static (
-            NotepadId::createFromString($history->aggregateId()),
-            UserId::create(),'');
+        $notepad = Notepad::emptyNotepad();
 
         foreach ($history->events() as $anEvent) {
             $notepad->applyThat($anEvent);
         }
         $notepad->clearEvents();
         return $notepad;
+    }
+
+    private static function emptyNotepad() {
+        $rc = new \ReflectionClass(__CLASS__);
+        return $rc->newInstanceWithoutConstructor();
     }
 
 }

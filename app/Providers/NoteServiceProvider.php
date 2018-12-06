@@ -13,7 +13,6 @@ use Notepad\Domain\Model\User\UserRepository;
 use Notepad\Infrastructure\UserPDORepository;
 use Notepad\Infrastructure\UserDoctrineRepository;
 
-use Notepad\Infrastructure\NotepadDoctrineRepository;
 
 use Notepad\Domain\Model\Notepad\Notepad;
 
@@ -40,6 +39,10 @@ use Notepad\Infrastructure\Projection\UsersNoteAddedProjection;
 
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
+
+use Notepad\Infrastructure\NotepadESourcingRepository;
+use Notepad\Infrastructure\UserESourcingRepository;
+
 
 use Notepad\Infrastructure\Projection\DoctrineProjectedEventTracker;
 use Notepad\Domain\Projection\ProjectedEventTracker;
@@ -80,9 +83,9 @@ class NoteServiceProvider extends ServiceProvider
                             
          $this->app->bind(UserRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new UserDoctrineRepository(
+            return new UserESourcingRepository(
                 $em,
-                $em->getClassMetaData(User::class)
+                $em->getClassMetaData(StoredEvent::class)
             );
         });
 
@@ -95,16 +98,15 @@ class NoteServiceProvider extends ServiceProvider
 
         $this->app->bind(NotepadRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new NotepadDoctrineRepository(
+            return new NotepadESourcingRepository(
                 $em,
-                $em->getClassMetaData(Notepad::class)
+                $em->getClassMetaData(StoredEvent::class)
             );
         });
 
         $this->app->bind(NotepadProjection::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
             return new Projector(
-
             );
         });
 

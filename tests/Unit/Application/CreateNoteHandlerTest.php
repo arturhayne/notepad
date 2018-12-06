@@ -14,7 +14,6 @@ use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Domain\Model\User\UserId;
 
 
-use Notepad\Infrastructure\NotepadDoctrineRepository;
 use Prophecy\Argument;
 
 

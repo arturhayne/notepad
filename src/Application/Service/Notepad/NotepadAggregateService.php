@@ -28,18 +28,17 @@ use  Notepad\Domain\Event\DomainEvent;
 abstract class NotepadAggregateService{
 
     protected $listNoteTransformer;
-    protected $eventStore;
+    protected $notepadRepository;
 
     public function __construct( 
         ListNoteTransformer $listNoteTransformer,
-        EventStore $eventStore){
+        NotepadRepository $notepadRepository){
         $this->listNoteTransformer = $listNoteTransformer;
-        $this->eventStore = $eventStore;
+        $this->notepadRepository = $notepadRepository;
     }
 
     protected function findNotepadOrFail($notepadId){
-        $history = $this->eventStore->getHistoryOfId($notepadId);
-        $notepad = Notepad::reconstitute($history);
+        $notepad = $this->notepadRepository->ofId(NotepadId::createFromString($notepadId));
         if($notepad == null){
             throw new \InvalidArgumentException('Note needs a Notepad');
         }
@@ -48,7 +47,7 @@ abstract class NotepadAggregateService{
 
     protected function subscribe(){
         DomainEventPublisher::instance()->subscribe(
-            new PersistDomainEventSubscriber($this->eventStore)
+            new PersistDomainEventSubscriber($this->notepadRepository)
         );
     }
 } 

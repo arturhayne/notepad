@@ -37,6 +37,6 @@ class UserWasAdded implements DomainEvent{
     public function occuredOn(){
         return $this->occurredOn;
     }
-    public static function arrayToDomainEvent($array){}
+    public static function arrayToDomainEvent(array $array){}
 
 }

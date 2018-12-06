@@ -8,6 +8,10 @@ use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
 
 use Notepad\Domain\Model\Common\AggregateRoot;
+use Notepad\Domain\Model\Common\EventSourcedAggregateRoot;
+use Notepad\Domain\Model\Common\AggregateHistory;
+
+
 
 
 class User extends AggregateRoot implements EventSourcedAggregateRoot{ 
@@ -65,15 +69,20 @@ class User extends AggregateRoot implements EventSourcedAggregateRoot{
         return $this->email;
     }
 
-    public static function reconstitute($events)
+    public static function reconstitute(AggregateHistory $history)
     {
-        $user = User::create($events[0]->aggregateId(),'teste','artur@gm.com');
+        $user = User::emptyUser();
 
-        foreach ($events as $anEvent) {
+        foreach ($history->events() as $anEvent) {
             $user->applyThat($anEvent);
         }
-
+        $user->clearEvents();
         return $user;
+    }
+
+    private static function emptyUser() {
+        $rc = new \ReflectionClass(__CLASS__);
+        return $rc->newInstanceWithoutConstructor();
     }
 
 }

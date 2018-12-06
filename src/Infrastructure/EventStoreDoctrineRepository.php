@@ -37,7 +37,7 @@ class EventStoreDoctrineRepository extends EntityRepository implements EventStor
         return $query->getQuery()->getResult();
     }
 
-    public function getHistoryOfId($aggregateId){
+    public function getEventsOfId($aggregateId){
         $query = $this->createQueryBuilder('e');
         if($aggregateId){
             $query->where('e.aggregateId = :aggregateId');

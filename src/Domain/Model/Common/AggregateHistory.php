@@ -4,12 +4,11 @@ namespace Notepad\Domain\Model\Common;
 use Notepad\Domain\Event\DomainEvent;
 use Verraes\ClassFunctions\ClassFunctions;
 
-
-
 final class AggregateHistory 
 {
-    private $aggregateId;
+    
     private $serializer;
+    private $aggregateId;
     private $events;
 
     public function __construct($aggregateId, array $storeEvents)
@@ -26,11 +25,8 @@ final class AggregateHistory
                 'array',
                 'json'
             );
-
             $type = $storedEvent->typeName();
-
             $event = $type::arrayToDomainEvent($arrayEvent);
-
             $this->events[] = $event;
         }
         $this->aggregateId = $aggregateId;
