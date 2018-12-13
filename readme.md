@@ -33,7 +33,7 @@ The command output will be in .eventsOutput in project folder
 
 - Create user
 ```
-POST http://localhost:8000/api/users/create 
+POST http://localhost:8000/api/user
 ```
 
 payload: {"name":"name","email":"teste@teste.com"}
@@ -45,7 +45,7 @@ Answer:
 
 - Create Notepad
 ```
-POST http://localhost:8000/api/notepad/create
+POST http://localhost:8000/api/notepad
 ```
 
 payload: {"name":"notepad name", "userId":"77d6ddad-0f6b-4378-9e03-03d4e36f181a"}
@@ -58,10 +58,10 @@ Answer:
 - Create Note
 
 ```
-POST http://localhost:8000/api/notes/create
+POST http://localhost:8000/api/notepad/2a21ae57-6115-4ed4-8df2-2404187b4dab/note
 ```
 
-payload: {"title":"title name", "content":"content", "notepadId":"2a21ae57-6115-4ed4-8df2-2404187b4dab"}
+payload: {"title":"title name", "content":"content"}
 
 Answer:
 {
@@ -71,7 +71,7 @@ Answer:
 - Amount of notes per user
 
 ```
-GET http://localhost:8000/api/user/qtNotes/b5724410-4caa-4607-aaa4-f81b58e0513c
+GET http://localhost:8000/api/user/c1f7d15c-d35b-4f22-b74f-f8f46e889d26/notepad/number-of-notes
 ```
 
 Answer:
@@ -82,7 +82,7 @@ Answer:
 - Notes from User
 
 ```
-GET http://localhost:8000/api/user/notesFromUser/b5724410-4caa-4607-aaa4-f81b58e0513c
+GET http://localhost:8000/api/user/c1f7d15c-d35b-4f22-b74f-f8f46e889d26/notepad/notes-from-user
 ```
 
 Answer:

@@ -17,17 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('notes/create','CreateNoteController@store');
 Route::delete('notes/delete/{noteId}/{notepadId}','DeleteNoteController@destroy');
 Route::get('notes/list','ListNoteController@list');
+Route::get('user/{userId}/notepad/number-of-notes','GetNumberNotesFromUserController@qtdFromUser');
+Route::get('user/{userId}/notepad/notes-from-user','NotesFromUserController@allNotes');
 
-Route::get('user/qtNotes/{userId}','GetNumberNotesFromUserController@qtdFromUser');
+Route::post('user','CreateUserController@store');
+Route::post('notepad','CreateNotepadController@store');
+Route::post('notepad/{id}/note','CreateNoteController@store');
 
-Route::get('user/notesFromUser/{userId}','NotesFromUserController@allNotes');
-
-
-Route::post('users/create','CreateUserController@store');
-
-Route::post('notepad/create','CreateNotepadController@store');
 
 

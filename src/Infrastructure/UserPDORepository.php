@@ -28,10 +28,11 @@ class UserPDORepository implements UserQueryRepository{
         $stm->execute([
             ':user_id' => $userId
         ]);
-        $result = $stm->fetchAll();
 
-        foreach ($result as $row){
-            $result2[] = array('id'=>$row['id'],
+        $result = [];
+
+        foreach ($stm->fetchAll() as $row){
+            $result[] = array('id'=>$row['id'],
             'user_id'=>$row['user_id'],
             'note_id'=>$row['note_id'],
             'notepad_id'=>$row['notepad_id'],
@@ -39,7 +40,7 @@ class UserPDORepository implements UserQueryRepository{
             'content'=>$row['content']);
         }
 
-        return $result2;
+        return $result;
     }
 
 }

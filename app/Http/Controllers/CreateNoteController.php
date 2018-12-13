@@ -16,8 +16,8 @@ class CreateNoteController extends Controller
         $this->handler = $handler;
     }
 
-    public function store(Request $request){
-        $comand = new CreateNoteCommand($request->title, $request->content, $request->notepadId);
+    public function store($id, Request $request){
+        $comand = new CreateNoteCommand($request->title, $request->content, $id);
         $id = $this->handler->execute($comand); 
         return response()->json(['id' => $id], Response::HTTP_CREATED);
     }
