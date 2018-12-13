@@ -5,17 +5,26 @@ An online notepad using DDD, Hexagonal Arch., CQRS, Doctrine, PDO
 # Requirements
 - php 5.6 ou higher [tutorial](http://tecadmin.net/install-php5-on-ubuntu/)
 - composer [tutorial](https://getcomposer.org/doc/00-intro.md#globally)
-- postgres
+- database: [postgres](https://www.postgresql.org/download/) or [MySQL](https://www.mysql.com/downloads/)
 
 ## Development
-- composer install
 - cp .env.example .env
+- composer install
 - php artisan key:generate
 
 ## Database
-It is necessary to especify the projection database in .env file and maybe in config\database.php. Projection connection is made with PDO.
+It is necessary to especify the projection database in .env (pgsql_projection or mysql_projection) or for another type in config\database.php. Projection connection is made with PDO.
 After all configuration:
 - php artisan migrate
+
+## Projections Command
+Scheduling the projection command (ProjectNotepadCommand) with crontab
+- #crotab -e
+ ```
+ * * * * * cd /[project-path-change-me-please]/notepad/ && php artisan schedule:run >> /dev/null 2>&1
+ ```
+
+The command output will be in .eventsOutput in project folder
 
 ## Run
 - php artisan serve --port=5000
@@ -61,7 +70,9 @@ Answer:
 
 - Amount of notes per user
 
+```
 GET http://localhost:8000/api/user/qtNotes/b5724410-4caa-4607-aaa4-f81b58e0513c
+```
 
 Answer:
 {
@@ -70,7 +81,9 @@ Answer:
 
 - Notes from User
 
+```
 GET http://localhost:8000/api/user/notesFromUser/b5724410-4caa-4607-aaa4-f81b58e0513c
+```
 
 Answer:
 [
