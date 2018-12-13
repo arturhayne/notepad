@@ -42,6 +42,6 @@ class ProjectNotepadCommand extends Command
     {
         $exchangeName = $this->argument('exchange-name');
         $numberOfNotifications = $this->projectionService->projectEvents($exchangeName);
-        $this->info($numberOfNotifications.' event(s) sent! ');
+        //$this->info($numberOfNotifications.' event(s) sent! ');
     }
 }
