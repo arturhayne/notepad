@@ -16,7 +16,7 @@ final class AggregateHistory
         $this->events = [];
         foreach($storeEvents as $storedEvent) {
 
-            if(!(string)$storedEvent->aggregateId()===$aggregateId) {
+            if(!$storedEvent->equals($aggregateId)) {
                 throw new \Exception("Not same event");
             }
 

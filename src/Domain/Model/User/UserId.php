@@ -26,4 +26,9 @@ class UserId{
     {
         return (string) $this->value;        
     }
+
+    public function equals(UserId $id)
+    {
+        return (string) $this->value() == (string) $id;
+    }
 }

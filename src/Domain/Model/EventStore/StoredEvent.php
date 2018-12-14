@@ -39,6 +39,11 @@ class StoredEvent implements DomainEvent{
         return $this->typeName;
     }
 
+    public function equals($id)
+    {
+        return (string) $this->aggregateId == (string) $id;
+    }
+
     public static function arrayToDomainEvent(array $array){}
 
 

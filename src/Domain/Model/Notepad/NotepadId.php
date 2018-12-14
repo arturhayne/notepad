@@ -24,4 +24,9 @@ class NotepadId{
     {
         return (string) $this->value;        
     }
+
+    public function equals(NotepadId $id)
+    {
+        return (string) $this->value() == (string) $id;
+    }
 }

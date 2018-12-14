@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::delete('notes/delete/{noteId}/{notepadId}','DeleteNoteController@destroy');
 Route::get('notes/list','ListNoteController@list');
+
 Route::get('user/{userId}/notepad/number-of-notes','GetNumberNotesFromUserController@qtdFromUser');
 Route::get('user/{userId}/notepad/notes-from-user','NotesFromUserController@allNotes');
 
