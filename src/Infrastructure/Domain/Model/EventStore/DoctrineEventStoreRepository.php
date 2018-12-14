@@ -1,6 +1,7 @@
 <?php
 
-namespace Notepad\Infrastructure;
+namespace Notepad\Infrastructure\Domain\Model\EventStore;
+
 use Doctrine\ORM\EntityRepository;
 
 use Notepad\Domain\Model\EventStore\EventStore;
@@ -11,7 +12,7 @@ use Notepad\Domain\Model\Common\AggregateHistory;
 use Notepad\Domain\Model\Notepad\NotepadWasAdded;
 
 
-class EventStoreDoctrineRepository extends EntityRepository implements EventStore 
+class DoctrineEventStoreRepository extends EntityRepository implements EventStore 
 {
     private $serializer;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Notepad\Infrastructure;
+namespace Notepad\Infrastructure\Domain\Model\User;
 
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\User\UserId;
 
 
-class UserPDORepository implements UserQueryRepository{
+class PDOUserRepository implements UserQueryRepository{
 
     private $pdo;
 

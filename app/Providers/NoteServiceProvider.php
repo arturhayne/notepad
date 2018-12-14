@@ -8,14 +8,13 @@ use Illuminate\Support\ServiceProvider;
 
 use Notepad\Domain\Model\User\User;
 use Notepad\Domain\Model\User\UserRepository;
-use Notepad\Infrastructure\UserPDORepository;
-use Notepad\Infrastructure\UserDoctrineRepository;
+use Notepad\Infrastructure\Domain\Model\User\PDOUserRepository;
+use Notepad\Infrastructure\DoctrineUserRepository;
 
 
 use Notepad\Domain\Model\Notepad\Notepad;
 
 use Notepad\Domain\Model\Notepad\NotepadRepository;
-use Notepad\Infrastructure\NotepadPDORepository;
 
 use Notepad\Application\Service\Notepad\ArrayListNoteTransformer;
 use Notepad\Application\Service\Notepad\ListNoteTransformer;
@@ -24,7 +23,7 @@ use Notepad\Domain\DomainEventSubscriber;
 use Notepad\Domain\PersistDomainEventSubscriber;
 
 use Notepad\Domain\Model\EventStore\EventStore;
-use Notepad\Infrastructure\EventStoreDoctrineRepository;
+use Notepad\Infrastructure\Domain\Model\EventStore\DoctrineEventStoreRepository;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 
 use Notepad\Infrastructure\Projection\Projector;
@@ -38,9 +37,8 @@ use Notepad\Infrastructure\Projection\UsersNoteAddedProjection;
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
 
-use Notepad\Infrastructure\NotepadESourcingRepository;
-use Notepad\Infrastructure\UserESourcingRepository;
-
+use Notepad\Infrastructure\Domain\Model\Notepad\DoctrineNotepadRepository;
+use Notepad\Infrastructure\Domain\Model\User\DoctrineUserQueryRepository;
 
 use Notepad\Infrastructure\Projection\DoctrineProjectedEventTracker;
 use Notepad\Domain\Projection\ProjectedEventTracker;
@@ -81,7 +79,7 @@ class NoteServiceProvider extends ServiceProvider
                             
          $this->app->bind(UserRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new UserESourcingRepository(
+            return new DoctrineUserRepository(
                 $em,
                 $em->getClassMetaData(StoredEvent::class)
             );
@@ -89,14 +87,14 @@ class NoteServiceProvider extends ServiceProvider
 
         $this->app->bind(UserQueryRepository::class, function($app)  use ($pdo){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new UserPDORepository(
+            return new PDOUserRepository(
                 $pdo
             );
         });
 
         $this->app->bind(NotepadRepository::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new NotepadESourcingRepository(
+            return new DoctrineNotepadRepository(
                 $em,
                 $em->getClassMetaData(StoredEvent::class)
             );
@@ -115,7 +113,7 @@ class NoteServiceProvider extends ServiceProvider
 
          $this->app->bind(EventStore::class, function($app)  use ($em){
             // This is what Doctrine's EntityRepository needs in its constructor.
-            return new EventStoreDoctrineRepository(
+            return new DoctrineEventStoreRepository(
                 $em,
                 $em->getClassMetaData(StoredEvent::class)
             );
