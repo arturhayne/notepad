@@ -6,16 +6,9 @@ use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;
 
-use Notepad\Domain\Model\User\UserRepository;
-use Notepad\Domain\Model\User\UserId;
-
-use Notepad\Domain\Model\Notepad\NoteRepository;
-use Notepad\Domain\Model\Notepad\NoteId;
-use Notepad\Domain\Model\Notepad\Note;
-
 use Notepad\Domain\Model\EventStore\EventStore;
 
-use Notepad\Application\Service\Note\ListNoteTransformer;
+use Notepad\Application\Service\Notepad\ListNoteTransformer;
 
 use  Notepad\Domain\Event\DomainEventPublisher;
 use  Notepad\Domain\Event\PersistDomainEventSubscriber;

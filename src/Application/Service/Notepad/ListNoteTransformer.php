@@ -1,6 +1,6 @@
 <?php 
 
-namespace Notepad\Application\Service\Note;
+namespace Notepad\Application\Service\Notepad;
 
 interface ListNoteTransformer{
 

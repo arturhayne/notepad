@@ -17,8 +17,8 @@ use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Infrastructure\NotepadPDORepository;
 
-use Notepad\Application\Service\Note\ArrayListNoteTransformer;
-use Notepad\Application\Service\Note\ListNoteTransformer;
+use Notepad\Application\Service\Notepad\ArrayListNoteTransformer;
+use Notepad\Application\Service\Notepad\ListNoteTransformer;
 
 use Notepad\Domain\DomainEventSubscriber;
 use Notepad\Domain\PersistDomainEventSubscriber;

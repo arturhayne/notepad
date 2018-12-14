@@ -1,12 +1,9 @@
 <?php
 
-namespace Notepad\Application\Service\Note;
+namespace Notepad\Application\Service\Notepad;
 
 use Notepad\Domain\Model\Notepad\NoteRepository;
 use Notepad\Domain\Model\Notepad\NoteId;
-
-use Notepad\Application\Service\Notepad\NotepadAggregateService;
-
 
 class DeleteNoteHandler extends NotepadAggregateService{
 
