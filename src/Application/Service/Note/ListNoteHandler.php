@@ -2,7 +2,7 @@
 
 namespace Notepad\Application\Service\Note;
 use Illuminate\Http\Response;
-use Notepad\Domain\Model\Note\NoteRepository;
+use Notepad\Domain\Model\Notepad\NoteRepository;
 use Notepad\Application\Service\Notepad\NotepadAggregateService;
 
 

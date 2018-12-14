@@ -7,7 +7,7 @@ use JMS\Serializer\SerializerBuilder;
 use Notepad\Domain\Model\EventStore\StoredEvent;
 use Notepad\Domain\Projection\ProjectorManager;
 use Notepad\Domain\Projection\ProjectedEventTracker;
-use Notepad\Domain\Model\Note\NoteWasAdded;
+use Notepad\Domain\Model\Notepad\NoteWasAdded;
 
 
 class ProjectionService

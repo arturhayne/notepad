@@ -1,10 +1,8 @@
 <?php
 
-namespace Notepad\Domain\Model\Note;
+namespace Notepad\Domain\Model\Notepad;
 
-use Notepad\Domain\Model\Note\NoteId;
-use  Notepad\Domain\Event\DomainEvent;
-
+use Notepad\Domain\Event\DomainEvent;
 
 class NoteWasAdded implements DomainEvent{
 

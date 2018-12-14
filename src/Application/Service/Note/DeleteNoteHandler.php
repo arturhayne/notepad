@@ -2,8 +2,8 @@
 
 namespace Notepad\Application\Service\Note;
 
-use Notepad\Domain\Model\Note\NoteRepository;
-use Notepad\Domain\Model\Note\NoteId;
+use Notepad\Domain\Model\Notepad\NoteRepository;
+use Notepad\Domain\Model\Notepad\NoteId;
 
 use Notepad\Application\Service\Notepad\NotepadAggregateService;
 

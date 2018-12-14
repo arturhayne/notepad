@@ -5,8 +5,6 @@ namespace App\Providers;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-use Notepad\Domain\Model\Note\NoteRepository;
-use Notepad\Infrastructure\NotePDORepository;
 
 use Notepad\Domain\Model\User\User;
 use Notepad\Domain\Model\User\UserRepository;

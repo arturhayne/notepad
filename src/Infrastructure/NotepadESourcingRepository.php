@@ -8,7 +8,7 @@ use Notepad\Domain\Model\Notepad\Notepad;
 
 use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Domain\Model\Notepad\NotepadId;
-use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Notepad\Note;
 
 use Notepad\Infrastructure\Projection\Projector;
 

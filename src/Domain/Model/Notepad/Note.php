@@ -1,12 +1,8 @@
 <?php
 
-namespace Notepad\Domain\Model\Note;
+namespace Notepad\Domain\Model\Notepad;
 
-use Notepad\Domain\Model\Notepad\NotepadId;
-use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Event\DomainEventPublisher;
-use Notepad\Domain\Event\NoteCreated;
-
 use Notepad\Domain\Model\EventStore\StoredEvent;
 use Notepad\Domain\Model\EventStore\EventStore;
 

@@ -9,9 +9,9 @@ use Notepad\Domain\Model\Notepad\NotepadId;
 use Notepad\Domain\Model\User\UserRepository;
 use Notepad\Domain\Model\User\UserId;
 
-use Notepad\Domain\Model\Note\NoteRepository;
-use Notepad\Domain\Model\Note\NoteId;
-use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Notepad\NoteRepository;
+use Notepad\Domain\Model\Notepad\NoteId;
+use Notepad\Domain\Model\Notepad\Note;
 
 use Notepad\Domain\Model\EventStore\EventStore;
 

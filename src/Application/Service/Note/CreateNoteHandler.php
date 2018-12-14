@@ -2,9 +2,9 @@
 
 namespace Notepad\Application\Service\Note;
 
-use Notepad\Domain\Model\Note\NoteRepository;
-use Notepad\Domain\Model\Note\NoteId;
-use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Notepad\NoteRepository;
+use Notepad\Domain\Model\Notepad\NoteId;
+use Notepad\Domain\Model\Notepad\Note;
 
 use Notepad\Domain\Event\DomainEventPublisher;
 use Notepad\Domain\Event\PersistDomainEventSubscriber;

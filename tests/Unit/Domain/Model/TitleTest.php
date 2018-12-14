@@ -3,7 +3,7 @@
 
 namespace Tests\Unit\Domain\Model;
 
-use Notepad\Domain\Model\Note\Title;
+use Notepad\Domain\Model\Notepad\Title;
 use PHPUnit\Framework\TestCase;
 
 class TitleTest extends TestCase

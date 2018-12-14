@@ -4,15 +4,15 @@ namespace Notepad\Domain\Model\Notepad;
 
 use Notepad\Domain\Model\User\UserId;
 use Doctrine\Common\Collections\ArrayCollection;
-use Notepad\Domain\Model\Note\NoteId;
-use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Notepad\NoteId;
+use Notepad\Domain\Model\Notepad\Note;
 use Doctrine\Common\Collections\Criteria;
 
 use Notepad\Domain\Model\Common\AggregateRoot;
 use Notepad\Domain\Model\Common\AggregateHistory;
 use Notepad\Domain\Model\Common\EventSourcedAggregateRoot;
 
-use Notepad\Domain\Model\Note\NoteWasAdded;
+use Notepad\Domain\Model\Notepad\NoteWasAdded;
 use Ramsey\Uuid\Uuid;
 
 

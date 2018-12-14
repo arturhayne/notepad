@@ -9,8 +9,8 @@ use Notepad\Domain\Model\Notepad\NotepadRepository;
 use Notepad\Domain\Model\User\UserRepository;
 use Notepad\Domain\Model\User\User;
 use Notepad\Domain\Model\User\UserId;
-use Notepad\Domain\Model\Note\Note;
-use Notepad\Domain\Model\Note\NoteId;
+use Notepad\Domain\Model\Notepad\Note;
+use Notepad\Domain\Model\Notepad\NoteId;
 
 use Notepad\Domain\Model\Notepad\Notepad;
 use Notepad\Domain\Model\Notepad\NotepadId;

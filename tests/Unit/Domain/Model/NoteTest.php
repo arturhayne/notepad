@@ -3,7 +3,7 @@
 
 namespace Tests\Unit\Domain\Model;
 
-use Notepad\Domain\Model\Note\Note;
+use Notepad\Domain\Model\Notepad\Note;
 use PHPUnit\Framework\TestCase;
 
 use Notepad\Domain\Event\DomainEventPublisher;

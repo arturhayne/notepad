@@ -4,7 +4,7 @@ namespace Notepad\Infrastructure\Persistence\Doctrine\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
-use Notepad\Domain\Model\Note\NoteId;
+use Notepad\Domain\Model\Notepad\NoteId;
 
 class DoctrineNoteId extends GuidType
 {

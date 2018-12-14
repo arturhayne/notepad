@@ -2,7 +2,7 @@
 
 namespace Notepad\Infrastructure\Projection;
 
-use Notepad\Domain\Model\Note\NoteWasAdded;
+use Notepad\Domain\Model\Notepad\NoteWasAdded;
 
 class UsersNoteAddedProjection implements Projection{
 
