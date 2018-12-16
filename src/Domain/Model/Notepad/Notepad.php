@@ -91,6 +91,22 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
         unset($this->notes[$this->findNote($noteId)]);
     }
 
+    protected function applyNoteWasUpdated(NoteWasUpdated $event){
+        $noteId = NoteId::createFromString($event->noteId());
+        $note = $this->notes[$this->findNote($noteId)];
+        $note->setTitle($event->title());
+        $note->setContent($event->content());
+    }
+
+    public function updateNote($noteId,$title,$content){
+        $pos = $this->findNote($noteId);
+        if(null === $pos){
+            throw new \InvalidArgumentException('Note not found!');
+        }
+        $this->recordApplyAndPublishThat(
+            new NoteWasUpdated($noteId, $this->id, $title, $content, $this->userId)
+        );
+    }
 
     public function removeNote(NoteId $noteId){
         $pos = $this->findNote($noteId);

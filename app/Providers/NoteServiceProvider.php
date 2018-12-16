@@ -35,7 +35,9 @@ use Notepad\Infrastructure\Projection\UsersNoteDeletedProjection;
 use Notepad\Infrastructure\Projection\NumUserNotesWasAddedProjection;
 use Notepad\Infrastructure\Projection\NumUserNotesWasIncreasedProjection;
 use Notepad\Infrastructure\Projection\NotepadWasAddedProjection; 
+use Notepad\Infrastructure\Projection\NoteWasUpdatedProjection;
 use Notepad\Infrastructure\Projection\UsersNoteAddedProjection; 
+use Notepad\Infrastructure\Projection\UsersNoteUpdatedProjection;
 
 use Notepad\Domain\Model\User\UserQueryRepository;
 use Notepad\Domain\Model\Notepad\NotepadQueryRepository;
@@ -141,7 +143,10 @@ class NoteServiceProvider extends ServiceProvider
                                     new NotepadWasAddedProjection($pdo),
                                     new NumUserNotesWasIncreasedProjection($pdo),
                                     new NumUserNotesWasAddedProjection($pdo),
-                                    new UsersNoteAddedProjection($pdo)]);
+                                    new UsersNoteAddedProjection($pdo),
+                                    new NoteWasUpdatedProjection($pdo),
+                                    new UsersNoteUpdatedProjection($pdo)
+                                    ]);
             return $projector;
         });
 

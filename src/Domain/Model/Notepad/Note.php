@@ -53,5 +53,14 @@ class Note{
     public function setNotepad(?Notepad $notepad){
         $this->notepad = $notepad;
     }
+
+    public function setTitle(string $title){
+        $this->title = Title::create($title);
+    }
+
+    public function setContent(string $content){
+        $this->content = $content;
+    }
+    
     
 }
