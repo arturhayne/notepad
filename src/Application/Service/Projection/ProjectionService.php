@@ -33,7 +33,6 @@ class ProjectionService
         $eventsNonProjected = $this->listNonProjectedEvents(
             $this->eventTracker->mostRecentProjectedEventId($exchangeName)
         );
-
         if (!$eventsNonProjected) {
             return 0;
         }

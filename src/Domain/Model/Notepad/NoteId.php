@@ -26,7 +26,7 @@ class NoteId{
     }
 
     public function equals(NoteId $noteId)
-    {
-        return (string) $this->value() == (string) $noteId;
+    {   
+        return (string) $this->value == (string) $noteId;
     }
 }

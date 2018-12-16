@@ -12,7 +12,6 @@ use Notepad\Domain\Model\Common\AggregateRoot;
 use Notepad\Domain\Model\Common\AggregateHistory;
 use Notepad\Domain\Model\Common\EventSourcedAggregateRoot;
 
-use Notepad\Domain\Model\Notepad\NoteWasAdded;
 use Ramsey\Uuid\Uuid;
 
 
@@ -85,24 +84,34 @@ class Notepad extends AggregateRoot implements EventSourcedAggregateRoot{
         $this->notes[] = $note;
     }
 
+    protected function applyNoteWasDeleted(NoteWasDeleted $event){
+        $noteId = NoteId::createFromString($event->noteId());
+        $note = $this->notes[$this->findNote($noteId)];
+        $note->setNotepad(null);
+        unset($this->notes[$this->findNote($noteId)]);
+    }
+
 
     public function removeNote(NoteId $noteId){
-        $note = $this->findNote($noteId);
-
-        if(!$note){
+        $pos = $this->findNote($noteId);
+        if(null === $pos){
             throw new \InvalidArgumentException('Note not found!');
         } 
-        $this->notes->removeElement($note);
-        $note->setNotepad(null);
-        return $note;
+
+        $this->recordApplyAndPublishThat(
+            new NoteWasDeleted($noteId, $this->id, $this->userId)
+        );
     }
 
     private function findNote(NoteId $noteId){
-        return $this->notes->matching(
-            Criteria::create()->where(
-                Criteria::expr()->eq('id',$noteId)
-                )
-            )->first();
+        
+        foreach ($this->notes as $k => $note) {
+            if( $noteId->equals($note->id()) ) {
+                return $k;
+                break;
+            }
+        }
+        return null; 
     }
 
     public static function reconstitute(AggregateHistory $history)
